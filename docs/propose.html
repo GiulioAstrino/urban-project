@@ -23,6 +23,8 @@
     <!-- Leaflet CSS & JS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <!-- Supabase SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <!-- Alpine.js -->
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 </head>
@@ -83,30 +85,30 @@
 
                 <!-- Right: Form Fields -->
                 <div class="md:w-1/2 p-8 md:p-12">
-                    <form @submit.prevent="submitted = true" class="space-y-6">
+                    <form @submit.prevent="submitReport($event)" class="space-y-6">
                         
                         <!-- Address -->
                         <div>
                             <label class="block text-sm font-bold text-slate-700 uppercase tracking-widest mb-2">Address (Required)</label>
-                            <input type="text" x-model="address" required placeholder="e.g. Via Piave 12, Mestre" class="w-full px-4 py-3 rounded-lg border border-gray-200 focus:ring-2 focus:ring-growth-green focus:border-growth-green outline-none transition-all">
+                            <input type="text" name="address" x-model="address" required placeholder="e.g. Via Piave 12, Mestre" class="w-full px-4 py-3 rounded-lg border border-gray-200 focus:ring-2 focus:ring-growth-green focus:border-growth-green outline-none transition-all">
                         </div>
 
                         <!-- Type of Space -->
                         <div>
                             <label class="block text-sm font-bold text-slate-700 uppercase tracking-widest mb-2">Type of Decay</label>
-                            <select class="w-full px-4 py-3 rounded-lg border border-gray-200 focus:ring-2 focus:ring-growth-green focus:border-growth-green outline-none transition-all">
-                                <option>Empty Storefront</option>
-                                <option>Abandoned Building</option>
-                                <option>Industrial Void</option>
-                                <option>Unused Lot</option>
-                                <option>Neglected Green Space</option>
+                            <select name="space_type" class="w-full px-4 py-3 rounded-lg border border-gray-200 focus:ring-2 focus:ring-growth-green focus:border-growth-green outline-none transition-all">
+                                <option value="Empty Storefront">Empty Storefront</option>
+                                <option value="Abandoned Building">Abandoned Building</option>
+                                <option value="Industrial Void">Industrial Void</option>
+                                <option value="Unused Lot">Unused Lot</option>
+                                <option value="Neglected Green Space">Neglected Green Space</option>
                             </select>
                         </div>
 
                         <!-- Description -->
                         <div>
                             <label class="block text-sm font-bold text-slate-700 uppercase tracking-widest mb-2">Context & Details</label>
-                            <textarea rows="4" placeholder="Describe the state of the space and its potential impact on the neighborhood..." class="w-full px-4 py-3 rounded-lg border border-gray-200 focus:ring-2 focus:ring-growth-green focus:border-growth-green outline-none transition-all"></textarea>
+                            <textarea name="description" rows="4" placeholder="Describe the state of the space and its potential impact on the neighborhood..." class="w-full px-4 py-3 rounded-lg border border-gray-200 focus:ring-2 focus:ring-growth-green focus:border-growth-green outline-none transition-all"></textarea>
                         </div>
 
                         <!-- Photo Upload -->
@@ -142,6 +144,36 @@
     </footer>
 
     <script>
+        // Configurazione Supabase
+        const SUPABASE_URL = 'https://mjevwldzatcytulcfhpb.supabase.co';
+        const SUPABASE_ANON_KEY = 'sb_publishable_GiqFOHnsA2QyXb3x6hoKJA_8GgtrYLr';
+        const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        async function submitReport(e) {
+            const app = document.querySelector('body').__x.$data;
+            const formData = new FormData(e.target);
+            
+            const reportData = {
+                address: app.address,
+                lat: app.lat,
+                lng: app.lng,
+                space_type: formData.get('space_type'),
+                description: formData.get('description'),
+                // Nota: In un sistema reale, dovresti caricare l'immagine su Supabase Storage prima
+                image_url: 'placeholder_or_local_path' 
+            };
+
+            const { data, error } = await supabaseClient
+                .from('reports')
+                .insert([reportData]);
+
+            if (error) {
+                alert('Errore durante l\'invio: ' + error.message);
+            } else {
+                app.submitted = true;
+            }
+        }
+
         document.addEventListener('DOMContentLoaded', () => {
             const map = L.map('select-map', {
                 zoomControl: false

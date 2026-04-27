@@ -38,10 +38,10 @@
     </div>
 
     <script>
-        // Inserirai qui le tue chiavi dopo
-        const SUPABASE_URL = 'YOUR_SUPABASE_URL';
-        const SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY';
-        const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        // Configurazione Supabase
+        const SUPABASE_URL = 'https://mjevwldzatcytulcfhpb.supabase.co';
+        const SUPABASE_ANON_KEY = 'sb_publishable_GiqFOHnsA2QyXb3x6hoKJA_8GgtrYLr';
+        const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
         const authForm = document.getElementById('auth-form');
         const emailInput = document.getElementById('email');
@@ -67,15 +67,16 @@
 
             let result;
             if (isLogin) {
-                result = await supabase.auth.signInWithPassword({ email, password });
+                result = await supabaseClient.auth.signInWithPassword({ email, password });
             } else {
-                result = await supabase.auth.signUp({ email, password });
+                result = await supabaseClient.auth.signUp({ email, password });
             }
 
             if (result.error) {
                 errorDiv.innerText = result.error.message;
                 errorDiv.classList.remove('hidden');
             } else {
+                // Login successo, reindirizza
                 window.location.href = 'index.html';
             }
         });

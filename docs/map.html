@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Discovery Map | uSeed</title>
+    <title>Map | uSeed</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -28,16 +28,10 @@
     <!-- Alpine.js -->
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 </head>
-<body class="antialiased h-screen flex flex-col" x-data="{ mobileMenuOpen: false }">
+<body class="antialiased h-screen flex flex-col" x-data="mapApp()">
 
     <!-- Navigation -->
-    <nav class="sticky top-0 z-50 dark-glass-panel border-b border-slate-700" x-data="{ user: null }" x-init="
-        const SUPABASE_URL = 'https://mjevwldzatcytulcfhpb.supabase.co';
-        const SUPABASE_ANON_KEY = 'sb_publishable_GiqFOHnsA2QyXb3x6hoKJA_8GgtrYLr';
-        const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-        supabaseClient.auth.getSession().then(({data}) => { user = data.session?.user || null });
-        supabaseClient.auth.onAuthStateChange((_event, session) => { user = session?.user || null });
-    ">
+    <nav class="sticky top-0 z-50 dark-glass-panel border-b border-slate-700">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-20">
                 <div class="flex items-center">
@@ -70,7 +64,7 @@
                 </div>
                 <!-- Mobile menu button -->
                 <div class="flex items-center sm:hidden">
-                    <button @click="mobileMenuOpen = !mobileMenuOpen" type="button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-growth-green">
+                    <button @click="mobileMenuOpen = !mobileMenuOpen" type="button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-slate-700 focus:outline-none">
                         <svg x-show="!mobileMenuOpen" class="block h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
                         </svg>
@@ -79,6 +73,15 @@
                         </svg>
                     </button>
                 </div>
+            </div>
+        </div>
+        <!-- Mobile Menu Overlay -->
+        <div x-show="mobileMenuOpen" class="sm:hidden dark-glass-panel absolute w-full border-b border-slate-700" style="display: none;">
+            <div class="pt-2 pb-3 space-y-1 px-4">
+                <a href="index.html" class="block py-2 text-white font-medium border-b border-slate-700">Home</a>
+                <a href="map.html" class="block py-2 text-growth-green font-bold border-b border-slate-700">Map</a>
+                <a href="feed.html" class="block py-2 text-gray-300 border-b border-slate-700">Proposals</a>
+                <a href="community.html" class="block py-2 text-gray-300">Community</a>
             </div>
         </div>
     </nav>
@@ -104,7 +107,7 @@
     </div>
 
     <!-- Main Content -->
-    <main class="flex-grow flex flex-col md:flex-row overflow-hidden relative" x-data="{ selectedSpot: null }">
+    <main class="flex-grow flex flex-col md:flex-row overflow-hidden relative">
         
         <!-- Map Container -->
         <div id="map" class="absolute inset-0 md:relative md:h-full md:w-2/3 lg:w-3/4 z-0"></div>
@@ -169,7 +172,7 @@
                             <span class="block text-lg font-bold text-slate-800 mt-1" x-text="selectedSpot?.sqft + ' m²'"></span>
                         </div>
                         <div class="bg-white p-4 rounded-lg border border-gray-200 shadow-sm">
-                            <span class="block text-xs font-medium text-gray-500 uppercase">Current Proposals</span>
+                            <span class="block text-xs font-medium text-gray-500 uppercase">Proposals</span>
                             <span class="block text-lg font-bold text-growth-green mt-1" x-text="selectedSpot?.proposals"></span>
                         </div>
                     </div>
@@ -178,12 +181,12 @@
 
                     <template x-if="selectedSpot?.proposals > 0">
                         <a :href="'feed.html#seed-' + selectedSpot?.id" class="w-full btn-primary text-center block">
-                            View Proposals for this Site
+                            View Proposals
                         </a>
                     </template>
                     <template x-if="selectedSpot?.proposals === 0">
                         <a href="feed.html" class="w-full btn-primary text-center block bg-slate-800 hover:bg-slate-700 shadow-none">
-                            Be the first to propose an idea!
+                            Plant the first Seed!
                         </a>
                     </template>
                 </div>
@@ -193,141 +196,96 @@
     </main>
 
     <script>
-        // Supabase Configuration
         const SUPABASE_URL = 'https://mjevwldzatcytulcfhpb.supabase.co';
         const SUPABASE_ANON_KEY = 'sb_publishable_GiqFOHnsA2QyXb3x6hoKJA_8GgtrYLr';
         const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-        // Real Data for Abandoned Spots (Static + Dynamic from DB)
-        const staticSpots = [
-            {
-                id: "piave-76",
-                title: "Via Piave 76",
-                zone: "Central District",
-                lat: 45.4880, 
-                lng: 12.2330,
-                sqft: "Varies",
-                proposals: 1,
-                desc: "Vacant commercial unit previously used for temporary civic initiatives. Perfect for mediation and community reactivation.",
-                image: "images/piave_76.png"
-            },
-            {
-                id: "piave-66",
-                title: "Via Piave 66",
-                zone: "Central District",
-                lat: 45.4890, 
-                lng: 12.2335,
-                sqft: "30",
-                proposals: 1,
-                desc: "Small commercial space. Strategic location for small-scale pilot projects.",
-                image: "images/piave_66.png"
-            },
-            {
-                id: "piave-38",
-                title: "Via Piave 38",
-                zone: "Central District",
-                lat: 45.4910, 
-                lng: 12.2345,
-                sqft: "500",
-                proposals: 1,
-                desc: "Large former commercial warehouse. Ambitious scale suitable for multi-use community projects.",
-                image: "images/piave_38.png"
-            },
-            {
-                id: "piave-24",
-                title: "Via Piave 24 (Former Bank)",
-                zone: "Central District",
-                lat: 45.4925, 
-                lng: 12.2355,
-                sqft: "180",
-                proposals: 1,
-                desc: "Corner commercial unit with high visibility. Vacant for over a year. Ideal for neighborhood services or cultural hub.",
-                image: "images/piave_24.png"
-            }
-        ];
+        function mapApp() {
+            return {
+                mobileMenuOpen: false,
+                user: null,
+                selectedSpot: null,
+                staticSpots: [
+                    {
+                        id: "piave-76",
+                        title: "Via Piave 76",
+                        zone: "Central District",
+                        lat: 45.4880, 
+                        lng: 12.2330,
+                        sqft: "Varies",
+                        proposals: 1,
+                        desc: "Vacant commercial unit previously used for temporary civic initiatives. Perfect for community reactivation.",
+                        image: "images/piave_76.png"
+                    },
+                    {
+                        id: "piave-66",
+                        title: "Via Piave 66",
+                        zone: "Central District",
+                        lat: 45.4890, 
+                        lng: 12.2335,
+                        sqft: "30",
+                        proposals: 1,
+                        desc: "Small commercial space. Strategic location for small-scale pilot projects.",
+                        image: "images/piave_66.png"
+                    },
+                    {
+                        id: "piave-38",
+                        title: "Via Piave 38",
+                        zone: "Central District",
+                        lat: 45.4910, 
+                        lng: 12.2345,
+                        sqft: "500",
+                        proposals: 1,
+                        desc: "Large former commercial warehouse. Ambitious scale suitable for multi-use community projects.",
+                        image: "images/piave_38.png"
+                    },
+                    {
+                        id: "piave-24",
+                        title: "Via Piave 24 (Former Bank)",
+                        zone: "Central District",
+                        lat: 45.4925, 
+                        lng: 12.2355,
+                        sqft: "180",
+                        proposals: 1,
+                        desc: "Corner commercial unit with high visibility. Vacant for over a year. Ideal for cultural hub.",
+                        image: "images/piave_24.png"
+                    }
+                ],
+                async init() {
+                    const { data } = await supabaseClient.auth.getSession();
+                    this.user = data.session?.user || null;
+                    supabaseClient.auth.onAuthStateChange((_event, session) => { this.user = session?.user || null });
 
-        document.addEventListener('alpine:init', async () => {
-            // Initialize Leaflet Map
-            const map = L.map('map', {
-                zoomControl: false 
-            }).setView([45.475, 12.240], 13);
+                    // Initialize Map
+                    const map = L.map('map', { zoomControl: false }).setView([45.475, 12.240], 13);
+                    L.control.zoom({ position: 'bottomright' }).addTo(map);
+                    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', { maxZoom: 20 }).addTo(map);
 
-            L.control.zoom({
-                position: 'bottomright'
-            }).addTo(map);
+                    const customIcon = L.divIcon({ className: 'custom-leaflet-marker', iconSize: [24, 24], iconAnchor: [12, 12] });
+                    const hotspotList = document.getElementById('hotspot-list');
 
-            L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-                subdomains: 'abcd',
-                maxZoom: 20
-            }).addTo(map);
+                    // Fetch dynamic spots
+                    const { data: dbSpots } = await supabaseClient.from('reports').select('*');
+                    const allSpots = [...this.staticSpots];
+                    if (dbSpots) {
+                        dbSpots.forEach(s => {
+                            allSpots.push({ id: s.id, title: s.address, zone: s.space_type, lat: s.lat, lng: s.lng, sqft: "TBD", proposals: 0, desc: s.description, image: "" });
+                        });
+                    }
 
-            const customIcon = L.divIcon({
-                className: 'custom-leaflet-marker',
-                iconSize: [24, 24],
-                iconAnchor: [12, 12]
-            });
+                    allSpots.forEach(spot => {
+                        const marker = L.marker([spot.lat, spot.lng], { icon: customIcon }).addTo(map);
+                        marker.on('click', () => { this.selectedSpot = spot; map.setView([spot.lat, spot.lng], 16, { animate: true }); });
 
-            const hotspotList = document.getElementById('hotspot-list');
-
-            // Fetch dynamic spots from Supabase
-            const { data: dbSpots, error } = await supabaseClient
-                .from('reports')
-                .select('*');
-            
-            const allSpots = [...staticSpots];
-            if (dbSpots) {
-                dbSpots.forEach(s => {
-                    allSpots.push({
-                        id: s.id,
-                        title: s.address,
-                        zone: s.space_type,
-                        lat: s.lat,
-                        lng: s.lng,
-                        sqft: "TBD",
-                        proposals: 0,
-                        desc: s.description,
-                        image: "" // Add s.image_url if storage is integrated
+                        const listItem = document.createElement('div');
+                        listItem.className = 'glass-panel p-4 rounded-lg cursor-pointer hover:border-growth-green transition-colors border border-gray-200';
+                        listItem.innerHTML = `<h4 class="font-bold text-slate-800 text-lg">${spot.title}</h4><p class="text-sm text-gray-500 mt-1">${spot.zone}</p>`;
+                        listItem.addEventListener('click', () => { this.selectedSpot = spot; map.setView([spot.lat, spot.lng], 16, { animate: true }); });
+                        hotspotList.appendChild(listItem);
                     });
-                });
+                }
             }
-
-            allSpots.forEach(spot => {
-                const marker = L.marker([spot.lat, spot.lng], { icon: customIcon }).addTo(map);
-                
-                const imageTag = spot.image ? `<img src="${spot.image}" class="w-full h-28 object-cover rounded mb-2">` : `<div class="w-full h-28 bg-slate-100 rounded mb-2 flex items-center justify-center text-gray-400 text-xs font-bold uppercase border border-dashed border-gray-300">No Photo</div>`;
-                const tooltipContent = `
-                    <div class="bg-white p-2 rounded-lg shadow-xl border border-gray-200 w-48 text-center">
-                        ${imageTag}
-                        <h4 class="font-bold text-slate-800 text-sm leading-tight">${spot.title}</h4>
-                        <span class="text-xs text-gray-500 uppercase tracking-wide block mt-1">${spot.zone}</span>
-                    </div>
-                `;
-                marker.bindTooltip(tooltipContent, {
-                    direction: 'top',
-                    className: 'p-0 border-0 bg-transparent shadow-none',
-                    offset: [0, -10]
-                });
-                
-                marker.on('click', () => {
-                    const app = document.querySelector('main').__x.$data;
-                    app.selectedSpot = spot;
-                    map.setView([spot.lat, spot.lng], 16, { animate: true });
-                });
-
-                const listItem = document.createElement('div');
-                listItem.className = 'glass-panel p-4 rounded-lg cursor-pointer hover:border-growth-green transition-colors border border-gray-200';
-                listItem.innerHTML = `
-                    <h4 class="font-bold text-slate-800 text-lg">${spot.title}</h4>
-                    <p class="text-sm text-gray-500 mt-1">${spot.zone}</p>
-                `;
-                listItem.addEventListener('click', () => {
-                    const app = document.querySelector('main').__x.$data;
-                    app.selectedSpot = spot;
-                    map.setView([spot.lat, spot.lng], 16, { animate: true });
-                });
-                hotspotList.appendChild(listItem);
-            });
-        });
+        }
     </script>
 </body>
 </html>

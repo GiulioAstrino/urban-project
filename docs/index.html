@@ -21,19 +21,21 @@
     </script>
     <!-- Custom Styles -->
     <link rel="stylesheet" href="styles.css">
+    <!-- Supabase SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <!-- Alpine.js -->
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 </head>
-<body class="antialiased min-h-screen flex flex-col relative" x-data="{ mobileMenuOpen: false }">
+<body class="antialiased min-h-screen flex flex-col relative" x-data="{ mobileMenuOpen: false, user: null }" x-init="
+    const SUPABASE_URL = 'https://mjevwldzatcytulcfhpb.supabase.co';
+    const SUPABASE_ANON_KEY = 'sb_publishable_GiqFOHnsA2QyXb3x6hoKJA_8GgtrYLr';
+    const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    supabaseClient.auth.getSession().then(({data}) => { user = data.session?.user || null });
+    supabaseClient.auth.onAuthStateChange((_event, session) => { user = session?.user || null });
+">
 
     <!-- Navigation -->
-    <nav class="sticky top-0 z-50 dark-glass-panel border-b border-slate-700" x-data="{ user: null }" x-init="
-        const SUPABASE_URL = 'https://mjevwldzatcytulcfhpb.supabase.co';
-        const SUPABASE_ANON_KEY = 'sb_publishable_GiqFOHnsA2QyXb3x6hoKJA_8GgtrYLr';
-        const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-        supabaseClient.auth.getSession().then(({data}) => { user = data.session?.user || null });
-        supabaseClient.auth.onAuthStateChange((_event, session) => { user = session?.user || null });
-    ">
+    <nav class="sticky top-0 z-50 dark-glass-panel border-b border-slate-700">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-20">
                 <div class="flex items-center">
@@ -66,19 +68,32 @@
                 </div>
                 <!-- Mobile menu button -->
                 <div class="flex items-center sm:hidden">
-                    <button @click="mobileMenuOpen = !mobileMenuOpen" type="button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-growth-green">
+                    <button @click="mobileMenuOpen = !mobileMenuOpen" type="button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-slate-700 focus:outline-none">
                         <svg x-show="!mobileMenuOpen" class="block h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" /></svg>
                         <svg x-show="mobileMenuOpen" class="block h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="display: none;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
                     </button>
                 </div>
             </div>
         </div>
-        <!-- Mobile Menu -->
+        <!-- Mobile Menu Overlay -->
         <div x-show="mobileMenuOpen" class="sm:hidden dark-glass-panel absolute w-full border-b border-slate-700" style="display: none;">
-            <div class="pt-2 pb-3 space-y-1">
-                <a href="index.html" class="bg-slate-800 border-l-4 border-growth-green text-white block pl-3 pr-4 py-2 text-base font-medium">Home</a>
-                <a href="map.html" class="border-l-4 border-transparent text-gray-300 block pl-3 pr-4 py-2 text-base font-medium">Map</a>
-                <a href="feed.html" class="border-l-4 border-transparent text-gray-300 block pl-3 pr-4 py-2 text-base font-medium">Proposals</a>
+            <div class="pt-2 pb-3 space-y-1 px-4">
+                <a href="index.html" class="block py-2 text-white font-medium border-b border-slate-700">Home</a>
+                <a href="map.html" class="block py-2 text-gray-300 border-b border-slate-700">Map</a>
+                <a href="feed.html" class="block py-2 text-gray-300 border-b border-slate-700">Proposals</a>
+                <a href="community.html" class="block py-2 text-gray-300">Community</a>
+                <template x-if="user">
+                    <div class="pt-4 pb-2 border-t border-slate-700 mt-2">
+                        <div class="text-xs text-gray-400 mb-2" x-text="user.email"></div>
+                        <button @click="await supabaseClient.auth.signOut(); window.location.reload();" class="text-sm text-red-400">Logout</button>
+                    </div>
+                </template>
+                <template x-if="!user">
+                    <div class="pt-4 flex gap-4 mt-2 border-t border-slate-700">
+                        <a href="login.html" class="text-sm text-gray-300">Login</a>
+                        <a href="login.html" class="text-sm text-growth-green font-bold">Sign Up</a>
+                    </div>
+                </template>
             </div>
         </div>
     </nav>
@@ -380,7 +395,7 @@
         <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h2 class="text-5xl md:text-7xl font-black mb-12 tracking-tighter">The future of your city <br>should not be decided without you.</h2>
             <div class="flex flex-col sm:flex-row justify-center gap-6">
-                <a href="#" class="bg-slate-900 text-white font-black py-6 px-12 rounded shadow-2xl uppercase tracking-widest hover:bg-slate-800 transition-all transform hover:-translate-y-1">Join uSeed</a>
+                <a href="login.html" class="bg-slate-900 text-white font-black py-6 px-12 rounded shadow-2xl uppercase tracking-widest hover:bg-slate-800 transition-all transform hover:-translate-y-1">Join uSeed</a>
                 <a href="feed.html" class="bg-white text-slate-900 font-black py-6 px-12 rounded shadow-2xl uppercase tracking-widest hover:bg-gray-100 transition-all transform hover:-translate-y-1">Explore Projects</a>
                 <a href="map.html" class="bg-transparent border-4 border-slate-900 text-slate-900 font-black py-6 px-12 rounded uppercase tracking-widest hover:bg-slate-900 hover:text-white transition-all transform hover:-translate-y-1">Start Reclaiming</a>
             </div>
@@ -404,7 +419,7 @@
                         <ul class="text-gray-500 space-y-2 text-sm">
                             <li><a href="map.html" class="hover:text-growth-green transition-colors">Map</a></li>
                             <li><a href="feed.html" class="hover:text-growth-green transition-colors">Proposals</a></li>
-                            <li><a href="#" class="hover:text-growth-green transition-colors">Community</a></li>
+                            <li><a href="community.html" class="hover:text-growth-green transition-colors">Community</a></li>
                         </ul>
                     </div>
                     <div class="space-y-4">

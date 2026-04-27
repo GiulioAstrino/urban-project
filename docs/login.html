@@ -35,10 +35,12 @@
         <div class="mt-8 text-center border-t pt-8">
             <p class="text-gray-500 text-sm">Don't have an account? <a href="#" id="toggle-auth" class="text-growth-green font-bold hover:underline">Sign Up</a></p>
         </div>
+        <div class="mt-4 text-center">
+            <a href="index.html" class="text-gray-400 text-xs uppercase tracking-widest hover:text-slate-600 transition-colors">Back to Home</a>
+        </div>
     </div>
 
     <script>
-        // Supabase Configuration
         const SUPABASE_URL = 'https://mjevwldzatcytulcfhpb.supabase.co';
         const SUPABASE_ANON_KEY = 'sb_publishable_GiqFOHnsA2QyXb3x6hoKJA_8GgtrYLr';
         const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
@@ -76,7 +78,6 @@
                 errorDiv.innerText = result.error.message;
                 errorDiv.classList.remove('hidden');
             } else {
-                // Success, redirect
                 window.location.href = 'index.html';
             }
         });

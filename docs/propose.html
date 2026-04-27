@@ -29,22 +29,24 @@
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 </head>
 <body class="antialiased min-h-screen flex flex-col bg-slate-50" 
-      x-data="{ mobileMenuOpen: false, submitted: false, address: '', lat: '', lng: '' }"
+      x-data="{ mobileMenuOpen: false, submitted: false, address: '', lat: '', lng: '', user: null }" 
       x-init="
-        const { data } = await supabaseClient.auth.getSession();
-        if (!data.session) {
-            window.location.href = 'login.html';
-        }
-      ">
-
-    <!-- Navigation -->
-    <nav class="sticky top-0 z-50 dark-glass-panel border-b border-slate-700" x-data="{ user: null }" x-init="
         const SUPABASE_URL = 'https://mjevwldzatcytulcfhpb.supabase.co';
         const SUPABASE_ANON_KEY = 'sb_publishable_GiqFOHnsA2QyXb3x6hoKJA_8GgtrYLr';
         const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-        supabaseClient.auth.getSession().then(({data}) => { user = data.session?.user || null });
-        supabaseClient.auth.onAuthStateChange((_event, session) => { user = session?.user || null });
-    ">
+        const { data } = await supabaseClient.auth.getSession();
+        user = data.session?.user || null;
+        if (!data.session) {
+            window.location.href = 'login.html';
+        }
+        supabaseClient.auth.onAuthStateChange((_event, session) => { 
+            user = session?.user || null;
+            if (!session) window.location.href = 'login.html';
+        });
+      ">
+
+    <!-- Navigation -->
+    <nav class="sticky top-0 z-50 dark-glass-panel border-b border-slate-700">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-20">
                 <div class="flex items-center">
@@ -61,12 +63,6 @@
                     <a href="community.html" class="border-b-2 border-transparent text-gray-300 hover:border-gray-300 hover:text-white px-1 pt-1 text-sm font-medium transition-colors">Community</a>
 
                     <div class="flex items-center gap-4 ml-4 border-l border-slate-700 pl-6">
-                        <template x-if="!user">
-                            <div class="flex items-center gap-4">
-                                <a href="login.html" class="text-sm font-medium text-gray-300 hover:text-white">Login</a>
-                                <a href="login.html" class="btn-primary text-xs py-2 px-4">Sign Up</a>
-                            </div>
-                        </template>
                         <template x-if="user">
                             <div class="flex items-center gap-4">
                                 <span class="text-xs text-gray-400 font-mono" x-text="user.email"></span>
@@ -75,9 +71,40 @@
                         </template>
                     </div>
                 </div>
+                <!-- Mobile menu button -->
+                <div class="flex items-center sm:hidden">
+                    <button @click="mobileMenuOpen = !mobileMenuOpen" type="button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-slate-700 focus:outline-none">
+                        <svg x-show="!mobileMenuOpen" class="block h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                        <svg x-show="mobileMenuOpen" class="block h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="display: none;">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
             </div>
         </div>
-    </nav> <div class="mobile-nav"><a href="index.html" class="mobile-nav-item"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" /></svg>Home</a><a href="map.html" class="mobile-nav-item"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" /></svg>Map</a><a href="feed.html" class="mobile-nav-item"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10l4 4v12a2 2 0 01-2 2z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 2v4a2 2 0 002 2h4" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 12h10M7 16h10M9 8h2" /></svg>Seeds</a><a href="community.html" class="mobile-nav-item"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" /></svg>Community</a></div>
+    </nav>
+
+    <!-- Mobile Bottom Navigation -->
+    <div class="mobile-nav">
+        <a href="index.html" class="mobile-nav-item">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" /></svg>
+            Home
+        </a>
+        <a href="map.html" class="mobile-nav-item active">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" /></svg>
+            Map
+        </a>
+        <a href="feed.html" class="mobile-nav-item">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10l4 4v12a2 2 0 01-2 2z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 2v4a2 2 0 002 2h4" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 12h10M7 16h10M9 8h2" /></svg>
+            Seeds
+        </a>
+        <a href="community.html" class="mobile-nav-item">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
+            Community
+        </a>
+    </div>
 
     <main class="flex-grow py-12 px-4 sm:px-6 lg:px-8">
         <div class="max-w-4xl mx-auto">
@@ -173,11 +200,6 @@
     </footer>
 
     <script>
-        // Supabase Configuration
-        const SUPABASE_URL = 'https://mjevwldzatcytulcfhpb.supabase.co';
-        const SUPABASE_ANON_KEY = 'sb_publishable_GiqFOHnsA2QyXb3x6hoKJA_8GgtrYLr';
-        const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
         async function submitReport(e) {
             const app = document.querySelector('body').__x.$data;
             const formData = new FormData(e.target);
@@ -188,8 +210,7 @@
                 lng: app.lng,
                 space_type: formData.get('space_type'),
                 description: formData.get('description'),
-                // Note: In a real system, you should upload the image to Supabase Storage first
-                image_url: 'placeholder_or_local_path' 
+                image_url: 'placeholder' 
             };
 
             const { data, error } = await supabaseClient

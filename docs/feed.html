@@ -26,7 +26,13 @@
 <body class="antialiased min-h-screen flex flex-col" x-data="feedApp()">
 
     <!-- Navigation -->
-    <nav class="sticky top-0 z-50 dark-glass-panel border-b border-slate-700">
+    <nav class="sticky top-0 z-50 dark-glass-panel border-b border-slate-700" x-data="{ user: null }" x-init="
+        const SUPABASE_URL = 'https://mjevwldzatcytulcfhpb.supabase.co';
+        const SUPABASE_ANON_KEY = 'sb_publishable_GiqFOHnsA2QyXb3x6hoKJA_8GgtrYLr';
+        const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        supabaseClient.auth.getSession().then(({data}) => { user = data.session?.user || null });
+        supabaseClient.auth.onAuthStateChange((_event, session) => { user = session?.user || null });
+    ">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-20">
                 <div class="flex items-center">
@@ -41,6 +47,21 @@
                     <a href="map.html" class="border-b-2 border-transparent text-gray-300 hover:border-gray-300 hover:text-white px-1 pt-1 text-sm font-medium transition-colors">Map</a>
                     <a href="feed.html" class="border-b-2 border-growth-green text-white px-1 pt-1 text-sm font-medium">Proposals</a>
                     <a href="community.html" class="border-b-2 border-transparent text-gray-300 hover:border-gray-300 hover:text-white px-1 pt-1 text-sm font-medium transition-colors">Community</a>
+
+                    <div class="flex items-center gap-4 ml-4 border-l border-slate-700 pl-6">
+                        <template x-if="!user">
+                            <div class="flex items-center gap-4">
+                                <a href="login.html" class="text-sm font-medium text-gray-300 hover:text-white">Login</a>
+                                <a href="login.html" class="btn-primary text-xs py-2 px-4">Sign Up</a>
+                            </div>
+                        </template>
+                        <template x-if="user">
+                            <div class="flex items-center gap-4">
+                                <span class="text-xs text-gray-400 font-mono" x-text="user.email"></span>
+                                <button @click="await supabaseClient.auth.signOut(); window.location.reload();" class="text-sm font-medium text-red-400 hover:text-red-300">Logout</button>
+                            </div>
+                        </template>
+                    </div>
                 </div>
                 <!-- Mobile menu button -->
                 <div class="flex items-center sm:hidden">
@@ -251,10 +272,16 @@
     </div>
 
     <script>
+        // Supabase Configuration
+        const SUPABASE_URL = 'https://mjevwldzatcytulcfhpb.supabase.co';
+        const SUPABASE_ANON_KEY = 'sb_publishable_GiqFOHnsA2QyXb3x6hoKJA_8GgtrYLr';
+        const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
         function feedApp() {
             return {
                 mobileMenuOpen: false,
                 isModalOpen: false,
+                user: null,
                 newSeed: {
                     title: '',
                     location: '',
@@ -316,27 +343,64 @@
                         imageAfter: 'images/piave_76_after.png'
                     }
                 ],
-                upvote(id) {
-                    const seed = this.seeds.find(s => s.id === id);
-                    if (seed.voted === 1) {
-                        seed.votes--;
-                        seed.voted = 0;
-                    } else {
-                        if (seed.voted === -1) seed.votes++;
-                        seed.votes++;
-                        seed.voted = 1;
+                async init() {
+                    const { data } = await supabaseClient.auth.getSession();
+                    this.user = data.session?.user || null;
+                    
+                    // Fetch real votes from database
+                    const { data: dbVotes } = await supabaseClient.from('votes').select('*');
+                    if (dbVotes) {
+                        // Logic to sync db votes with UI seeds
+                        dbVotes.forEach(v => {
+                            const seed = this.seeds.find(s => s.id === v.seed_id);
+                            if (seed) {
+                                seed.votes += v.value;
+                                if (this.user && v.user_id === this.user.id) seed.voted = v.value;
+                            }
+                        });
                     }
                 },
-                downvote(id) {
+                async upvote(id) {
+                    if (!this.user) { alert('Please login to vote'); return; }
                     const seed = this.seeds.find(s => s.id === id);
-                    if (seed.voted === -1) {
+                    const newValue = (seed.voted === 1) ? 0 : 1;
+                    
+                    // Optimistic UI update
+                    const oldVoted = seed.voted;
+                    if (oldVoted === 1) seed.votes--;
+                    else {
+                        if (oldVoted === -1) seed.votes++;
                         seed.votes++;
-                        seed.voted = 0;
-                    } else {
-                        if (seed.voted === 1) seed.votes--;
-                        seed.votes--;
-                        seed.voted = -1;
                     }
+                    seed.voted = newValue;
+
+                    // Persistence in Supabase
+                    const { error } = await supabaseClient
+                        .from('votes')
+                        .upsert({ seed_id: id, user_id: this.user.id, value: newValue }, { onConflict: 'seed_id,user_id' });
+                    
+                    if (error) alert('Error saving vote: ' + error.message);
+                },
+                async downvote(id) {
+                    if (!this.user) { alert('Please login to vote'); return; }
+                    const seed = this.seeds.find(s => s.id === id);
+                    const newValue = (seed.voted === -1) ? 0 : -1;
+
+                    // Optimistic UI update
+                    const oldVoted = seed.voted;
+                    if (oldVoted === -1) seed.votes++;
+                    else {
+                        if (oldVoted === 1) seed.votes--;
+                        seed.votes--;
+                    }
+                    seed.voted = newValue;
+
+                    // Persistence in Supabase
+                    const { error } = await supabaseClient
+                        .from('votes')
+                        .upsert({ seed_id: id, user_id: this.user.id, value: newValue }, { onConflict: 'seed_id,user_id' });
+                    
+                    if (error) alert('Error saving vote: ' + error.message);
                 },
                 submitSeed() {
                     // Basic validation

@@ -83,38 +83,64 @@
         </div>
     </nav>
 
+    <!-- Mobile Bottom Navigation -->
+    <div class="mobile-nav">
+        <a href="index.html" class="mobile-nav-item">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" /></svg>
+            Home
+        </a>
+        <a href="map.html" class="mobile-nav-item active">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" /></svg>
+            Map
+        </a>
+        <a href="feed.html" class="mobile-nav-item">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10l4 4v12a2 2 0 01-2 2z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 2v4a2 2 0 002 2h4" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 12h10M7 16h10M9 8h2" /></svg>
+            Seeds
+        </a>
+        <a href="community.html" class="mobile-nav-item">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
+            Community
+        </a>
+    </div>
+
     <!-- Main Content -->
     <main class="flex-grow flex flex-col md:flex-row overflow-hidden relative" x-data="{ selectedSpot: null }">
         
         <!-- Map Container -->
-        <div id="map" class="h-1/2 md:h-full md:w-2/3 lg:w-3/4 z-0"></div>
+        <div id="map" class="absolute inset-0 md:relative md:h-full md:w-2/3 lg:w-3/4 z-0"></div>
 
-        <!-- Sidebar / Modal Overaly on Mobile -->
-        <div class="h-1/2 md:h-full md:w-1/3 lg:w-1/4 bg-white shadow-[-4px_0_15px_rgba(0,0,0,0.1)] z-10 flex flex-col overflow-hidden relative">
+        <!-- Sidebar / Modal Overaly -->
+        <div :class="{'translate-y-full md:translate-y-0': !selectedSpot, 'translate-y-0': selectedSpot}" 
+             class="fixed bottom-0 left-0 right-0 h-[70vh] md:h-full md:relative md:w-1/3 lg:w-1/4 bg-white shadow-[-4px_0_15px_rgba(0,0,0,0.1)] z-10 flex flex-col overflow-hidden transition-transform duration-300 ease-in-out rounded-t-3xl md:rounded-none">
             
-            <!-- Hot Spots List (Shows when no marker selected) -->
+            <!-- Mobile Handle -->
+            <div class="md:hidden flex justify-center py-4 bg-white sticky top-0 z-30" @click="selectedSpot = null">
+                <div class="w-12 h-1.5 bg-gray-200 rounded-full"></div>
+            </div>
+            
+            <!-- Hot Spots List -->
             <div x-show="!selectedSpot" class="h-full flex flex-col p-6 overflow-y-auto animate-fade-in">
                 <h2 class="text-2xl font-extrabold text-slate-800 mb-6 flex items-center gap-2">
                     <svg class="w-6 h-6 text-growth-green" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                     </svg>
-                    Hot Spots
+                    Discovery
                 </h2>
-                <p class="text-sm text-gray-500 mb-6">Click a marker on the map or select a hotspot below to view details and proposals.</p>
+                <p class="text-sm text-gray-500 mb-6">Click a marker on the map to start reclaiming spaces.</p>
                 
                 <div class="space-y-4" id="hotspot-list">
                     <!-- Populated by JS -->
                 </div>
             </div>
 
-            <!-- Details Panel (Shows when marker clicked) -->
-            <div x-show="selectedSpot" style="display: none;" class="h-full flex flex-col p-6 overflow-y-auto bg-slate-50 absolute inset-0 z-20">
+            <!-- Details Panel -->
+            <div x-show="selectedSpot" style="display: none;" class="h-full flex flex-col p-6 overflow-y-auto bg-slate-50 relative z-20">
                 <button @click="selectedSpot = null" class="self-start mb-4 text-gray-500 hover:text-slate-800 flex items-center gap-1 transition-colors">
                     <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                     </svg>
-                    Back to Map
+                    Close
                 </button>
 
                 <div x-show="selectedSpot">

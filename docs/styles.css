@@ -142,9 +142,9 @@ h1, h2, h3, h4, h5, h6 {
     background: rgba(30, 41, 59, 0.95);
     backdrop-filter: blur(10px);
     border-top: 1px solid rgba(255, 255, 255, 0.1);
-    z-index: 100;
+    z-index: 9999;
     justify-content: space-around;
-    items-center: center;
+    align-items: center;
     padding-bottom: env(safe-area-inset-bottom);
   }
   
@@ -154,10 +154,12 @@ h1, h2, h3, h4, h5, h6 {
     align-items: center;
     justify-content: center;
     color: #94a3b8;
+    min-width: 60px;
     font-size: 10px;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.05em;
+    text-decoration: none;
   }
   
   .mobile-nav-item.active {

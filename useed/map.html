@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Discovery Map | uSeed</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'growth-green': '#2ecc71',
+                        'slate-dark': '#1e293b',
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="styles.css">
+    <!-- Leaflet CSS & JS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <!-- Alpine.js -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+</head>
+<body class="antialiased h-screen flex flex-col" x-data="{ mobileMenuOpen: false }">
+
+    <!-- Navigation -->
+    <nav class="flex-shrink-0 z-50 dark-glass-panel border-b border-slate-700">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-20">
+                <div class="flex items-center">
+                    <a href="index.html" class="flex-shrink-0 flex items-center gap-2 group">
+                        <img src="images/logo.png" alt="uSeed Logo" class="h-10 w-auto transform group-hover:scale-110 transition-transform bg-white/90 rounded px-1 py-0.5">
+                        <span class="font-bold text-2xl tracking-wider uppercase text-white hidden sm:block drop-shadow-md">u<span class="text-growth-green">Seed</span></span>
+                    </a>
+                </div>
+                <!-- Desktop Menu -->
+                <div class="hidden sm:ml-6 sm:flex sm:items-center sm:space-x-8">
+                    <a href="index.html" class="border-b-2 border-transparent text-gray-300 hover:border-gray-300 hover:text-white px-1 pt-1 text-sm font-medium transition-colors">Manifesto</a>
+                    <a href="map.html" class="border-b-2 border-growth-green text-white px-1 pt-1 text-sm font-medium">Discovery Map</a>
+                    <a href="feed.html" class="border-b-2 border-transparent text-gray-300 hover:border-gray-300 hover:text-white px-1 pt-1 text-sm font-medium transition-colors">Seed Feed</a>
+                </div>
+                <!-- Mobile menu button -->
+                <div class="flex items-center sm:hidden">
+                    <button @click="mobileMenuOpen = !mobileMenuOpen" type="button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-slate-700 focus:outline-none">
+                        <svg x-show="!mobileMenuOpen" class="block h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                        <svg x-show="mobileMenuOpen" class="block h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="display: none;">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile Menu -->
+        <div x-show="mobileMenuOpen" class="sm:hidden absolute w-full dark-glass-panel border-b border-slate-700" style="display: none;">
+            <div class="pt-2 pb-3 space-y-1">
+                <a href="index.html" class="border-l-4 border-transparent text-gray-300 hover:bg-slate-700 block pl-3 pr-4 py-2 text-base font-medium">Manifesto</a>
+                <a href="map.html" class="bg-slate-800 border-l-4 border-growth-green text-white block pl-3 pr-4 py-2 text-base font-medium">Discovery Map</a>
+                <a href="feed.html" class="border-l-4 border-transparent text-gray-300 hover:bg-slate-700 block pl-3 pr-4 py-2 text-base font-medium">Seed Feed</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="flex-grow flex flex-col md:flex-row overflow-hidden relative" x-data="{ selectedSpot: null }">
+        
+        <!-- Map Container -->
+        <div id="map" class="h-1/2 md:h-full md:w-2/3 lg:w-3/4 z-0"></div>
+
+        <!-- Sidebar / Modal Overaly on Mobile -->
+        <div class="h-1/2 md:h-full md:w-1/3 lg:w-1/4 bg-white shadow-[-4px_0_15px_rgba(0,0,0,0.1)] z-10 flex flex-col overflow-hidden relative">
+            
+            <!-- Hot Spots List (Shows when no marker selected) -->
+            <div x-show="!selectedSpot" class="h-full flex flex-col p-6 overflow-y-auto animate-fade-in">
+                <h2 class="text-2xl font-extrabold text-slate-800 mb-6 flex items-center gap-2">
+                    <svg class="w-6 h-6 text-growth-green" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                    </svg>
+                    Hot Spots
+                </h2>
+                <p class="text-sm text-gray-500 mb-6">Click a marker on the map or select a hotspot below to view details and proposals.</p>
+                
+                <div class="space-y-4" id="hotspot-list">
+                    <!-- Populated by JS -->
+                </div>
+            </div>
+
+            <!-- Details Panel (Shows when marker clicked) -->
+            <div x-show="selectedSpot" style="display: none;" class="h-full flex flex-col p-6 overflow-y-auto bg-slate-50 absolute inset-0 z-20">
+                <button @click="selectedSpot = null" class="self-start mb-4 text-gray-500 hover:text-slate-800 flex items-center gap-1 transition-colors">
+                    <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                    </svg>
+                    Back to Map
+                </button>
+
+                <div x-show="selectedSpot">
+                    <div class="h-48 w-full bg-slate-200 rounded-lg mb-6 overflow-hidden relative">
+                        <template x-if="selectedSpot?.image">
+                            <img :src="selectedSpot?.image" alt="Location" class="w-full h-full object-cover">
+                        </template>
+                        <template x-if="!selectedSpot?.image">
+                            <div class="w-full h-full flex items-center justify-center bg-slate-300 text-gray-500 font-bold uppercase tracking-widest text-sm">Nessuna Foto</div>
+                        </template>
+                        <div class="absolute inset-0 bg-gradient-to-t from-slate-900/60 to-transparent"></div>
+                        <div class="absolute bottom-3 left-3 text-white text-xs font-bold uppercase tracking-wide bg-slate-900/50 px-2 py-1 rounded">
+                            ID: <span x-text="selectedSpot?.id"></span>
+                        </div>
+                    </div>
+
+                    <h3 class="text-2xl font-extrabold text-slate-800 mb-2" x-text="selectedSpot?.title"></h3>
+                    <div class="flex items-center gap-2 mb-6">
+                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800" x-text="selectedSpot?.zone"></span>
+                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">Abandoned</span>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-4 mb-8">
+                        <div class="bg-white p-4 rounded-lg border border-gray-200 shadow-sm">
+                            <span class="block text-xs font-medium text-gray-500 uppercase">Square Footage</span>
+                            <span class="block text-lg font-bold text-slate-800 mt-1" x-text="selectedSpot?.sqft + ' m²'"></span>
+                        </div>
+                        <div class="bg-white p-4 rounded-lg border border-gray-200 shadow-sm">
+                            <span class="block text-xs font-medium text-gray-500 uppercase">Current Proposals</span>
+                            <span class="block text-lg font-bold text-growth-green mt-1" x-text="selectedSpot?.proposals"></span>
+                        </div>
+                    </div>
+
+                    <p class="text-gray-600 mb-8 leading-relaxed" x-text="selectedSpot?.desc"></p>
+
+                    <template x-if="selectedSpot?.proposals > 0">
+                        <a :href="'feed.html#seed-' + selectedSpot?.id" class="w-full btn-primary text-center block">
+                            View Proposals for this Site
+                        </a>
+                    </template>
+                    <template x-if="selectedSpot?.proposals === 0">
+                        <a href="feed.html" class="w-full btn-primary text-center block bg-slate-800 hover:bg-slate-700 shadow-none">
+                            Be the first to propose an idea!
+                        </a>
+                    </template>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <script>
+        // Real Data for Abandoned Spots in Mestre (Via Piave)
+        const spots = [
+            {
+                id: "piave-76",
+                title: "Via Piave 76",
+                zone: "Mestre Centrale",
+                lat: 45.4880, 
+                lng: 12.2330,
+                sqft: "Varies",
+                proposals: 1,
+                desc: "Ex negozio sfitto usato temporaneamente per iniziative civiche. Perfetto per una riattivazione e mediazione.",
+                image: "images/piave_76.png"
+            },
+            {
+                id: "piave-66",
+                title: "Via Piave 66",
+                zone: "Mestre Centrale",
+                lat: 45.4890, 
+                lng: 12.2335,
+                sqft: "30",
+                proposals: 1,
+                desc: "Piccolo locale commerciale. Spazio di piccola scala, posizione centrale. Perfetto per pilot replicabile.",
+                image: "images/piave_66.png"
+            },
+            {
+                id: "piave-38",
+                title: "Via Piave 38",
+                zone: "Mestre Centrale",
+                lat: 45.4910, 
+                lng: 12.2345,
+                sqft: "500",
+                proposals: 1,
+                desc: "Ex grande spazio commerciale. Area di scala intermedia, più ambiziosa ma ancora concreta, adatta a progetto multiuso.",
+                image: "images/piave_38.png"
+            },
+            {
+                id: "piave-24",
+                title: "Via Piave 24 (Ex Banca)",
+                zone: "Mestre Centrale",
+                lat: 45.4925, 
+                lng: 12.2355,
+                sqft: "180",
+                proposals: 1,
+                desc: "Spazio ex bancario ad angolo. Ottima visibilità e grandi vetrine, attualmente vuoto da oltre un anno. Ideale per servizi di quartiere o hub culturale.",
+                image: "images/piave_24.png"
+            },
+            {
+                id: "cappuccina-45",
+                title: "Edicola Chiusa Via Cappuccina",
+                zone: "Mestre Centrale",
+                lat: 45.4885, 
+                lng: 12.2370,
+                sqft: "15",
+                proposals: 0,
+                desc: "Ex edicola su marciapiede trafficato vicino alla stazione. Micro-spazio perfetto per info-point, bookcrossing o micro-servizi per i pendolari.",
+                image: ""
+            }
+        ];
+
+        document.addEventListener('alpine:init', () => {
+            // Initialize Leaflet Map
+            // Center between Mestre and Marghera
+            const map = L.map('map', {
+                zoomControl: false // We'll add it to a better position
+            }).setView([45.475, 12.240], 13);
+
+            L.control.zoom({
+                position: 'bottomright'
+            }).addTo(map);
+
+            // Add a dark/industrial themed tile layer
+            L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+                subdomains: 'abcd',
+                maxZoom: 20
+            }).addTo(map);
+
+            // Custom Icon
+            const customIcon = L.divIcon({
+                className: 'custom-leaflet-marker',
+                iconSize: [24, 24],
+                iconAnchor: [12, 12]
+            });
+
+            // Populate Map and Sidebar
+            const hotspotList = document.getElementById('hotspot-list');
+
+            spots.forEach(spot => {
+                // Add marker
+                const marker = L.marker([spot.lat, spot.lng], { icon: customIcon }).addTo(map);
+                
+                // Add hover image tooltip with title and image
+                const imageTag = spot.image ? `<img src="${spot.image}" class="w-full h-28 object-cover rounded mb-2">` : `<div class="w-full h-28 bg-slate-100 rounded mb-2 flex items-center justify-center text-gray-400 text-xs font-bold uppercase border border-dashed border-gray-300">Nessuna Foto</div>`;
+                const tooltipContent = `
+                    <div class="bg-white p-2 rounded-lg shadow-xl border border-gray-200 w-48 text-center">
+                        ${imageTag}
+                        <h4 class="font-bold text-slate-800 text-sm leading-tight">${spot.title}</h4>
+                        <span class="text-xs text-gray-500 uppercase tracking-wide block mt-1">${spot.zone}</span>
+                    </div>
+                `;
+                marker.bindTooltip(tooltipContent, {
+                    direction: 'top',
+                    className: 'p-0 border-0 bg-transparent shadow-none',
+                    offset: [0, -10]
+                });
+                
+                // On marker click, update Alpine state
+                marker.on('click', () => {
+                    if (spot.proposals > 0) {
+                        window.location.href = 'feed.html#seed-' + spot.id;
+                    } else {
+                        // Trigger Alpine data update
+                        const app = document.querySelector('main').__x.$data;
+                        app.selectedSpot = spot;
+                        map.setView([spot.lat, spot.lng], 16, { animate: true });
+                    }
+                });
+
+                // Add to list
+                const listItem = document.createElement('div');
+                listItem.className = 'glass-panel p-4 rounded-lg cursor-pointer hover:border-growth-green transition-colors border border-gray-200';
+                listItem.innerHTML = `
+                    <h4 class="font-bold text-slate-800 text-lg">${spot.title}</h4>
+                    <p class="text-sm text-gray-500 mt-1">${spot.zone} • ${spot.sqft} m²</p>
+                    <div class="mt-3 flex justify-between items-center">
+                        <span class="text-xs font-semibold text-growth-green uppercase tracking-wide">${spot.proposals} Proposals</span>
+                        <svg class="w-5 h-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                        </svg>
+                    </div>
+                `;
+                listItem.addEventListener('click', () => {
+                    if (spot.proposals > 0) {
+                        window.location.href = 'feed.html#seed-' + spot.id;
+                    } else {
+                        const app = document.querySelector('main').__x.$data;
+                        app.selectedSpot = spot;
+                        map.setView([spot.lat, spot.lng], 16, { animate: true });
+                    }
+                });
+                hotspotList.appendChild(listItem);
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,105 @@
+% Mestre Executive Summary (1-page)
+% Compile with: pdflatex mestre_executive_summary_v2.tex
+
+\documentclass[10pt]{article}
+
+\usepackage[margin=18mm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{microtype}
+\usepackage{xcolor}
+\usepackage{ragged2e}
+\usepackage[hidelinks]{hyperref}
+
+% Typography
+\usepackage{lmodern}
+\renewcommand{\familydefault}{\sfdefault}
+
+% Layout
+\usepackage{multicol}
+\setlength{\columnsep}{10mm}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt}
+
+% ===== Palette (urban/night + neutral background + warm accent) =====
+\definecolor{Primary}{HTML}{0B2A3D}  % deep blue
+\definecolor{Bg}{HTML}{F5F2EB}       % soft beige
+\definecolor{Text}{HTML}{1F2937}     % slate
+\definecolor{Muted}{HTML}{64748B}    % muted blue-gray
+\definecolor{Rule}{HTML}{D9D6CF}     % warm light rule
+\definecolor{Accent}{HTML}{F59E0B}   % warm orange
+
+\newcommand{\key}[1]{\textcolor{Accent}{\bfseries #1}}
+\newcommand{\emphit}[1]{\textit{#1}}
+
+% Header + section styling (no extra packages)
+\newcommand{\HeaderBar}[2]{%
+  \noindent\colorbox{Primary}{%
+    \parbox{\dimexpr\linewidth-2\fboxsep\relax}{%
+      \vspace{2pt}%
+      {\color{white}\fontsize{18}{21}\selectfont\bfseries #1\par}%
+      \vspace{2pt}%
+      {\color{white!85}\normalsize #2\par}%
+      \vspace{2pt}%
+    }%
+  }\par
+}
+
+\newcommand{\SectionTitle}[1]{%
+  \vspace{2pt}%
+  {\color{Primary}\bfseries #1\par}%
+  \vspace{2pt}%
+  {\color{Rule}\hrule height 0.8pt}\vspace{4pt}%
+}
+
+\newcommand{\NoteBox}[1]{%
+  \vspace{3pt}%
+  \noindent\fcolorbox{Rule}{white}{\parbox{\dimexpr\linewidth-2\fboxsep-2\fboxrule\relax}{#1}}\par
+}
+
+\begin{document}
+\color{Text}
+
+% Prevent awkward hyphenation in the title
+\hyphenation{Mestre}
+
+\HeaderBar{Mestre and the Creative City Debate: Emergence of a new Urban Hub}{Executive Summary \textemdash{} Master’s Level Urban Development Project}
+
+\vspace{6pt}
+
+\begin{multicols}{2}
+\justifying
+
+\SectionTitle{Problem Definition}
+Mestre has long been perceived as a transitional urban space, lacking a clear autonomous identity when compared to Venice’s historic centre. Development strategies inspired by the \key{creative city} paradigm---often relying on cultural events, urban branding, and \key{top-down} interventions---have shown clear limits in this context.
+
+Proximity to Venice, a global tourist and cultural pole, makes it difficult for Mestre to compete on the same terms, weakening the effectiveness of attraction-led policies. A telling example is \key{M9 -- Museo del ’900}, conceived as a cultural anchor capable of activating surrounding urban life. Despite the project’s quality, its impact on everyday urban vitality has remained limited, highlighting how institutional cultural production alone is insufficient to build a lived city.
+
+At the same time, public space appears fragmented between residential areas and corridors of movement. Even the area around \key{Venezia Mestre Station}, while central, functions primarily as a space of passage. \emphit{The problem is not the absence of people, but the lack of urban conditions that transform presence into permanence and social relations.}
+
+\SectionTitle{Case Study}
+The project focuses on Mestre’s residential areas and the neighbourhoods surrounding the station, characterised by a population of students, workers, and temporary residents. These groups experience the city daily, yet often use it as a logistical base for travel towards Venice.
+
+While this dynamic is unavoidable for tourist flows, for residents it produces an urban void: a shortage of accessible and attractive public spaces where an autonomous social life can develop. Sociality therefore shifts into private settings, while the public realm remains underused.
+
+In this context, \key{Parco Piraghetto} represents a potential site of activation: accessible and central, yet still lacking a continuous and recognisable social function. The city is inhabited, but its public dimension remains weak and fragmented.
+
+\columnbreak
+\justifying
+
+\SectionTitle{Proposed Intervention}
+The project aims to move beyond an imitative approach towards Venice by developing a strategy grounded in the activation of local everyday life. The goal is not to attract new flows, but to offer those who already live in Mestre spaces in which to recognise themselves and build shared social practices.
+
+The intervention focuses on reactivating existing public spaces through \key{light, progressive micro-interventions}, with particular attention to Parco Piraghetto and its surroundings. Elements such as lighting, seating, small kiosks, and low-intensity activities make the space more accessible, safer, and more habitable during the evening.
+
+The park is not conceived as a final destination, but as a trigger for urban sociality. \emphit{While Parco Piraghetto is a key site for initial activation, its effectiveness depends on integration within a broader network of surrounding streets and local activities, enabling a gradual transition from public gathering to extended urban social life.}
+
+\SectionTitle{Expected Impact}
+The project proposes a reinterpretation of the creative city paradigm, shifting the focus from institutional cultural production to the construction of everyday social practices. Urban creativity is understood as the spontaneous emergence of relationships, atmospheres, and informal uses of public space.
+
+Within this frame, Mestre can develop an alternative and complementary centrality to Venice: not based on tourist attraction, but on the quality of everyday urban life. The city can thus emerge as a \key{distributed urban hub}, grounded in a network of active, lived spaces capable of generating continuity between daytime and evening life and a stronger sense of belonging for those who inhabit it.
+\end{multicols}
+
+\NoteBox{{\color{Primary}\bfseries Note on the Creative City Debate.} \small O’Connor and Shaw argue that the creative-city agenda loses its progressive capacity when civic aspirations are reduced to competitiveness and cultural branding. In Mestre, this calls for a shift from image-led policy to the material and social conditions that enable everyday urban life.}
+
+\end{document}

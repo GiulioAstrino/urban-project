@@ -256,8 +256,8 @@
                     this.user = data.session?.user || null;
                     supabaseClient.auth.onAuthStateChange((_event, session) => { this.user = session?.user || null });
 
-                    // Initialize Map
-                    const map = L.map('map', { zoomControl: false }).setView([45.475, 12.240], 13);
+                    // Initialize Leaflet Map
+                    const map = L.map('map', { zoomControl: false }).setView([45.485, 12.240], 14);
                     L.control.zoom({ position: 'bottomright' }).addTo(map);
                     L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', { maxZoom: 20 }).addTo(map);
 

@@ -57,7 +57,7 @@
                         <template x-if="user">
                             <div class="flex items-center gap-4">
                                 <span class="text-xs text-gray-400 font-mono" x-text="user.email"></span>
-                                <button @click="await supabaseClient.auth.signOut(); window.location.reload();" class="text-sm font-medium text-red-400 hover:text-red-300">Logout</button>
+                                <button @click="await supabaseClient.auth.signOut(); window.location.href = 'index.html'" class="text-sm font-medium text-red-400 hover:text-red-300">Logout</button>
                             </div>
                         </template>
                     </div>

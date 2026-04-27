@@ -10,6 +10,18 @@
   --concrete-bg: #f1f5f9;
 }
 
+/* Fix for enlarged SVGs */
+svg {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+/* Default icon size if no Tailwind class is present */
+svg:not([class*="w-"]) {
+  width: 24px;
+  height: 24px;
+}
+
 body {
   font-family: 'Inter', sans-serif;
   background-color: var(--concrete-bg);
@@ -112,4 +124,59 @@ h1, h2, h3, h4, h5, h6 {
 /* Progress bar animation */
 .progress-bar-fill {
   transition: width 1s ease-out;
+}
+
+/* Mobile Bottom Navigation */
+.mobile-nav {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .mobile-nav {
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 64px;
+    background: rgba(30, 41, 59, 0.95);
+    backdrop-filter: blur(10px);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    z-index: 100;
+    justify-content: space-around;
+    items-center: center;
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+  
+  .mobile-nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #94a3b8;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  
+  .mobile-nav-item.active {
+    color: var(--growth-green);
+  }
+
+  .mobile-nav-item svg {
+    width: 24px;
+    height: 24px;
+    margin-bottom: 4px;
+  }
+
+  /* Padding adjustment for content to not be hidden by mobile nav */
+  body {
+    padding-bottom: 80px;
+  }
+
+  /* Full screen map on mobile fix */
+  .mobile-h-full {
+    height: 100vh !important;
+  }
 }

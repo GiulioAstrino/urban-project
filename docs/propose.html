@@ -90,7 +90,7 @@
                         <!-- Address -->
                         <div>
                             <label class="block text-sm font-bold text-slate-700 uppercase tracking-widest mb-2">Address (Required)</label>
-                            <input type="text" name="address" x-model="address" required placeholder="e.g. Via Piave 12, Mestre" class="w-full px-4 py-3 rounded-lg border border-gray-200 focus:ring-2 focus:ring-growth-green focus:border-growth-green outline-none transition-all">
+                            <input type="text" name="address" x-model="address" required placeholder="e.g. 12 Main St" class="w-full px-4 py-3 rounded-lg border border-gray-200 focus:ring-2 focus:ring-growth-green focus:border-growth-green outline-none transition-all">
                         </div>
 
                         <!-- Type of Space -->
@@ -144,7 +144,7 @@
     </footer>
 
     <script>
-        // Configurazione Supabase
+        // Supabase Configuration
         const SUPABASE_URL = 'https://mjevwldzatcytulcfhpb.supabase.co';
         const SUPABASE_ANON_KEY = 'sb_publishable_GiqFOHnsA2QyXb3x6hoKJA_8GgtrYLr';
         const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
@@ -159,7 +159,7 @@
                 lng: app.lng,
                 space_type: formData.get('space_type'),
                 description: formData.get('description'),
-                // Nota: In un sistema reale, dovresti caricare l'immagine su Supabase Storage prima
+                // Note: In a real system, you should upload the image to Supabase Storage first
                 image_url: 'placeholder_or_local_path' 
             };
 
@@ -168,7 +168,7 @@
                 .insert([reportData]);
 
             if (error) {
-                alert('Errore durante l\'invio: ' + error.message);
+                alert('Submission Error: ' + error.message);
             } else {
                 app.submitted = true;
             }

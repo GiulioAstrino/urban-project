@@ -42,7 +42,8 @@
                 <div class="hidden sm:ml-6 sm:flex sm:items-center sm:space-x-8">
                     <a href="index.html" class="border-b-2 border-transparent text-gray-300 hover:border-gray-300 hover:text-white px-1 pt-1 text-sm font-medium transition-colors">Home</a>
                     <a href="map.html" class="border-b-2 border-growth-green text-white px-1 pt-1 text-sm font-medium">Discovery Map</a>
-                    <a href="feed.html" class="border-b-2 border-transparent text-gray-300 hover:border-gray-300 hover:text-white px-1 pt-1 text-sm font-medium transition-colors">Seed Feed</a>
+                    <a href="feed.html" class="border-b-2 border-transparent text-gray-300 hover:border-gray-300 hover:text-white px-1 pt-1 text-sm font-medium transition-colors">Proposals</a>
+                    <a href="community.html" class="border-b-2 border-transparent text-gray-300 hover:border-gray-300 hover:text-white px-1 pt-1 text-sm font-medium transition-colors">Community</a>
                 </div>
                 <!-- Mobile menu button -->
                 <div class="flex items-center sm:hidden">
@@ -62,7 +63,8 @@
             <div class="pt-2 pb-3 space-y-1">
                 <a href="index.html" class="border-l-4 border-transparent text-gray-300 hover:bg-slate-700 block pl-3 pr-4 py-2 text-base font-medium">Home</a>
                 <a href="map.html" class="bg-slate-800 border-l-4 border-growth-green text-white block pl-3 pr-4 py-2 text-base font-medium">Discovery Map</a>
-                <a href="feed.html" class="border-l-4 border-transparent text-gray-300 hover:bg-slate-700 block pl-3 pr-4 py-2 text-base font-medium">Seed Feed</a>
+                <a href="feed.html" class="border-l-4 border-transparent text-gray-300 hover:bg-slate-700 block pl-3 pr-4 py-2 text-base font-medium">Proposals</a>
+                <a href="community.html" class="border-l-4 border-transparent text-gray-300 hover:bg-slate-700 block pl-3 pr-4 py-2 text-base font-medium">Community</a>
             </div>
         </div>
     </nav>
@@ -107,7 +109,7 @@
                             <img :src="selectedSpot?.image" alt="Location" class="w-full h-full object-cover">
                         </template>
                         <template x-if="!selectedSpot?.image">
-                            <div class="w-full h-full flex items-center justify-center bg-slate-300 text-gray-500 font-bold uppercase tracking-widest text-sm">Nessuna Foto</div>
+                            <div class="w-full h-full flex items-center justify-center bg-slate-300 text-gray-500 font-bold uppercase tracking-widest text-sm">No Photo</div>
                         </template>
                         <div class="absolute inset-0 bg-gradient-to-t from-slate-900/60 to-transparent"></div>
                         <div class="absolute bottom-3 left-3 text-white text-xs font-bold uppercase tracking-wide bg-slate-900/50 px-2 py-1 rounded">
@@ -151,77 +153,76 @@
     </main>
 
     <script>
-        // Real Data for Abandoned Spots in Mestre (Via Piave)
+        // Real Data for Abandoned Spots (Example Data)
         const spots = [
             {
                 id: "piave-76",
                 title: "Via Piave 76",
-                zone: "Mestre Centrale",
+                zone: "Central District",
                 lat: 45.4880, 
                 lng: 12.2330,
                 sqft: "Varies",
                 proposals: 1,
-                desc: "Ex negozio sfitto usato temporaneamente per iniziative civiche. Perfetto per una riattivazione e mediazione.",
+                desc: "Vacant commercial unit previously used for temporary civic initiatives. Perfect for mediation and community reactivation.",
                 image: "images/piave_76.png"
             },
             {
                 id: "piave-66",
                 title: "Via Piave 66",
-                zone: "Mestre Centrale",
+                zone: "Central District",
                 lat: 45.4890, 
                 lng: 12.2335,
                 sqft: "30",
                 proposals: 1,
-                desc: "Piccolo locale commerciale. Spazio di piccola scala, posizione centrale. Perfetto per pilot replicabile.",
+                desc: "Small commercial space. Strategic location for small-scale pilot projects.",
                 image: "images/piave_66.png"
             },
             {
                 id: "piave-38",
                 title: "Via Piave 38",
-                zone: "Mestre Centrale",
+                zone: "Central District",
                 lat: 45.4910, 
                 lng: 12.2345,
                 sqft: "500",
                 proposals: 1,
-                desc: "Ex grande spazio commerciale. Area di scala intermedia, più ambiziosa ma ancora concreta, adatta a progetto multiuso.",
+                desc: "Large former commercial warehouse. Ambitious scale suitable for multi-use community projects.",
                 image: "images/piave_38.png"
             },
             {
                 id: "piave-24",
-                title: "Via Piave 24 (Ex Banca)",
-                zone: "Mestre Centrale",
+                title: "Via Piave 24 (Former Bank)",
+                zone: "Central District",
                 lat: 45.4925, 
                 lng: 12.2355,
                 sqft: "180",
                 proposals: 1,
-                desc: "Spazio ex bancario ad angolo. Ottima visibilità e grandi vetrine, attualmente vuoto da oltre un anno. Ideale per servizi di quartiere o hub culturale.",
+                desc: "Corner commercial unit with high visibility. Vacant for over a year. Ideal for neighborhood services or cultural hub.",
                 image: "images/piave_24.png"
             },
             {
                 id: "cappuccina-45",
-                title: "Edicola Chiusa Via Cappuccina",
-                zone: "Mestre Centrale",
+                title: "Closed Newsstand",
+                zone: "Station District",
                 lat: 45.4885, 
                 lng: 12.2370,
                 sqft: "15",
                 proposals: 0,
-                desc: "Ex edicola su marciapiede trafficato vicino alla stazione. Micro-spazio perfetto per info-point, bookcrossing o micro-servizi per i pendolari.",
+                desc: "Former newsstand near the main station. Perfect micro-space for info-points, bookcrossing, or micro-services.",
                 image: ""
             }
         ];
 
         document.addEventListener('alpine:init', () => {
             // Initialize Leaflet Map
-            // Center between Mestre and Marghera
             const map = L.map('map', {
-                zoomControl: false // We'll add it to a better position
+                zoomControl: false 
             }).setView([45.475, 12.240], 13);
 
             L.control.zoom({
                 position: 'bottomright'
             }).addTo(map);
 
-            // Add a dark/industrial themed tile layer
+            // Add a dark themed tile layer
             L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
                 attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
                 subdomains: 'abcd',
@@ -243,7 +244,7 @@
                 const marker = L.marker([spot.lat, spot.lng], { icon: customIcon }).addTo(map);
                 
                 // Add hover image tooltip with title and image
-                const imageTag = spot.image ? `<img src="${spot.image}" class="w-full h-28 object-cover rounded mb-2">` : `<div class="w-full h-28 bg-slate-100 rounded mb-2 flex items-center justify-center text-gray-400 text-xs font-bold uppercase border border-dashed border-gray-300">Nessuna Foto</div>`;
+                const imageTag = spot.image ? `<img src="${spot.image}" class="w-full h-28 object-cover rounded mb-2">` : `<div class="w-full h-28 bg-slate-100 rounded mb-2 flex items-center justify-center text-gray-400 text-xs font-bold uppercase border border-dashed border-gray-300">No Photo</div>`;
                 const tooltipContent = `
                     <div class="bg-white p-2 rounded-lg shadow-xl border border-gray-200 w-48 text-center">
                         ${imageTag}

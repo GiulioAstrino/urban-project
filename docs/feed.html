@@ -38,8 +38,9 @@
                 <!-- Desktop Menu -->
                 <div class="hidden sm:ml-6 sm:flex sm:items-center sm:space-x-8">
                     <a href="index.html" class="border-b-2 border-transparent text-gray-300 hover:border-gray-300 hover:text-white px-1 pt-1 text-sm font-medium transition-colors">Home</a>
-                    <a href="map.html" class="border-b-2 border-transparent text-gray-300 hover:border-gray-300 hover:text-white px-1 pt-1 text-sm font-medium transition-colors">Discovery Map</a>
-                    <a href="feed.html" class="border-b-2 border-growth-green text-white px-1 pt-1 text-sm font-medium">Seed Feed</a>
+                    <a href="map.html" class="border-b-2 border-transparent text-gray-300 hover:border-gray-300 hover:text-white px-1 pt-1 text-sm font-medium transition-colors">Map</a>
+                    <a href="feed.html" class="border-b-2 border-growth-green text-white px-1 pt-1 text-sm font-medium">Proposals</a>
+                    <a href="community.html" class="border-b-2 border-transparent text-gray-300 hover:border-gray-300 hover:text-white px-1 pt-1 text-sm font-medium transition-colors">Community</a>
                 </div>
                 <!-- Mobile menu button -->
                 <div class="flex items-center sm:hidden">
@@ -58,8 +59,9 @@
         <div x-show="mobileMenuOpen" class="sm:hidden absolute w-full dark-glass-panel border-b border-slate-700" style="display: none;">
             <div class="pt-2 pb-3 space-y-1">
                 <a href="index.html" class="border-l-4 border-transparent text-gray-300 hover:bg-slate-700 block pl-3 pr-4 py-2 text-base font-medium">Home</a>
-                <a href="map.html" class="border-l-4 border-transparent text-gray-300 hover:bg-slate-700 block pl-3 pr-4 py-2 text-base font-medium">Discovery Map</a>
-                <a href="feed.html" class="bg-slate-800 border-l-4 border-growth-green text-white block pl-3 pr-4 py-2 text-base font-medium">Seed Feed</a>
+                <a href="map.html" class="border-l-4 border-transparent text-gray-300 hover:bg-slate-700 block pl-3 pr-4 py-2 text-base font-medium">Map</a>
+                <a href="feed.html" class="bg-slate-800 border-l-4 border-growth-green text-white block pl-3 pr-4 py-2 text-base font-medium">Proposals</a>
+                <a href="community.html" class="border-l-4 border-transparent text-gray-300 hover:bg-slate-700 block pl-3 pr-4 py-2 text-base font-medium">Community</a>
             </div>
         </div>
     </nav>
@@ -71,7 +73,7 @@
         <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-10 gap-4">
             <div>
                 <h1 class="text-4xl font-extrabold text-slate-800">The Seed Feed</h1>
-                <p class="text-gray-500 mt-2">Discover, debate, and elevate the best ideas for Mestre & Marghera.</p>
+                <p class="text-gray-500 mt-2">Discover, debate, and elevate the best ideas for our neighborhoods.</p>
             </div>
             <button @click="isModalOpen = true" class="btn-primary flex items-center gap-2 whitespace-nowrap shadow-lg">
                 <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -192,7 +194,7 @@
                     <div class="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
                         <div class="sm:flex sm:items-start">
                             <div class="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-green-100 sm:mx-0 sm:h-10 sm:w-10">
-                                <svg class="h-6 w-6 text-growth-green" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                <svg class="h-6 h-6 text-growth-green" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                                 </svg>
                             </div>
@@ -203,7 +205,7 @@
                                 <form @submit.prevent="submitSeed" class="mt-6 space-y-4">
                                     <div>
                                         <label class="block text-sm font-bold text-slate-700 uppercase mb-1">Project Title</label>
-                                        <input type="text" x-model="newSeed.title" required class="w-full border-gray-300 rounded-md shadow-sm focus:ring-growth-green focus:border-growth-green p-2 border bg-gray-50" placeholder="e.g., Marghera Vertical Farm">
+                                        <input type="text" x-model="newSeed.title" required class="w-full border-gray-300 rounded-md shadow-sm focus:ring-growth-green focus:border-growth-green p-2 border bg-gray-50" placeholder="e.g., Neighborhood Hub">
                                     </div>
                                     
                                     <div class="grid grid-cols-2 gap-4">
@@ -211,14 +213,15 @@
                                             <label class="block text-sm font-bold text-slate-700 uppercase mb-1">Location / Zone</label>
                                             <select x-model="newSeed.location" required class="w-full border-gray-300 rounded-md shadow-sm focus:ring-growth-green focus:border-growth-green p-2 border bg-gray-50">
                                                 <option value="" disabled>Select area...</option>
-                                                <option value="Mestre (Ex-Railway)">Mestre (Ex-Railway)</option>
-                                                <option value="Marghera (Industrial)">Marghera (Industrial)</option>
+                                                <option value="Central Area">Central Area</option>
+                                                <option value="Industrial Area">Industrial Area</option>
+                                                <option value="Residential Area">Residential Area</option>
                                                 <option value="Other">Other</option>
                                             </select>
                                         </div>
                                         <div>
                                             <label class="block text-sm font-bold text-slate-700 uppercase mb-1">Est. Budget</label>
-                                            <input type="text" x-model="newSeed.budget" required class="w-full border-gray-300 rounded-md shadow-sm focus:ring-growth-green focus:border-growth-green p-2 border bg-gray-50" placeholder="e.g., €150k">
+                                            <input type="text" x-model="newSeed.budget" required class="w-full border-gray-300 rounded-md shadow-sm focus:ring-growth-green focus:border-growth-green p-2 border bg-gray-50" placeholder="e.g., €50k">
                                         </div>
                                     </div>
 
@@ -264,10 +267,10 @@
                         id: 'piave-76',
                         title: 'Piave Civic Front',
                         location: 'Via Piave 76',
-                        author: 'Comitato Piave',
+                        author: 'Piave Committee',
                         budget: '€15K–40K',
-                        vision: 'Temporary civic storefront: sportello quartiere, doposcuola, micro-eventi, esposizioni locali, orientamento lavoro.',
-                        needs: 'Serranda sfitta in asse ad alta criticità. Serve ridurre il vuoto urbano e rafforzare le reti locali per un presidio sociale quotidiano.',
+                        vision: 'Temporary civic storefront: neighborhood service point, after-school activities, micro-events, local exhibitions, career guidance.',
+                        needs: 'Vacant shop in high-criticality area. Need to reduce urban vacancy and strengthen local networks for daily social presence.',
                         votes: 312,
                         voted: 0, // 0 = not voted, 1 = upvoted, -1 = downvoted
                         image: 'images/piave_76.png',
@@ -277,10 +280,10 @@
                         id: 'piave-66',
                         title: 'Micro Skill Lab',
                         location: 'Via Piave 66',
-                        author: 'CNA Locale',
+                        author: 'Local CNA',
                         budget: '€8K–25K',
-                        vision: 'Coworking ultra-light, sportello freelance, laboratorio artigianato, aula corsi digitali, incubatore donne/migranti.',
-                        needs: 'Alto rischio vacancy per locali molto piccoli. Serve promuovere autoimprenditorialità, inclusione economica e testare modelli commerciali.',
+                        vision: 'Ultra-light coworking, freelance desk, craft workshop, digital skills classroom, incubator for women/migrants.',
+                        needs: 'High vacancy risk for very small premises. Need to promote self-employment, economic inclusion, and test commercial models.',
                         votes: 185,
                         voted: 0,
                         image: 'images/piave_66.png',
@@ -288,12 +291,12 @@
                     },
                     {
                         id: 'piave-38',
-                        title: 'Mercato Sociale + Food + Training',
+                        title: 'Social Market + Food + Training',
                         location: 'Via Piave 38',
                         author: 'Confesercenti',
                         budget: '€150K–500K',
-                        vision: 'Mercato interculturale, cucine condivise, corsi professionali food, eventi quartiere, retail incubator.',
-                        needs: 'Grande spazio vuoto a rischio degrado. Un progetto multiuso porta occupazione locale, economia interculturale e presidio per la sicurezza.',
+                        vision: 'Intercultural market, shared kitchens, professional food courses, neighborhood events, retail incubator.',
+                        needs: 'Large empty space at risk of decay. A multi-use project brings local employment, intercultural economy, and security monitoring.',
                         votes: 420,
                         voted: 0,
                         image: 'images/piave_38.png',
@@ -303,10 +306,10 @@
                         id: 'piave-24',
                         title: 'Cultural & Neighborhood Hub',
                         location: 'Via Piave 24',
-                        author: 'Associazione Culturale Mestre',
+                        author: 'Mestre Cultural Association',
                         budget: '€40K–80K',
-                        vision: 'Trasformare l\'ex banca in un hub di quartiere con biblioteca sociale, sale riunioni per associazioni e un cafè gestito da cooperative.',
-                        needs: 'Uno spazio di aggregazione sicuro e visibile all\'incrocio per rianimare l\'area e offrire servizi culturali gratuiti.',
+                        vision: 'Transform the former bank into a neighborhood hub with a social library, association meeting rooms, and a cafe managed by cooperatives.',
+                        needs: 'A safe and visible meeting space at the intersection to revitalize the area and offer free cultural services.',
                         votes: 115,
                         voted: 0,
                         image: 'images/piave_24.png',

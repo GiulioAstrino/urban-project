@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>uSeed | Planting Ideas, Growing Cities</title>
+    <title>uSeed | Reclaim the spaces your city forgot</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -13,6 +13,7 @@
                     colors: {
                         'growth-green': '#2ecc71',
                         'slate-dark': '#1e293b',
+                        'civic-blue': '#2563eb',
                     }
                 }
             }
@@ -20,7 +21,7 @@
     </script>
     <!-- Custom Styles -->
     <link rel="stylesheet" href="styles.css">
-    <!-- Alpine.js for mobile menu -->
+    <!-- Alpine.js -->
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 </head>
 <body class="antialiased min-h-screen flex flex-col relative" x-data="{ mobileMenuOpen: false }">
@@ -37,192 +38,411 @@
                 </div>
                 <!-- Desktop Menu -->
                 <div class="hidden sm:ml-6 sm:flex sm:items-center sm:space-x-8">
-                    <a href="index.html" class="border-b-2 border-growth-green text-white px-1 pt-1 text-sm font-medium">Manifesto</a>
-                    <a href="map.html" class="border-b-2 border-transparent text-gray-300 hover:border-gray-300 hover:text-white px-1 pt-1 text-sm font-medium transition-colors">Discovery Map</a>
-                    <a href="feed.html" class="border-b-2 border-transparent text-gray-300 hover:border-gray-300 hover:text-white px-1 pt-1 text-sm font-medium transition-colors">Seed Feed</a>
+                    <a href="index.html" class="border-b-2 border-growth-green text-white px-1 pt-1 text-sm font-medium">Home</a>
+                    <a href="map.html" class="border-b-2 border-transparent text-gray-300 hover:border-gray-300 hover:text-white px-1 pt-1 text-sm font-medium transition-colors">Map</a>
+                    <a href="feed.html" class="border-b-2 border-transparent text-gray-300 hover:border-gray-300 hover:text-white px-1 pt-1 text-sm font-medium transition-colors">Proposals</a>
+                    <a href="#" class="border-b-2 border-transparent text-gray-300 hover:border-gray-300 hover:text-white px-1 pt-1 text-sm font-medium transition-colors">Community</a>
+                    <a href="#" class="border-b-2 border-transparent text-gray-300 hover:border-gray-300 hover:text-white px-1 pt-1 text-sm font-medium transition-colors">About</a>
+                    <div class="flex items-center gap-4 ml-4">
+                        <button class="text-sm font-medium text-gray-300 hover:text-white">Login</button>
+                        <button class="btn-primary text-xs py-2 px-4">Sign Up</button>
+                    </div>
                 </div>
                 <!-- Mobile menu button -->
                 <div class="flex items-center sm:hidden">
-                    <button @click="mobileMenuOpen = !mobileMenuOpen" type="button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-growth-green" aria-controls="mobile-menu" aria-expanded="false">
-                        <span class="sr-only">Open main menu</span>
-                        <svg x-show="!mobileMenuOpen" class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-                        </svg>
-                        <svg x-show="mobileMenuOpen" class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true" style="display: none;">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                        </svg>
+                    <button @click="mobileMenuOpen = !mobileMenuOpen" type="button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-growth-green">
+                        <svg x-show="!mobileMenuOpen" class="block h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" /></svg>
+                        <svg x-show="mobileMenuOpen" class="block h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="display: none;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
                     </button>
                 </div>
             </div>
         </div>
-
         <!-- Mobile Menu -->
-        <div x-show="mobileMenuOpen" class="sm:hidden dark-glass-panel absolute w-full border-b border-slate-700" id="mobile-menu" style="display: none;">
+        <div x-show="mobileMenuOpen" class="sm:hidden dark-glass-panel absolute w-full border-b border-slate-700" style="display: none;">
             <div class="pt-2 pb-3 space-y-1">
-                <a href="index.html" class="bg-slate-800 border-l-4 border-growth-green text-white block pl-3 pr-4 py-2 text-base font-medium">Manifesto</a>
-                <a href="map.html" class="border-l-4 border-transparent text-gray-300 hover:bg-slate-700 hover:border-gray-300 hover:text-white block pl-3 pr-4 py-2 text-base font-medium">Discovery Map</a>
-                <a href="feed.html" class="border-l-4 border-transparent text-gray-300 hover:bg-slate-700 hover:border-gray-300 hover:text-white block pl-3 pr-4 py-2 text-base font-medium">Seed Feed</a>
+                <a href="index.html" class="bg-slate-800 border-l-4 border-growth-green text-white block pl-3 pr-4 py-2 text-base font-medium">Home</a>
+                <a href="map.html" class="border-l-4 border-transparent text-gray-300 block pl-3 pr-4 py-2 text-base font-medium">Map</a>
+                <a href="feed.html" class="border-l-4 border-transparent text-gray-300 block pl-3 pr-4 py-2 text-base font-medium">Proposals</a>
             </div>
         </div>
     </nav>
 
-    <!-- Hero Section -->
-    <main class="flex-grow">
-        <div class="relative bg-slate-900 overflow-hidden">
-            <!-- Background Image overlay -->
-            <div class="absolute inset-0">
-                <img class="w-full h-full object-cover opacity-30 mix-blend-multiply" src="https://images.unsplash.com/photo-1505322022379-7c3353ee6291?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80" alt="Industrial texture background">
-                <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/60 to-transparent"></div>
+    <!-- 1. Hero Section -->
+    <header class="relative bg-slate-900 overflow-hidden pt-20 pb-32">
+        <div class="absolute inset-0">
+            <img class="w-full h-full object-cover opacity-20 mix-blend-overlay" src="https://images.unsplash.com/photo-1449824913935-59a10b8d2000?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80" alt="Urban Texture">
+            <div class="absolute inset-0 bg-gradient-to-b from-slate-900/50 via-slate-900 to-slate-900"></div>
+        </div>
+        
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h1 class="text-5xl md:text-7xl font-black text-white leading-tight mb-6 animate-fade-in">
+                Reclaim the spaces <br><span class="text-growth-green">your city forgot.</span>
+            </h1>
+            <p class="mt-6 max-w-3xl mx-auto text-xl text-gray-300 leading-relaxed animate-fade-in delay-100">
+                uSeed is a participatory urban platform where citizens identify abandoned spaces, propose socially impactful regeneration projects, and transform neglected areas into real community opportunities.
+            </p>
+            <div class="mt-12 flex flex-col sm:flex-row justify-center gap-4 animate-fade-in delay-200">
+                <a href="map.html" class="btn-primary text-lg px-8 py-4 uppercase tracking-widest">Explore the Map</a>
+                <a href="map.html" class="bg-white hover:bg-gray-100 text-slate-900 font-bold py-4 px-8 rounded shadow-lg uppercase tracking-widest transition-all">Propose a Space</a>
+                <a href="feed.html" class="bg-slate-700/50 hover:bg-slate-700 text-white font-bold py-4 px-8 rounded shadow-lg border border-slate-600 uppercase tracking-widest transition-all backdrop-blur-sm">Start a Project</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- 2. Ethical Mission -->
+    <section class="py-24 bg-white relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                <div>
+                    <h2 class="text-4xl font-black text-slate-900 mb-8">Why uSeed exists</h2>
+                    <p class="text-xl text-gray-600 leading-relaxed mb-10">
+                        Cities are too often shaped by top-down decisions that overlook the lived realities of neighborhoods. uSeed exists to reduce the distance between unused space and collective action.
+                    </p>
+                    <div class="p-8 bg-slate-50 border-l-8 border-growth-green rounded-r-xl italic text-2xl text-slate-700 font-serif shadow-inner">
+                        "Empty Space + Community + Mediation + Structured Proposal = Activation"
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    <div class="p-6 border border-gray-100 rounded-xl shadow-sm hover:shadow-md transition-shadow">
+                        <div class="text-growth-green mb-4 font-black text-3xl">01</div>
+                        <h4 class="font-bold text-slate-800 mb-2">Urban Justice</h4>
+                        <p class="text-gray-600 text-sm">Reclaim socially lost spaces for everyone.</p>
+                    </div>
+                    <div class="p-6 border border-gray-100 rounded-xl shadow-sm hover:shadow-md transition-shadow">
+                        <div class="text-growth-green mb-4 font-black text-3xl">02</div>
+                        <h4 class="font-bold text-slate-800 mb-2">Bottom-up Democracy</h4>
+                        <p class="text-gray-600 text-sm">Citizens as co-designers of their city.</p>
+                    </div>
+                    <div class="p-6 border border-gray-100 rounded-xl shadow-sm hover:shadow-md transition-shadow">
+                        <div class="text-growth-green mb-4 font-black text-3xl">03</div>
+                        <h4 class="font-bold text-slate-800 mb-2">Transparency</h4>
+                        <p class="text-gray-600 text-sm">Every proposal is visible, trackable, and accountable.</p>
+                    </div>
+                    <div class="p-6 border border-gray-100 rounded-xl shadow-sm hover:shadow-md transition-shadow">
+                        <div class="text-growth-green mb-4 font-black text-3xl">04</div>
+                        <h4 class="font-bold text-slate-800 mb-2">Anti-speculative</h4>
+                        <p class="text-gray-600 text-sm">Social value before empty extraction.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. How it Works -->
+    <section class="py-24 bg-slate-50 border-y border-gray-200 overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-20">
+                <h2 class="text-4xl font-black text-slate-900">From abandoned places to active possibilities</h2>
+                <div class="mt-4 h-1 w-32 bg-growth-green mx-auto rounded"></div>
             </div>
             
-            <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32 flex flex-col items-center text-center">
-                <div class="bg-white rounded-3xl p-4 mb-8 shadow-2xl animate-fade-in border-4 border-growth-green/30">
-                    <img src="images/logo.png" alt="uSeed Logo" class="h-32 md:h-48 w-auto">
+            <div class="grid grid-cols-1 md:grid-cols-5 gap-8 relative">
+                <!-- Step 1 -->
+                <div class="flex flex-col items-center text-center">
+                    <div class="w-16 h-16 rounded-full bg-growth-green text-white flex items-center justify-center font-black text-2xl shadow-xl mb-6 ring-8 ring-green-100">1</div>
+                    <h4 class="font-bold mb-3 text-slate-800">Map forgotten spaces</h4>
+                    <p class="text-gray-600 text-sm">Users upload or geolocate abandoned / vacant / underused spaces.</p>
                 </div>
-                <h1 class="text-5xl md:text-7xl font-extrabold text-white tracking-tight mb-6 animate-fade-in drop-shadow-lg">
-                    <span class="block">Mestre isn't decaying.</span>
-                    <span class="block text-growth-green mt-2">It's waiting.</span>
-                </h1>
-                <p class="mt-4 max-w-2xl text-xl text-gray-300 mb-10 animate-fade-in delay-100">
-                    Planting Ideas, Growing Cities. Transform urban voids into vibrant community hubs through collaborative funding and citizen-led vision.
-                </p>
-                <div class="animate-fade-in delay-200">
-                    <button onclick="document.getElementById('how-it-works').scrollIntoView({behavior: 'smooth'})" class="btn-primary text-lg px-8 py-4 uppercase tracking-wider">
-                        Join the Movement
-                    </button>
+                <!-- Step 2 -->
+                <div class="flex flex-col items-center text-center">
+                    <div class="w-16 h-16 rounded-full bg-growth-green text-white flex items-center justify-center font-black text-2xl shadow-xl mb-6 ring-8 ring-green-100">2</div>
+                    <h4 class="font-bold mb-3 text-slate-800">Build real proposals</h4>
+                    <p class="text-gray-600 text-sm">Structured builder for impact, feasibility, and governance.</p>
                 </div>
-            </div>
-        </div>
-
-        <!-- The Problem Section -->
-        <div class="py-24 bg-white relative">
-            <!-- Decorative diagonal slice -->
-            <div class="absolute top-0 left-0 w-full overflow-hidden leading-none transform -translate-y-full z-10">
-                <svg class="relative block w-full h-12" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
-                    <path d="M1200 120L0 16.48 0 0 1200 0 1200 120z" class="fill-white"></path>
-                </svg>
-            </div>
-
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center mb-16">
-                    <h2 class="text-3xl font-extrabold text-slate-800 sm:text-4xl">The Tale of Two Voids</h2>
-                    <div class="mt-2 h-1 w-24 bg-growth-green mx-auto rounded"></div>
+                <!-- Step 3 -->
+                <div class="flex flex-col items-center text-center">
+                    <div class="w-16 h-16 rounded-full bg-growth-green text-white flex items-center justify-center font-black text-2xl shadow-xl mb-6 ring-8 ring-green-100">3</div>
+                    <h4 class="font-bold mb-3 text-slate-800">Vote and validate</h4>
+                    <p class="text-gray-600 text-sm">Community supports, comments, and improves the ideas.</p>
                 </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
-                    <!-- Column 1: Mestre -->
-                    <div class="glass-panel rounded-2xl overflow-hidden group hover:shadow-2xl transition-all duration-300 border border-gray-100">
-                        <div class="h-64 overflow-hidden relative">
-                            <img src="https://images.unsplash.com/photo-1530533718754-001d2668365a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Abandoned Railway" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 grayscale hover:grayscale-0">
-                            <div class="absolute inset-0 bg-gradient-to-t from-slate-900/80 to-transparent"></div>
-                            <h3 class="absolute bottom-4 left-6 text-2xl font-bold text-white uppercase tracking-wider">Mestre's Challenge</h3>
-                        </div>
-                        <div class="p-8">
-                            <h4 class="text-xl font-bold text-slate-800 mb-3 flex items-center gap-2">
-                                <svg class="w-6 h-6 text-growth-green" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
-                                </svg>
-                                Abandoned Railways
-                            </h4>
-                            <p class="text-gray-600 leading-relaxed">
-                                Miles of disconnected iron arteries cutting through the city. Once the lifeblood of logistics, these railway zones now act as physical barriers, dividing neighborhoods and gathering rust. They represent immense linear potential for parks, cycling highways, or community markets.
-                            </p>
-                        </div>
-                    </div>
-
-                    <!-- Column 2: Marghera -->
-                    <div class="glass-panel rounded-2xl overflow-hidden group hover:shadow-2xl transition-all duration-300 border border-gray-100">
-                        <div class="h-64 overflow-hidden relative">
-                            <img src="https://images.unsplash.com/photo-1518557984649-7b161c230cfa?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Industrial Void" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 grayscale hover:grayscale-0">
-                            <div class="absolute inset-0 bg-gradient-to-t from-slate-900/80 to-transparent"></div>
-                            <h3 class="absolute bottom-4 left-6 text-2xl font-bold text-white uppercase tracking-wider">Marghera's Challenge</h3>
-                        </div>
-                        <div class="p-8">
-                            <h4 class="text-xl font-bold text-slate-800 mb-3 flex items-center gap-2">
-                                <svg class="w-6 h-6 text-growth-green" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
-                                </svg>
-                                Industrial Voids
-                            </h4>
-                            <p class="text-gray-600 leading-relaxed">
-                                Monumental structures left hollow by deindustrialization. These massive concrete cathedrals stand empty, waiting to be repurposed. They offer the necessary square footage for large-scale innovation hubs, artist collectives, or indoor vertical farming.
-                            </p>
-                        </div>
-                    </div>
+                <!-- Step 4 -->
+                <div class="flex flex-col items-center text-center">
+                    <div class="w-16 h-16 rounded-full bg-growth-green text-white flex items-center justify-center font-black text-2xl shadow-xl mb-6 ring-8 ring-green-100">4</div>
+                    <h4 class="font-bold mb-3 text-slate-800">Institutional Visibility</h4>
+                    <p class="text-gray-600 text-sm">Projects become visible to municipalities and NGOs.</p>
+                </div>
+                <!-- Step 5 -->
+                <div class="flex flex-col items-center text-center">
+                    <div class="w-16 h-16 rounded-full bg-growth-green text-white flex items-center justify-center font-black text-2xl shadow-xl mb-6 ring-8 ring-green-100">5</div>
+                    <h4 class="font-bold mb-3 text-slate-800">Track implementation</h4>
+                    <p class="text-gray-600 text-sm">Transparency dashboard for pilot and progress outcomes.</p>
                 </div>
             </div>
         </div>
+    </section>
 
-        <!-- The Solution Section -->
-        <div id="how-it-works" class="py-24 bg-slate-50 border-t border-gray-200">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center mb-20">
-                    <h2 class="text-3xl font-extrabold text-slate-800 sm:text-4xl">The UrbanHub Solution</h2>
-                    <p class="mt-4 text-xl text-gray-600 max-w-3xl mx-auto">A transparent, democratic pipeline to turn urban decay into community assets.</p>
+    <!-- 4. What You Can Do -->
+    <section class="py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col lg:flex-row justify-between items-end mb-16 gap-4">
+                <div>
+                    <h2 class="text-4xl font-black text-slate-900 uppercase">Your city. Your role.</h2>
                 </div>
-
-                <div class="relative">
-                    <!-- Connecting line -->
-                    <div class="hidden md:block absolute top-1/2 left-0 w-full h-1 bg-gray-200 transform -translate-y-1/2 rounded-full" aria-hidden="true"></div>
-                    <div class="hidden md:block absolute top-1/2 left-0 w-2/3 h-1 bg-growth-green transform -translate-y-1/2 rounded-full origin-left transition-all duration-1000" aria-hidden="true"></div>
-
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
-                        <!-- Step 1 -->
-                        <div class="relative text-center group">
-                            <div class="w-20 h-20 mx-auto bg-white border-4 border-growth-green rounded-full flex items-center justify-center relative z-10 shadow-lg group-hover:scale-110 transition-transform">
-                                <span class="text-2xl font-bold text-slate-800">1</span>
-                            </div>
-                            <div class="mt-8 glass-panel p-6 rounded-xl border border-gray-100 relative">
-                                <div class="absolute -top-4 left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-[10px] border-l-transparent border-b-[15px] border-b-white border-r-[10px] border-r-transparent filter drop-shadow-sm"></div>
-                                <h3 class="text-xl font-bold text-slate-800 mb-2">Citizen Seeds Idea</h3>
-                                <p class="text-gray-600 text-sm">Anyone can propose a transformation for an abandoned spot. A "Seed" describes the vision, the logic, and the estimated budget.</p>
-                            </div>
-                        </div>
-
-                        <!-- Step 2 -->
-                        <div class="relative text-center group">
-                            <div class="w-20 h-20 mx-auto bg-white border-4 border-growth-green rounded-full flex items-center justify-center relative z-10 shadow-lg group-hover:scale-110 transition-transform">
-                                <span class="text-2xl font-bold text-slate-800">2</span>
-                            </div>
-                            <div class="mt-8 glass-panel p-6 rounded-xl border border-gray-100 relative">
-                                <div class="absolute -top-4 left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-[10px] border-l-transparent border-b-[15px] border-b-white border-r-[10px] border-r-transparent filter drop-shadow-sm"></div>
-                                <h3 class="text-xl font-bold text-slate-800 mb-2">Community Upvotes</h3>
-                                <p class="text-gray-600 text-sm">The community reviews, discusses, and upvotes Seeds. Only the most supported ideas gain momentum to reach the review threshold.</p>
-                            </div>
-                        </div>
-
-                        <!-- Step 3 -->
-                        <div class="relative text-center group">
-                            <div class="w-20 h-20 mx-auto bg-slate-100 border-4 border-gray-300 rounded-full flex items-center justify-center relative z-10 shadow-sm group-hover:border-growth-green transition-colors duration-500">
-                                <span class="text-2xl font-bold text-gray-500">3</span>
-                            </div>
-                            <div class="mt-8 glass-panel p-6 rounded-xl border border-gray-100 relative opacity-80 group-hover:opacity-100 transition-opacity">
-                                <div class="absolute -top-4 left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-[10px] border-l-transparent border-b-[15px] border-b-white border-r-[10px] border-r-transparent filter drop-shadow-sm"></div>
-                                <h3 class="text-xl font-bold text-slate-800 mb-2">Funding & Execution</h3>
-                                <p class="text-gray-600 text-sm">Once the threshold is met, the Seed is formally reviewed by the Municipality and opened for Investor funding.</p>
-                            </div>
-                        </div>
-                    </div>
+                <div class="text-gray-500 font-medium">Empowering collective intelligence.</div>
+            </div>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div class="p-8 border-2 border-slate-50 rounded-2xl hover:border-growth-green/30 transition-colors group">
+                    <svg class="w-10 h-10 text-growth-green mb-6 group-hover:scale-110 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /></svg>
+                    <h4 class="font-bold text-slate-800 mb-2">Add New Spaces</h4>
+                    <p class="text-gray-500 text-sm">Pinpoint underused places on our public map.</p>
                 </div>
-
-                <div class="mt-20 text-center">
-                    <a href="map.html" class="inline-flex items-center gap-2 text-growth-green font-bold text-lg hover:text-green-600 transition-colors group">
-                        Explore the Map to Start 
-                        <svg class="w-5 h-5 transform group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                        </svg>
-                    </a>
+                <div class="p-8 border-2 border-slate-50 rounded-2xl hover:border-growth-green/30 transition-colors group">
+                    <svg class="w-10 h-10 text-growth-green mb-6 group-hover:scale-110 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" /></svg>
+                    <h4 class="font-bold text-slate-800 mb-2">Propose Ideas</h4>
+                    <p class="text-gray-500 text-sm">Submit regeneration concepts with social impact.</p>
+                </div>
+                <div class="p-8 border-2 border-slate-50 rounded-2xl hover:border-growth-green/30 transition-colors group">
+                    <svg class="w-10 h-10 text-growth-green mb-6 group-hover:scale-110 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                    <h4 class="font-bold text-slate-800 mb-2">Vote on Priorities</h4>
+                    <p class="text-gray-500 text-sm">Help decide which projects deserve attention.</p>
+                </div>
+                <div class="p-8 border-2 border-slate-50 rounded-2xl hover:border-growth-green/30 transition-colors group">
+                    <svg class="w-10 h-10 text-growth-green mb-6 group-hover:scale-110 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" /></svg>
+                    <h4 class="font-bold text-slate-800 mb-2">Build Coalitions</h4>
+                    <p class="text-gray-500 text-sm">Connect with neighbors and local associations.</p>
                 </div>
             </div>
         </div>
-    </main>
+    </section>
+
+    <!-- 5. Interactive Heatmap -->
+    <section class="py-24 bg-slate-900 text-white overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col lg:flex-row items-center gap-16">
+                <div class="flex-1">
+                    <h2 class="text-4xl font-black mb-8 leading-tight">See what your <br>neighborhood really needs</h2>
+                    <p class="text-xl text-gray-400 mb-10 leading-relaxed">
+                        uSeed isn't just a social platform—it's urban intelligence. We visualize collective demand to show institutions exactly what communities are asking for.
+                    </p>
+                    <div class="space-y-6">
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-2 bg-green-500 rounded-full"></div>
+                            <span class="font-bold uppercase tracking-widest text-sm">Green Spaces</span>
+                            <span class="ml-auto text-gray-500 font-mono">72% Support</span>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <div class="w-8 h-2 bg-civic-blue rounded-full"></div>
+                            <span class="font-bold uppercase tracking-widest text-sm">Cultural Hubs</span>
+                            <span class="ml-auto text-gray-500 font-mono">54% Support</span>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <div class="w-10 h-2 bg-orange-400 rounded-full"></div>
+                            <span class="font-bold uppercase tracking-widest text-sm">Sports & Youth</span>
+                            <span class="ml-auto text-gray-500 font-mono">61% Support</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex-1 relative group">
+                    <div class="absolute -inset-4 bg-growth-green/20 rounded-full blur-3xl opacity-50 group-hover:opacity-100 transition-opacity"></div>
+                    <img src="https://images.unsplash.com/photo-1524661135-423995f22d0b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Heatmap preview" class="relative rounded-2xl shadow-2xl grayscale brightness-50 group-hover:grayscale-0 transition-all duration-700">
+                    <div class="absolute inset-0 flex items-center justify-center">
+                        <div class="bg-growth-green text-slate-900 font-black p-4 rounded uppercase tracking-tighter transform -rotate-1 shadow-2xl">Live Map Data</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. Case Studies -->
+    <section class="py-24 bg-slate-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-black text-slate-900 uppercase">From idea to impact</h2>
+                <div class="mt-4 h-1 w-24 bg-growth-green mx-auto rounded"></div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Case 1 -->
+                <div class="glass-panel rounded-2xl overflow-hidden hover:shadow-2xl transition-all group">
+                    <div class="h-48 overflow-hidden relative">
+                        <img src="https://images.unsplash.com/photo-1531050171669-70c47309d2e7?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" class="w-full h-full object-cover group-hover:scale-105 transition-transform">
+                        <div class="absolute top-4 right-4 bg-growth-green text-white text-xs font-bold px-2 py-1 rounded">ACTIVE PILOT</div>
+                    </div>
+                    <div class="p-6">
+                        <h4 class="font-black text-slate-800 text-xl mb-2">Via Piave Civic Front</h4>
+                        <p class="text-sm text-gray-500 mb-4 font-medium uppercase tracking-wider">Problem: Empty Storefronts</p>
+                        <p class="text-gray-600 text-sm mb-6 leading-relaxed">Temporary civic storefront for neighborhood services, micro-events, and local orientations.</p>
+                        <div class="flex justify-between items-center pt-4 border-t border-gray-100">
+                            <span class="text-growth-green font-black">312 Votes</span>
+                            <span class="text-xs font-bold text-slate-400">FEASIBILITY: 92%</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Case 2 -->
+                <div class="glass-panel rounded-2xl overflow-hidden hover:shadow-2xl transition-all group">
+                    <div class="h-48 overflow-hidden relative">
+                        <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" class="w-full h-full object-cover group-hover:scale-105 transition-transform">
+                        <div class="absolute top-4 right-4 bg-civic-blue text-white text-xs font-bold px-2 py-1 rounded">COMMUNITY VALIDATED</div>
+                    </div>
+                    <div class="p-6">
+                        <h4 class="font-black text-slate-800 text-xl mb-2">Ex-Industrial Hub</h4>
+                        <p class="text-sm text-gray-500 mb-4 font-medium uppercase tracking-wider">Problem: Deindustrialization</p>
+                        <p class="text-gray-600 text-sm mb-6 leading-relaxed">Massive empty warehouse repurposed for artist collectives and vertical indoor farming.</p>
+                        <div class="flex justify-between items-center pt-4 border-t border-gray-100">
+                            <span class="text-growth-green font-black">845 Votes</span>
+                            <span class="text-xs font-bold text-slate-400">FEASIBILITY: 68%</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Case 3 -->
+                <div class="glass-panel rounded-2xl overflow-hidden hover:shadow-2xl transition-all group">
+                    <div class="h-48 overflow-hidden relative">
+                        <img src="https://images.unsplash.com/photo-1519301956621-395181444553?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" class="w-full h-full object-cover group-hover:scale-105 transition-transform">
+                        <div class="absolute top-4 right-4 bg-orange-400 text-white text-xs font-bold px-2 py-1 rounded">REVIEW STAGE</div>
+                    </div>
+                    <div class="p-6">
+                        <h4 class="font-black text-slate-800 text-xl mb-2">Neighborhood Market</h4>
+                        <p class="text-sm text-gray-500 mb-4 font-medium uppercase tracking-wider">Problem: Food Desert</p>
+                        <p class="text-gray-600 text-sm mb-6 leading-relaxed">Transforming a vacant lot into a permanent community market with shared kitchens.</p>
+                        <div class="flex justify-between items-center pt-4 border-t border-gray-100">
+                            <span class="text-growth-green font-black">420 Votes</span>
+                            <span class="text-xs font-bold text-slate-400">FEASIBILITY: 85%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 7. Difference Section -->
+    <section class="py-24 bg-white border-t border-gray-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-4xl font-black text-slate-900 mb-16 uppercase">More than participation</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+                <div>
+                    <h4 class="font-bold text-slate-400 mb-4">Decidim</h4>
+                    <p class="text-gray-500 italic">Democratic infrastructure for participation.</p>
+                </div>
+                <div class="flex items-center justify-center">
+                    <div class="h-12 w-12 bg-growth-green rounded-full flex items-center justify-center text-white font-black text-2xl shadow-lg">+</div>
+                </div>
+                <div>
+                    <h4 class="font-bold text-slate-900 mb-4 uppercase tracking-tighter text-2xl">uSeed</h4>
+                    <p class="text-slate-800 font-bold">Civic urban activation + regeneration + negotiation.</p>
+                </div>
+            </div>
+            <p class="mt-16 text-2xl font-light text-gray-600 italic">"uSeed transforms participation into spatial transformation."</p>
+        </div>
+    </section>
+
+    <!-- 8. Governance + Trust -->
+    <section class="py-24 bg-slate-900 text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                <div class="order-2 lg:order-1">
+                    <div class="space-y-4">
+                        <div class="flex items-center gap-4 bg-slate-800 p-4 rounded-lg border-l-4 border-gray-600">
+                            <span class="font-mono text-gray-500">01</span>
+                            <span class="font-bold uppercase tracking-widest text-sm">Space Reported</span>
+                        </div>
+                        <div class="flex items-center gap-4 bg-slate-800 p-4 rounded-lg border-l-4 border-civic-blue">
+                            <span class="font-mono text-civic-blue">02</span>
+                            <span class="font-bold uppercase tracking-widest text-sm text-civic-blue">Idea Proposed</span>
+                        </div>
+                        <div class="flex items-center gap-4 bg-slate-800 p-4 rounded-lg border-l-4 border-growth-green">
+                            <span class="font-mono text-growth-green">03</span>
+                            <span class="font-bold uppercase tracking-widest text-sm text-growth-green">Community Validated</span>
+                        </div>
+                        <div class="flex items-center gap-4 bg-slate-800 p-4 rounded-lg border-l-4 border-orange-400">
+                            <span class="font-mono text-orange-400">04</span>
+                            <span class="font-bold uppercase tracking-widest text-sm text-orange-400">Feasibility Reviewed</span>
+                        </div>
+                        <div class="flex items-center gap-4 bg-growth-green p-4 rounded-lg border-l-4 border-white text-slate-900">
+                            <span class="font-mono font-black">05</span>
+                            <span class="font-bold uppercase tracking-widest text-sm">Pilot Activated</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="order-1 lg:order-2">
+                    <h2 class="text-4xl font-black mb-8 uppercase leading-tight">Not just ideas. <br>Real accountability.</h2>
+                    <p class="text-xl text-gray-400 leading-relaxed mb-8">
+                        We prevent "wishful thinking" by enforcing a structured progression. Every project must meet technical thresholds and institutional reviews before moving forward.
+                    </p>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="p-4 bg-slate-800 rounded-lg">
+                            <h5 class="text-growth-green font-black mb-1">STRICT</h5>
+                            <p class="text-xs text-gray-500 uppercase">Validation</p>
+                        </div>
+                        <div class="p-4 bg-slate-800 rounded-lg">
+                            <h5 class="text-civic-blue font-black mb-1">OPEN</h5>
+                            <p class="text-xs text-gray-500 uppercase">Governance</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 9. Community Section -->
+    <section class="py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-4xl font-black text-slate-900 mb-16 uppercase">Built by citizens, strengthened by institutions</h2>
+            <div class="flex flex-wrap justify-center gap-8 text-gray-400 font-bold uppercase tracking-widest">
+                <span class="hover:text-slate-900 transition-colors">Citizens</span>
+                <span class="text-growth-green">•</span>
+                <span class="hover:text-slate-900 transition-colors">Associations</span>
+                <span class="text-growth-green">•</span>
+                <span class="hover:text-slate-900 transition-colors">Municipalities</span>
+                <span class="text-growth-green">•</span>
+                <span class="hover:text-slate-900 transition-colors">Universities</span>
+                <span class="text-growth-green">•</span>
+                <span class="hover:text-slate-900 transition-colors">Ethical Investors</span>
+                <span class="text-growth-green">•</span>
+                <span class="hover:text-slate-900 transition-colors">Social Enterprises</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- 10. Final CTA -->
+    <section class="py-32 bg-growth-green text-slate-900 relative overflow-hidden">
+        <div class="absolute inset-0">
+            <div class="absolute top-0 right-0 w-96 h-96 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl"></div>
+            <div class="absolute bottom-0 left-0 w-96 h-96 bg-slate-900/10 rounded-full translate-y-1/2 -translate-x-1/2 blur-3xl"></div>
+        </div>
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-5xl md:text-7xl font-black mb-12 tracking-tighter">The future of your city <br>should not be decided without you.</h2>
+            <div class="flex flex-col sm:flex-row justify-center gap-6">
+                <a href="#" class="bg-slate-900 text-white font-black py-6 px-12 rounded shadow-2xl uppercase tracking-widest hover:bg-slate-800 transition-all transform hover:-translate-y-1">Join uSeed</a>
+                <a href="feed.html" class="bg-white text-slate-900 font-black py-6 px-12 rounded shadow-2xl uppercase tracking-widest hover:bg-gray-100 transition-all transform hover:-translate-y-1">Explore Projects</a>
+                <a href="map.html" class="bg-transparent border-4 border-slate-900 text-slate-900 font-black py-6 px-12 rounded uppercase tracking-widest hover:bg-slate-900 hover:text-white transition-all transform hover:-translate-y-1">Start Reclaiming</a>
+            </div>
+        </div>
+    </section>
 
     <!-- Footer -->
-    <footer class="bg-slate-900 border-t border-slate-800 py-12">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center flex flex-col items-center">
-            <img src="images/logo.png" alt="uSeed Logo" class="h-16 w-auto mb-4 bg-white/90 rounded p-2 shadow-lg">
-            <p class="text-gray-400">Planting Ideas, Growing Cities. Mestre Urban Hub Mediator.</p>
-            <p class="text-gray-500 text-sm mt-4">© 2026 uSeed Platform Prototype. Designed for impact.</p>
+    <footer class="bg-slate-900 border-t border-slate-800 py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-12 text-center md:text-left">
+                <div>
+                    <a href="index.html" class="flex items-center gap-2 mb-6 justify-center md:justify-start">
+                        <img src="images/logo.png" alt="uSeed Logo" class="h-12 w-auto bg-white/90 rounded p-1">
+                        <span class="font-bold text-3xl tracking-wider uppercase text-white">u<span class="text-growth-green">Seed</span></span>
+                    </a>
+                    <p class="text-gray-400 max-w-sm">Democratic infrastructure for collective urban regeneration. Plant ideas. Reclaim spaces. Grow communities.</p>
+                </div>
+                <div class="flex gap-12">
+                    <div class="space-y-4">
+                        <h5 class="text-white font-bold uppercase text-sm tracking-widest">Platform</h5>
+                        <ul class="text-gray-500 space-y-2 text-sm">
+                            <li><a href="map.html" class="hover:text-growth-green transition-colors">Map</a></li>
+                            <li><a href="feed.html" class="hover:text-growth-green transition-colors">Proposals</a></li>
+                            <li><a href="#" class="hover:text-growth-green transition-colors">Community</a></li>
+                        </ul>
+                    </div>
+                    <div class="space-y-4">
+                        <h5 class="text-white font-bold uppercase text-sm tracking-widest">Legal</h5>
+                        <ul class="text-gray-500 space-y-2 text-sm">
+                            <li><a href="#" class="hover:text-growth-green transition-colors">Privacy</a></li>
+                            <li><a href="#" class="hover:text-growth-green transition-colors">Ethics</a></li>
+                            <li><a href="#" class="hover:text-growth-green transition-colors">Terms</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-20 pt-8 border-t border-slate-800 text-center">
+                <p class="text-gray-600 text-xs tracking-widest uppercase">© 2026 uSeed Platform. Designed for democratic urban impact.</p>
+            </div>
         </div>
     </footer>
 

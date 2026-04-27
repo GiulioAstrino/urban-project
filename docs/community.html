@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Community | uSeed</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'growth-green': '#2ecc71',
+                        'slate-dark': '#1e293b',
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="styles.css">
+    <!-- Alpine.js -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+</head>
+<body class="antialiased min-h-screen flex flex-col bg-slate-50" x-data="{ mobileMenuOpen: false, submitted: false }">
+
+    <!-- Navigation -->
+    <nav class="sticky top-0 z-50 dark-glass-panel border-b border-slate-700">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-20">
+                <div class="flex items-center">
+                    <a href="index.html" class="flex-shrink-0 flex items-center gap-2 group">
+                        <img src="images/logo.png" alt="uSeed Logo" class="h-10 w-auto transform group-hover:scale-110 transition-transform bg-white/90 rounded px-1 py-0.5">
+                        <span class="font-bold text-2xl tracking-wider uppercase text-white hidden sm:block drop-shadow-md">u<span class="text-growth-green">Seed</span></span>
+                    </a>
+                </div>
+                <!-- Desktop Menu -->
+                <div class="hidden sm:ml-6 sm:flex sm:items-center sm:space-x-8">
+                    <a href="index.html" class="border-b-2 border-transparent text-gray-300 hover:border-gray-300 hover:text-white px-1 pt-1 text-sm font-medium transition-colors">Home</a>
+                    <a href="map.html" class="border-b-2 border-transparent text-gray-300 hover:border-gray-300 hover:text-white px-1 pt-1 text-sm font-medium transition-colors">Map</a>
+                    <a href="feed.html" class="border-b-2 border-transparent text-gray-300 hover:border-gray-300 hover:text-white px-1 pt-1 text-sm font-medium transition-colors">Proposals</a>
+                    <a href="community.html" class="border-b-2 border-growth-green text-white px-1 pt-1 text-sm font-medium">Community</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="flex-grow">
+        <!-- Community Hero -->
+        <section class="bg-slate-900 py-24 text-center px-4">
+            <h1 class="text-4xl md:text-6xl font-black text-white uppercase mb-6 tracking-tighter">
+                Non siamo soli. <br><span class="text-growth-green">Siamo comunità.</span>
+            </h1>
+            <p class="text-xl text-gray-400 max-w-3xl mx-auto leading-relaxed">
+                uSeed non è solo una piattaforma, è l'abbraccio collettivo di chi crede che ogni angolo della città meriti di splendere. Perché un quartiere non è fatto di muri, ma di legami che si intrecciano.
+            </p>
+        </section>
+
+        <!-- Social Sentiment Section -->
+        <section class="py-20 bg-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-12 text-center">
+                    <div class="p-8">
+                        <div class="text-5xl mb-6">🌱</div>
+                        <h4 class="font-bold text-slate-800 text-xl mb-4">Coltiviamo Fiducia</h4>
+                        <p class="text-gray-600">Restituire valore a un luogo significa dire a chi lo abita che la sua voce conta. La cura è il primo passo verso la democrazia.</p>
+                    </div>
+                    <div class="p-8">
+                        <div class="text-5xl mb-6">🤝</div>
+                        <h4 class="font-bold text-slate-800 text-xl mb-4">Radici Condivise</h4>
+                        <p class="text-gray-600">Ogni segnalazione è un atto d'amore verso il futuro. Trasformiamo l'indifferenza in partecipazione attiva e consapevole.</p>
+                    </div>
+                    <div class="p-8">
+                        <div class="text-5xl mb-6">✨</div>
+                        <h4 class="font-bold text-slate-800 text-xl mb-4">Bellezza Collettiva</h4>
+                        <p class="text-gray-600">La vera rigenerazione urbana avviene quando i sogni di molti diventano il progetto di tutti. Nessuno spazio è davvero perduto.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section class="py-24 bg-slate-50 border-t border-gray-100">
+            <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="bg-white rounded-3xl shadow-2xl overflow-hidden border border-gray-100">
+                    <div x-show="!submitted" class="p-10 md:p-16">
+                        <h2 class="text-3xl font-black text-slate-900 uppercase mb-4">Parliamo del futuro</h2>
+                        <p class="text-gray-500 mb-10">Hai un'idea, un dubbio o vuoi semplicemente unirti a noi? Scrivici, ogni parola è un seme prezioso per la nostra città.</p>
+                        
+                        <form @submit.prevent="submitted = true" class="space-y-6">
+                            <div>
+                                <label class="block text-sm font-bold text-slate-700 uppercase tracking-widest mb-2">La tua Email</label>
+                                <input type="email" required placeholder="email@esempio.com" class="w-full px-4 py-4 rounded-xl border border-gray-200 focus:ring-2 focus:ring-growth-green outline-none transition-all">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-bold text-slate-700 uppercase tracking-widest mb-2">Cosa hai nel cuore?</label>
+                                <textarea rows="5" required placeholder="Raccontaci la tua visione o chiedici supporto..." class="w-full px-4 py-4 rounded-xl border border-gray-200 focus:ring-2 focus:ring-growth-green outline-none transition-all"></textarea>
+                            </div>
+                            <button type="submit" class="w-full btn-primary py-5 uppercase tracking-widest text-lg font-black shadow-lg">Invia Messaggio</button>
+                        </form>
+                    </div>
+
+                    <!-- Success State -->
+                    <div x-show="submitted" class="p-16 text-center animate-fade-in" style="display: none;">
+                        <div class="text-6xl mb-6">💌</div>
+                        <h2 class="text-3xl font-black text-slate-900 mb-4 uppercase">Grazie per la tua voce</h2>
+                        <p class="text-gray-600 mb-8">Abbiamo ricevuto il tuo messaggio. Insieme, un passo alla volta, stiamo ridisegnando il cuore urbano di Mestre.</p>
+                        <button @click="submitted = false" class="text-growth-green font-bold uppercase tracking-widest hover:underline">Scrivi un altro messaggio</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-slate-900 py-12 text-center">
+        <p class="text-gray-600 text-xs tracking-widest uppercase">© 2026 uSeed • La forza della comunità</p>
+    </footer>
+
+</body>
+</html>

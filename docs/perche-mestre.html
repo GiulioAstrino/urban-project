@@ -2,44 +2,178 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Why Mestre - Useed</title>
-    <style>
-        body { font-family: sans-serif; line-height: 1.6; padding: 20px; max-width: 800px; margin: auto; }
-        header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #ccc; padding-bottom: 10px; margin-bottom: 20px; }
-        nav a { margin-left: 15px; text-decoration: none; color: #333; }
-        h1, h2 { color: #2c3e50; }
-        .timeline { margin: 20px 0; }
-        .timeline-item { margin-bottom: 10px; }
-        .necessity { background: #f9f9f9; padding: 20px; border-left: 5px solid #2c3e50; margin-top: 30px; }
-    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Why Mestre | uSeed</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'growth-green': '#2ecc71',
+                        'slate-dark': '#1e293b',
+                        'civic-blue': '#2563eb',
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="styles.css">
 </head>
-<body>
-    <header>
-        <div class="logo">Useed</div>
-        <nav>
-            <a href="/">Home</a>
-            <a href="perche-mestre.html">Why Mestre</a>
-        </nav>
+<body class="antialiased min-h-screen flex flex-col relative">
+
+    <!-- Navigation -->
+    <nav class="sticky top-0 z-50 dark-glass-panel border-b border-slate-700">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-20">
+                <div class="flex items-center">
+                    <a href="index.html" class="flex-shrink-0 flex items-center gap-2 group">
+                        <img src="images/logo.png" alt="uSeed Logo" class="h-10 w-auto transform group-hover:scale-110 transition-transform bg-white/90 rounded px-1 py-0.5">
+                        <span class="font-bold text-2xl tracking-wider uppercase text-white hidden sm:block drop-shadow-md">u<span class="text-growth-green">Seed</span></span>
+                    </a>
+                </div>
+                <!-- Desktop Menu -->
+                <div class="hidden sm:ml-6 sm:flex sm:items-center sm:space-x-8">
+                    <a href="index.html" class="border-b-2 border-transparent text-gray-300 hover:border-gray-300 hover:text-white px-1 pt-1 text-sm font-medium transition-colors">Home</a>
+                    <a href="perche-mestre.html" class="border-b-2 border-growth-green text-white px-1 pt-1 text-sm font-medium">Why Mestre</a>
+                    <a href="map.html" class="border-b-2 border-transparent text-gray-300 hover:border-gray-300 hover:text-white px-1 pt-1 text-sm font-medium transition-colors">Map</a>
+                    <a href="feed.html" class="border-b-2 border-transparent text-gray-300 hover:border-gray-300 hover:text-white px-1 pt-1 text-sm font-medium transition-colors">Proposals</a>
+                    <a href="community.html" class="border-b-2 border-transparent text-gray-300 hover:border-gray-300 hover:text-white px-1 pt-1 text-sm font-medium transition-colors">Community</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="relative bg-slate-900 overflow-hidden pt-20 pb-24">
+        <div class="absolute inset-0">
+            <img class="w-full h-full object-cover opacity-20 mix-blend-overlay" src="https://images.unsplash.com/photo-1449824913935-59a10b8d2000?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80" alt="Urban Texture">
+            <div class="absolute inset-0 bg-gradient-to-b from-slate-900/50 via-slate-900 to-slate-900"></div>
+        </div>
+        
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h1 class="text-5xl md:text-7xl font-black text-white leading-tight mb-6 animate-fade-in">
+                Why <span class="text-growth-green">Mestre?</span>
+            </h1>
+            <p class="mt-6 max-w-3xl mx-auto text-xl text-gray-300 leading-relaxed animate-fade-in delay-100 uppercase tracking-widest font-bold">
+                The historical roots of a city in search of identity.
+            </p>
+        </div>
     </header>
 
-    <h1>Why Mestre</h1>
+    <!-- Timeline Section -->
+    <section class="py-24 bg-white relative">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-black text-slate-900 mb-12 text-center border-b-4 border-growth-green inline-block pb-2">Historical Timeline</h2>
+            
+            <div class="space-y-8">
+                <div class="flex gap-6 items-start group">
+                    <div class="font-black text-growth-green text-xl pt-1 min-w-[100px]">1917–1970</div>
+                    <div class="pb-8 border-l-2 border-slate-100 pl-8 relative">
+                        <div class="absolute -left-[9px] top-2 w-4 h-4 rounded-full bg-growth-green group-hover:scale-150 transition-transform"></div>
+                        <h4 class="font-bold text-slate-800 text-lg uppercase">Porto Marghera industrial hub creation</h4>
+                    </div>
+                </div>
 
-    <section class="timeline">
-        <h2>Historical Timeline of Mestre</h2>
-        <div class="timeline-item">1917–1970: Porto Marghera industrial hub creation</div>
-        <div class="timeline-item">1926: Annexation of Mestre to Venice</div>
-        <div class="timeline-item">1960–1990: Suburban expansion and motorization</div>
-        <div class="timeline-item">1972: Opening of the Tangenziale A52</div>
-        <div class="timeline-item">1985–1997: Pedestrianization and restyling of Piazza Ferretto</div>
-        <div class="timeline-item">2004: San Giuliano Park inauguration</div>
-        <div class="timeline-item">2018: M9 Museum opening</div>
-        <div class="timeline-item">2026: New Mestre train station</div>
+                <div class="flex gap-6 items-start group">
+                    <div class="font-black text-growth-green text-xl pt-1 min-w-[100px]">1926</div>
+                    <div class="pb-8 border-l-2 border-slate-100 pl-8 relative">
+                        <div class="absolute -left-[9px] top-2 w-4 h-4 rounded-full bg-growth-green group-hover:scale-150 transition-transform"></div>
+                        <h4 class="font-bold text-slate-800 text-lg uppercase">Annexation of Mestre to Venice</h4>
+                    </div>
+                </div>
+
+                <div class="flex gap-6 items-start group">
+                    <div class="font-black text-growth-green text-xl pt-1 min-w-[100px]">1960–1990</div>
+                    <div class="pb-8 border-l-2 border-slate-100 pl-8 relative">
+                        <div class="absolute -left-[9px] top-2 w-4 h-4 rounded-full bg-growth-green group-hover:scale-150 transition-transform"></div>
+                        <h4 class="font-bold text-slate-800 text-lg uppercase">Suburban expansion and motorization</h4>
+                    </div>
+                </div>
+
+                <div class="flex gap-6 items-start group">
+                    <div class="font-black text-growth-green text-xl pt-1 min-w-[100px]">1972</div>
+                    <div class="pb-8 border-l-2 border-slate-100 pl-8 relative">
+                        <div class="absolute -left-[9px] top-2 w-4 h-4 rounded-full bg-growth-green group-hover:scale-150 transition-transform"></div>
+                        <h4 class="font-bold text-slate-800 text-lg uppercase">Opening of the Tangenziale A52</h4>
+                    </div>
+                </div>
+
+                <div class="flex gap-6 items-start group">
+                    <div class="font-black text-growth-green text-xl pt-1 min-w-[100px]">1985–1997</div>
+                    <div class="pb-8 border-l-2 border-slate-100 pl-8 relative">
+                        <div class="absolute -left-[9px] top-2 w-4 h-4 rounded-full bg-growth-green group-hover:scale-150 transition-transform"></div>
+                        <h4 class="font-bold text-slate-800 text-lg uppercase">Pedestrianization and restyling of Piazza Ferretto</h4>
+                    </div>
+                </div>
+
+                <div class="flex gap-6 items-start group">
+                    <div class="font-black text-growth-green text-xl pt-1 min-w-[100px]">2004</div>
+                    <div class="pb-8 border-l-2 border-slate-100 pl-8 relative">
+                        <div class="absolute -left-[9px] top-2 w-4 h-4 rounded-full bg-growth-green group-hover:scale-150 transition-transform"></div>
+                        <h4 class="font-bold text-slate-800 text-lg uppercase">San Giuliano Park inauguration</h4>
+                    </div>
+                </div>
+
+                <div class="flex gap-6 items-start group">
+                    <div class="font-black text-growth-green text-xl pt-1 min-w-[100px]">2018</div>
+                    <div class="pb-8 border-l-2 border-slate-100 pl-8 relative">
+                        <div class="absolute -left-[9px] top-2 w-4 h-4 rounded-full bg-growth-green group-hover:scale-150 transition-transform"></div>
+                        <h4 class="font-bold text-slate-800 text-lg uppercase">M9 Museum opening</h4>
+                    </div>
+                </div>
+
+                <div class="flex gap-6 items-start group">
+                    <div class="font-black text-growth-green text-xl pt-1 min-w-[100px]">2026</div>
+                    <div class="pb-8 border-l-2 border-slate-100 pl-8 relative">
+                        <div class="absolute -left-[9px] top-2 w-4 h-4 rounded-full bg-growth-green group-hover:scale-150 transition-transform"></div>
+                        <h4 class="font-bold text-slate-800 text-lg uppercase">New Mestre train station</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
     </section>
 
-    <section class="necessity">
-        <h2>The Necessity for Useed</h2>
-        <p>Mestre’s history is defined by a succession of <em>top-down</em> interventions and planning driven by priorities external to its social fabric, which have fragmented the territory and hindered the formation of a shared, diffuse identity.</p>
-        <p>This legacy of discontinuity—where the city has repeatedly been reshaped by centralized, monofunctional choices—is precisely what creates the need for a platform like Useed. The necessity arises from having experienced decades of imposed transformations that left little room for spontaneous aggregation, leaving a void that now requires tools capable of reconnecting the territory, grounded in its complex historical reality.</p>
+    <!-- Necessity Section -->
+    <section class="py-24 bg-slate-50 border-y border-gray-200">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-4xl font-black text-slate-900 mb-8 uppercase">The Necessity for uSeed</h2>
+            <div class="prose prose-lg text-gray-600 leading-relaxed space-y-6 font-medium">
+                <p>
+                    Mestre’s history is defined by a succession of <span class="text-slate-900 font-bold">top-down interventions</span> and planning driven by priorities external to its social fabric, which have fragmented the territory and hindered the formation of a shared, diffuse identity.
+                </p>
+                <div class="p-8 bg-white border-l-8 border-growth-green rounded-r-xl shadow-sm italic text-xl text-slate-700 font-serif">
+                    "A legacy of discontinuity requires a tool for reconnection."
+                </div>
+                <p>
+                    This legacy of discontinuity—where the city has repeatedly been reshaped by centralized, monofunctional choices—is precisely what creates the need for a platform like <span class="text-growth-green font-bold uppercase">uSeed</span>. 
+                </p>
+                <p>
+                    The necessity arises from having experienced decades of imposed transformations that left little room for <span class="text-slate-900 font-bold">spontaneous aggregation</span>, leaving a void that now requires tools capable of reconnecting the territory, grounded in its complex historical reality.
+                </p>
+            </div>
+        </div>
     </section>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 border-t border-slate-800 py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-12 text-center md:text-left">
+                <div>
+                    <a href="index.html" class="flex items-center gap-2 mb-6 justify-center md:justify-start">
+                        <img src="images/logo.png" alt="uSeed Logo" class="h-12 w-auto bg-white/90 rounded p-1">
+                        <span class="font-bold text-3xl tracking-wider uppercase text-white">u<span class="text-growth-green">Seed</span></span>
+                    </a>
+                    <p class="text-gray-400 max-w-sm">Democratic infrastructure for collective urban regeneration. Plant ideas. Reclaim spaces. Grow communities.</p>
+                </div>
+            </div>
+            <div class="mt-20 pt-8 border-t border-slate-800 text-center">
+                <p class="text-gray-600 text-xs tracking-widest uppercase">© 2026 uSeed Platform. Designed for democratic urban impact.</p>
+            </div>
+        </div>
+    </footer>
+
 </body>
 </html>

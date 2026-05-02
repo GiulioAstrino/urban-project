@@ -24,7 +24,7 @@
     <style>
         .timeline-line {
             width: 6px;
-            background: linear-gradient(to bottom, #2ecc71, #27ae60, #1e293b);
+            background: linear-gradient(to bottom, #2ecc71, #e2e8f0);
             position: absolute;
             left: 50%;
             transform: translateX(-50%);
@@ -38,28 +38,28 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 320px;
+            width: 260px; /* Ridotta la larghezza */
             background: rgba(30, 41, 59, 0.98);
             backdrop-filter: blur(12px);
             color: white;
-            padding: 1.5rem;
-            border-radius: 1.25rem;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            padding: 1.25rem;
+            border-radius: 1rem;
+            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.5);
             z-index: 100;
             border: 1px solid rgba(46, 204, 113, 0.3);
             text-align: left;
         }
         .group:hover .tooltip-cloud {
             display: block;
-            animation: fadeInOut 0.3s ease-out;
+            animation: fadeInOut 0.2s ease-out;
         }
         @keyframes fadeInOut {
-            from { opacity: 0; scale: 0.9; }
-            to { opacity: 1; scale: 1; }
+            from { opacity: 0; transform: translate(-50%, -50%) scale(0.95); }
+            to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
         }
         @media (max-width: 768px) {
             .timeline-line { left: 30px; }
-            .tooltip-cloud { left: 50px; transform: translateY(-50%); width: calc(100vw - 100px); }
+            .tooltip-cloud { left: 50px; transform: translateY(-50%); width: 240px; }
         }
     </style>
 </head>
@@ -86,22 +86,23 @@
         </div>
     </nav>
 
-    <!-- Hero Section -->
+    <!-- Hero Section (REVERTED) -->
     <header class="relative bg-slate-900 overflow-hidden pt-24 pb-36">
         <div class="absolute inset-0">
-            <img class="w-full h-full object-cover opacity-20" src="https://images.unsplash.com/photo-1449824913935-59a10b8d2000?auto=format&fit=crop&w=1920&q=80" alt="Urban Texture">
+            <img class="w-full h-full object-cover opacity-30 mix-blend-overlay" src="https://images.unsplash.com/photo-1516733725897-1aa73b87c8e8?auto=format&fit=crop&w=1920&q=80" alt="Urban Texture">
+            <div class="absolute inset-0 bg-gradient-to-b from-slate-900/40 via-slate-900 to-slate-900"></div>
         </div>
         <div class="relative max-w-7xl mx-auto px-4 text-center">
-            <h1 class="text-6xl md:text-8xl font-black text-white mb-6 tracking-tighter uppercase italic">
-                The <span class="text-growth-green">Root</span> Analysis
+            <h1 class="text-6xl md:text-8xl font-black text-white mb-6 animate-fade-in tracking-tighter">
+                Why <span class="text-growth-green">Mestre?</span>
             </h1>
-            <p class="mt-6 max-w-3xl mx-auto text-xl text-gray-400 font-bold uppercase tracking-[0.2em]">
-                Why Mestre's history demands a collective awakening.
+            <p class="mt-6 max-w-2xl mx-auto text-xl text-gray-300 animate-fade-in delay-100 uppercase tracking-widest font-black">
+                Unveiling the "City in Transit"
             </p>
         </div>
     </header>
 
-    <!-- Vertical Deep-Dive Timeline -->
+    <!-- Vertical Timeline -->
     <section class="py-32 relative overflow-hidden bg-white">
         <div class="max-w-7xl mx-auto px-4 relative">
             <div class="timeline-line"></div>
@@ -113,17 +114,17 @@
                     <div class="md:w-5/12 text-right hidden md:block">
                         <h3 class="text-4xl font-black text-slate-200">1917–1970</h3>
                     </div>
-                    <div class="z-20 flex items-center justify-center bg-growth-green w-10 h-10 rounded-full border-4 border-white shadow-[0_0_20px_rgba(46,204,113,0.6)] cursor-crosshair transition-all duration-300 group-hover:scale-[2.5] relative">
+                    <div class="z-20 flex items-center justify-center bg-growth-green w-10 h-10 rounded-full border-4 border-white shadow-[0_0_20px_rgba(46,204,113,0.4)] cursor-crosshair transition-all duration-300 group-hover:scale-[2.2] relative">
                         <div class="tooltip-cloud">
-                            <h5 class="text-growth-green font-black uppercase text-sm mb-3">Industrial Path Dependency</h5>
-                            <p class="text-xs leading-relaxed text-gray-300">
+                            <h5 class="text-growth-green font-black uppercase text-[10px] mb-2">Industrial Path Dependency</h5>
+                            <p class="text-[11px] leading-relaxed text-gray-300">
                                 The creation of Porto Marghera locked Mestre into a monofunctional role as an "industrial support center." This prioritised labor supply over urban social relations, molding Mestre as a "commuter city." Today's legacy is a city that lacks a living alternative center, making it feel "dull" despite its demographic explosion.
                             </p>
                         </div>
                     </div>
                     <div class="md:w-5/12 pl-8 md:pl-16">
                         <h4 class="text-2xl font-black text-slate-800 uppercase tracking-tight">Porto Marghera Industrial Hub</h4>
-                        <p class="text-slate-500 mt-2 font-medium">The birth of the productive periphery.</p>
+                        <p class="text-slate-500 mt-2 font-medium italic">The birth of the productive periphery.</p>
                     </div>
                 </div>
 
@@ -132,17 +133,17 @@
                     <div class="md:w-5/12 text-left hidden md:block">
                         <h3 class="text-4xl font-black text-slate-200">1926</h3>
                     </div>
-                    <div class="z-20 flex items-center justify-center bg-growth-green w-10 h-10 rounded-full border-4 border-white shadow-[0_0_20px_rgba(46,204,113,0.6)] cursor-crosshair transition-all duration-300 group-hover:scale-[2.5] relative">
+                    <div class="z-20 flex items-center justify-center bg-growth-green w-10 h-10 rounded-full border-4 border-white shadow-[0_0_20px_rgba(46,204,113,0.4)] cursor-crosshair transition-all duration-300 group-hover:scale-[2.2] relative">
                         <div class="tooltip-cloud">
-                            <h5 class="text-growth-green font-black uppercase text-sm mb-3">The Loss of Autonomy</h5>
-                            <p class="text-xs leading-relaxed text-gray-300">
+                            <h5 class="text-growth-green font-black uppercase text-[10px] mb-2">The Loss of Autonomy</h5>
+                            <p class="text-[11px] leading-relaxed text-gray-300">
                                 Annexation to Venice under the Fascist regime turned Mestre into a functional appendage. By losing symbolic and administrative autonomy, Mestre became a "spillover" destination for Venice's needs. This prevented the birth of autonomous urban hubs and left a lasting local identity vacuum.
                             </p>
                         </div>
                     </div>
                     <div class="md:w-5/12 pr-8 md:pr-16 md:text-right">
                         <h4 class="text-2xl font-black text-slate-800 uppercase tracking-tight">Annexation to Venice</h4>
-                        <p class="text-slate-500 mt-2 font-medium">Administrative subordination begins.</p>
+                        <p class="text-slate-500 mt-2 font-medium italic">Administrative subordination begins.</p>
                     </div>
                 </div>
 
@@ -151,17 +152,17 @@
                     <div class="md:w-5/12 text-right hidden md:block">
                         <h3 class="text-4xl font-black text-slate-200">1959–1961</h3>
                     </div>
-                    <div class="z-20 flex items-center justify-center bg-growth-green w-10 h-10 rounded-full border-4 border-white shadow-[0_0_20px_rgba(46,204,113,0.6)] cursor-crosshair transition-all duration-300 group-hover:scale-[2.5] relative">
+                    <div class="z-20 flex items-center justify-center bg-growth-green w-10 h-10 rounded-full border-4 border-white shadow-[0_0_20px_rgba(46,204,113,0.4)] cursor-crosshair transition-all duration-300 group-hover:scale-[2.2] relative">
                         <div class="tooltip-cloud">
-                            <h5 class="text-growth-green font-black uppercase text-sm mb-3">Planning Paralysis</h5>
-                            <p class="text-xs leading-relaxed text-gray-300">
+                            <h5 class="text-growth-green font-black uppercase text-[10px] mb-2">Planning Paralysis</h5>
+                            <p class="text-[11px] leading-relaxed text-gray-300">
                                 The revocation of the Dorigo Master Plan guaranteed expansive freedom for residential construction. Mestre urbanized "in patches" without identity or containment. This chaotic growth hampered the generation of stable aggregation spaces, forcing sociality into fragmented satellite neighborhoods.
                             </p>
                         </div>
                     </div>
                     <div class="md:w-5/12 pl-8 md:pl-16">
                         <h4 class="text-2xl font-black text-slate-800 uppercase tracking-tight">Dorigo Master Plan Failure</h4>
-                        <p class="text-slate-500 mt-2 font-medium">Chaos over order.</p>
+                        <p class="text-slate-500 mt-2 font-medium italic">Chaos over order.</p>
                     </div>
                 </div>
 
@@ -170,17 +171,17 @@
                     <div class="md:w-5/12 text-left hidden md:block">
                         <h3 class="text-4xl font-black text-slate-200">1972</h3>
                     </div>
-                    <div class="z-20 flex items-center justify-center bg-growth-green w-10 h-10 rounded-full border-4 border-white shadow-[0_0_20px_rgba(46,204,113,0.6)] cursor-crosshair transition-all duration-300 group-hover:scale-[2.5] relative">
+                    <div class="z-20 flex items-center justify-center bg-growth-green w-10 h-10 rounded-full border-4 border-white shadow-[0_0_20px_rgba(46,204,113,0.4)] cursor-crosshair transition-all duration-300 group-hover:scale-[2.2] relative">
                         <div class="tooltip-cloud">
-                            <h5 class="text-growth-green font-black uppercase text-sm mb-3">The "Passing City" Model</h5>
-                            <p class="text-xs leading-relaxed text-gray-300">
+                            <h5 class="text-growth-green font-black uppercase text-[10px] mb-2">The "Passing City" Model</h5>
+                            <p class="text-[11px] leading-relaxed text-gray-300">
                                 The Ring Road (Tangenziale) reinforced Mestre as an infrastructural node rather than an urban destination. It encouraged car culture and split the city with fast roads, discouraging walking or cycling. Daily sociality was pushed to peripheral shopping centers reachable only by vehicle.
                             </p>
                         </div>
                     </div>
                     <div class="md:w-5/12 pr-8 md:pr-16 md:text-right">
                         <h4 class="text-2xl font-black text-slate-800 uppercase tracking-tight">Inauguration of the Ring Road</h4>
-                        <p class="text-slate-500 mt-2 font-medium">Mobility as a barrier to stay.</p>
+                        <p class="text-slate-500 mt-2 font-medium italic">Mobility as a barrier to stay.</p>
                     </div>
                 </div>
 
@@ -189,17 +190,17 @@
                     <div class="md:w-5/12 text-right hidden md:block">
                         <h3 class="text-4xl font-black text-slate-200">1985–1997</h3>
                     </div>
-                    <div class="z-20 flex items-center justify-center bg-growth-green w-10 h-10 rounded-full border-4 border-white shadow-[0_0_20px_rgba(46,204,113,0.6)] cursor-crosshair transition-all duration-300 group-hover:scale-[2.5] relative">
+                    <div class="z-20 flex items-center justify-center bg-growth-green w-10 h-10 rounded-full border-4 border-white shadow-[0_0_20px_rgba(46,204,113,0.4)] cursor-crosshair transition-all duration-300 group-hover:scale-[2.2] relative">
                         <div class="tooltip-cloud">
-                            <h5 class="text-growth-green font-black uppercase text-sm mb-3">Beautification without Ecosystem</h5>
-                            <p class="text-xs leading-relaxed text-gray-300">
+                            <h5 class="text-growth-green font-black uppercase text-[10px] mb-2">Beautification without Ecosystem</h5>
+                            <p class="text-[11px] leading-relaxed text-gray-300">
                                 Pedestrianization made the center more livable but created an isolated "living room." Consumption-based sociality (shops and aperitifs) took over, without deep cultural or community functions. It remains a "small showcase" that hasn't triggered diffuse urbanity elsewhere.
                             </p>
                         </div>
                     </div>
                     <div class="md:w-5/12 pl-8 md:pl-16">
                         <h4 class="text-2xl font-black text-slate-800 uppercase tracking-tight">Piazza Ferretto Restyling</h4>
-                        <p class="text-slate-500 mt-2 font-medium">Quality without connectivity.</p>
+                        <p class="text-slate-500 mt-2 font-medium italic">Quality without connectivity.</p>
                     </div>
                 </div>
 
@@ -208,17 +209,17 @@
                     <div class="md:w-5/12 text-left hidden md:block">
                         <h3 class="text-4xl font-black text-slate-200">2004</h3>
                     </div>
-                    <div class="z-20 flex items-center justify-center bg-growth-green w-10 h-10 rounded-full border-4 border-white shadow-[0_0_20px_rgba(46,204,113,0.6)] cursor-crosshair transition-all duration-300 group-hover:scale-[2.5] relative">
+                    <div class="z-20 flex items-center justify-center bg-growth-green w-10 h-10 rounded-full border-4 border-white shadow-[0_0_20px_rgba(46,204,113,0.4)] cursor-crosshair transition-all duration-300 group-hover:scale-[2.2] relative">
                         <div class="tooltip-cloud">
-                            <h5 class="text-growth-green font-black uppercase text-sm mb-3">The Isolated Green Giant</h5>
-                            <p class="text-xs leading-relaxed text-gray-300">
+                            <h5 class="text-growth-green font-black uppercase text-[10px] mb-2">The Isolated Green Giant</h5>
+                            <p class="text-[11px] leading-relaxed text-gray-300">
                                 San Giuliano Park is a high-quality space that remains "outside the city." Due to its size and isolation from the residential fabric, it serves for episodic events rather than daily urban living. It lacks a natural daily influx from the surrounding neighborhoods.
                             </p>
                         </div>
                     </div>
                     <div class="md:w-5/12 pr-8 md:pr-16 md:text-right">
                         <h4 class="text-2xl font-black text-slate-800 uppercase tracking-tight">San Giuliano Park Opening</h4>
-                        <p class="text-slate-500 mt-2 font-medium">A landscape detached from life.</p>
+                        <p class="text-slate-500 mt-2 font-medium italic">A landscape detached from life.</p>
                     </div>
                 </div>
 
@@ -227,17 +228,17 @@
                     <div class="md:w-5/12 text-right hidden md:block">
                         <h3 class="text-4xl font-black text-slate-200">2018</h3>
                     </div>
-                    <div class="z-20 flex items-center justify-center bg-growth-green w-10 h-10 rounded-full border-4 border-white shadow-[0_0_20px_rgba(46,204,113,0.6)] cursor-crosshair transition-all duration-300 group-hover:scale-[2.5] relative">
+                    <div class="z-20 flex items-center justify-center bg-growth-green w-10 h-10 rounded-full border-4 border-white shadow-[0_0_20px_rgba(46,204,113,0.4)] cursor-crosshair transition-all duration-300 group-hover:scale-[2.2] relative">
                         <div class="tooltip-cloud">
-                            <h5 class="text-growth-green font-black uppercase text-sm mb-3">The Top-Down Cultural Bet</h5>
-                            <p class="text-xs leading-relaxed text-gray-300">
+                            <h5 class="text-growth-green font-black uppercase text-[10px] mb-2">The Top-Down Cultural Bet</h5>
+                            <p class="text-[11px] leading-relaxed text-gray-300">
                                 M9 aimed at cultural regeneration but created a monofunctional district. It links Mestre to museum tourism (complementary to Venice) without addressing the existing social fabric. Visitors enter and exit without staying, failing to stimulate spontaneous urban life around it.
                             </p>
                         </div>
                     </div>
                     <div class="md:w-5/12 pl-8 md:pl-16">
                         <h4 class="text-2xl font-black text-slate-800 uppercase tracking-tight">M9 Museum Inauguration</h4>
-                        <p class="text-slate-500 mt-2 font-medium">Culture as an island.</p>
+                        <p class="text-slate-500 mt-2 font-medium italic">Culture as an island.</p>
                     </div>
                 </div>
 
@@ -246,17 +247,17 @@
                     <div class="md:w-5/12 text-left hidden md:block">
                         <h3 class="text-4xl font-black text-slate-200">2026</h3>
                     </div>
-                    <div class="z-20 flex items-center justify-center bg-growth-green w-10 h-10 rounded-full border-4 border-white shadow-[0_0_20px_rgba(46,204,113,0.6)] cursor-crosshair transition-all duration-300 group-hover:scale-[2.5] relative">
+                    <div class="z-20 flex items-center justify-center bg-growth-green w-10 h-10 rounded-full border-4 border-white shadow-[0_0_20px_rgba(46,204,113,0.4)] cursor-crosshair transition-all duration-300 group-hover:scale-[2.2] relative">
                         <div class="tooltip-cloud">
-                            <h5 class="text-growth-green font-black uppercase text-sm mb-3">Intermodal Gateway</h5>
-                            <p class="text-xs leading-relaxed text-gray-300">
+                            <h5 class="text-growth-green font-black uppercase text-[10px] mb-2">Intermodal Gateway</h5>
+                            <p class="text-[11px] leading-relaxed text-gray-300">
                                 The new station project is the latest example of infrastructure as "redemption." Success depends on the mix of functions that can animate it. Without local integration, it risks remaining just a "transit node" rather than a true urban gateway for the community.
                             </p>
                         </div>
                     </div>
                     <div class="md:w-5/12 pr-8 md:pr-16 md:text-right">
                         <h4 class="text-2xl font-black text-slate-800 uppercase tracking-tight">New Mestre Train Station</h4>
-                        <p class="text-slate-500 mt-2 font-medium">Final hope for urban anchorage.</p>
+                        <p class="text-slate-500 mt-2 font-medium italic">Final hope for urban anchorage.</p>
                     </div>
                 </div>
 
@@ -264,26 +265,25 @@
         </div>
     </section>
 
-    <!-- Deep Conclusion -->
-    <section class="py-32 bg-slate-900 text-white">
+    <!-- Necessity Section (REVERTED) -->
+    <section class="py-32 bg-slate-900 text-white relative">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16">
-                <h2 class="text-5xl font-black uppercase tracking-tighter">The Path to <span class="text-growth-green">Useed</span></h2>
-                <div class="mt-4 h-1 w-32 bg-growth-green mx-auto rounded"></div>
-            </div>
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
-                <div class="space-y-8">
-                    <p class="text-2xl text-gray-400 leading-tight font-bold uppercase tracking-tight">
-                        Mestre has always been designed as a functional support, not a relational city.
+                <div class="animate-fade-in">
+                    <h2 class="text-5xl font-black mb-10 uppercase leading-none tracking-tighter">The Necessity <br>for <span class="text-growth-green">uSeed</span></h2>
+                    <p class="text-2xl text-gray-400 leading-tight mb-12 font-bold uppercase tracking-tight">
+                        Mestre’s history is a sequence of <strong>top-down interventions</strong>.
                     </p>
-                    <p class="text-lg text-gray-300 leading-relaxed">
-                        From the industrial sprawl to the ring road, every major "Turning Point" has reinforced the model of a city to be <strong>crossed</strong> rather than <strong>lived</strong>. The "flagship" projects like M9 or the station are top-down attempts to fix this, but they often lack the diffuse social infrastructure to make them truly belong to the citizens.
-                    </p>
+                    <div class="p-10 bg-slate-800 border-l-8 border-growth-green rounded-r-2xl shadow-2xl italic text-3xl font-serif text-gray-200">
+                        "A legacy of discontinuity requires a tool for reconnection."
+                    </div>
                 </div>
-                <div class="p-10 bg-slate-800 border-l-8 border-growth-green rounded-r-2xl shadow-2xl">
-                    <p class="text-xl text-white font-bold mb-6 uppercase">The Root of the Necessity:</p>
-                    <p class="text-gray-400 italic text-lg leading-relaxed">
-                        "The lack of spontaneous aggregation spaces and the dominance of car culture have created a social void. Useed is not just a platform; it is the bottom-up response to a century of top-down planning that forgot the power of local hubs."
+                <div class="space-y-8 text-xl text-gray-400 leading-relaxed">
+                    <p>
+                        This legacy of discontinuity—where the city has repeatedly been reshaped by centralized, monofunctional choices—is precisely what creates the need for a platform like <span class="text-growth-green font-black uppercase">uSeed</span>.
+                    </p>
+                    <p>
+                        The necessity arises from having experienced decades of imposed transformations that left little room for <strong>spontaneous aggregation</strong>, leaving a void that now requires tools capable of reconnecting the territory from the bottom up.
                     </p>
                 </div>
             </div>

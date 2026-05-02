@@ -47,7 +47,7 @@
     </nav>
 
     <!-- Hero Section -->
-    <header class="relative bg-slate-900 overflow-hidden pt-20 pb-24">
+    <header class="relative bg-slate-900 overflow-hidden pt-20 pb-32">
         <div class="absolute inset-0">
             <img class="w-full h-full object-cover opacity-20 mix-blend-overlay" src="https://images.unsplash.com/photo-1449824913935-59a10b8d2000?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80" alt="Urban Texture">
             <div class="absolute inset-0 bg-gradient-to-b from-slate-900/50 via-slate-900 to-slate-900"></div>
@@ -57,102 +57,94 @@
             <h1 class="text-5xl md:text-7xl font-black text-white leading-tight mb-6 animate-fade-in">
                 Why <span class="text-growth-green">Mestre?</span>
             </h1>
-            <p class="mt-6 max-w-3xl mx-auto text-xl text-gray-300 leading-relaxed animate-fade-in delay-100 uppercase tracking-widest font-bold">
-                The historical roots of a city in search of identity.
+            <p class="mt-6 max-w-3xl mx-auto text-xl text-gray-300 leading-relaxed animate-fade-in delay-100">
+                A historical journey through the turning points that shaped a city in search of its collective soul.
             </p>
         </div>
     </header>
 
-    <!-- Timeline Section -->
-    <section class="py-24 bg-white relative">
-        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="text-3xl font-black text-slate-900 mb-12 text-center border-b-4 border-growth-green inline-block pb-2">Historical Timeline</h2>
+    <!-- Timeline Section (How it works style) -->
+    <section class="py-24 bg-slate-50 border-y border-gray-200 overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-20">
+                <h2 class="text-4xl font-black text-slate-900 uppercase">Historical Timeline</h2>
+                <div class="mt-4 h-1 w-32 bg-growth-green mx-auto rounded"></div>
+            </div>
             
-            <div class="space-y-8">
-                <div class="flex gap-6 items-start group">
-                    <div class="font-black text-growth-green text-xl pt-1 min-w-[100px]">1917–1970</div>
-                    <div class="pb-8 border-l-2 border-slate-100 pl-8 relative">
-                        <div class="absolute -left-[9px] top-2 w-4 h-4 rounded-full bg-growth-green group-hover:scale-150 transition-transform"></div>
-                        <h4 class="font-bold text-slate-800 text-lg uppercase">Porto Marghera industrial hub creation</h4>
-                    </div>
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-y-16 gap-x-8 relative">
+                <!-- Point 1 -->
+                <div class="flex flex-col items-center text-center">
+                    <div class="w-16 h-16 rounded-full bg-growth-green text-white flex items-center justify-center font-black text-xl shadow-xl mb-6 ring-8 ring-green-100">1917</div>
+                    <h4 class="font-bold mb-3 text-slate-800 uppercase tracking-tight">Porto Marghera hub</h4>
+                    <p class="text-gray-600 text-sm">Creation of the industrial heart that redefined the city's purpose.</p>
                 </div>
-
-                <div class="flex gap-6 items-start group">
-                    <div class="font-black text-growth-green text-xl pt-1 min-w-[100px]">1926</div>
-                    <div class="pb-8 border-l-2 border-slate-100 pl-8 relative">
-                        <div class="absolute -left-[9px] top-2 w-4 h-4 rounded-full bg-growth-green group-hover:scale-150 transition-transform"></div>
-                        <h4 class="font-bold text-slate-800 text-lg uppercase">Annexation of Mestre to Venice</h4>
-                    </div>
+                <!-- Point 2 -->
+                <div class="flex flex-col items-center text-center">
+                    <div class="w-16 h-16 rounded-full bg-growth-green text-white flex items-center justify-center font-black text-xl shadow-xl mb-6 ring-8 ring-green-100">1926</div>
+                    <h4 class="font-bold mb-3 text-slate-800 uppercase tracking-tight">Annexation</h4>
+                    <p class="text-gray-600 text-sm">Mestre is merged with Venice, losing its administrative autonomy.</p>
                 </div>
-
-                <div class="flex gap-6 items-start group">
-                    <div class="font-black text-growth-green text-xl pt-1 min-w-[100px]">1960–1990</div>
-                    <div class="pb-8 border-l-2 border-slate-100 pl-8 relative">
-                        <div class="absolute -left-[9px] top-2 w-4 h-4 rounded-full bg-growth-green group-hover:scale-150 transition-transform"></div>
-                        <h4 class="font-bold text-slate-800 text-lg uppercase">Suburban expansion and motorization</h4>
-                    </div>
+                <!-- Point 3 -->
+                <div class="flex flex-col items-center text-center">
+                    <div class="w-16 h-16 rounded-full bg-growth-green text-white flex items-center justify-center font-black text-xl shadow-xl mb-6 ring-8 ring-green-100">1960</div>
+                    <h4 class="font-bold mb-3 text-slate-800 uppercase tracking-tight">Expansion</h4>
+                    <p class="text-gray-600 text-sm">Rapid suburban growth and the rise of car-centric motorization.</p>
                 </div>
-
-                <div class="flex gap-6 items-start group">
-                    <div class="font-black text-growth-green text-xl pt-1 min-w-[100px]">1972</div>
-                    <div class="pb-8 border-l-2 border-slate-100 pl-8 relative">
-                        <div class="absolute -left-[9px] top-2 w-4 h-4 rounded-full bg-growth-green group-hover:scale-150 transition-transform"></div>
-                        <h4 class="font-bold text-slate-800 text-lg uppercase">Opening of the Tangenziale A52</h4>
-                    </div>
+                <!-- Point 4 -->
+                <div class="flex flex-col items-center text-center">
+                    <div class="w-16 h-16 rounded-full bg-growth-green text-white flex items-center justify-center font-black text-xl shadow-xl mb-6 ring-8 ring-green-100">1972</div>
+                    <h4 class="font-bold mb-3 text-slate-800 uppercase tracking-tight">Tangenziale</h4>
+                    <p class="text-gray-600 text-sm">Opening of the ring road, reinforcing the "city in transit" model.</p>
                 </div>
-
-                <div class="flex gap-6 items-start group">
-                    <div class="font-black text-growth-green text-xl pt-1 min-w-[100px]">1985–1997</div>
-                    <div class="pb-8 border-l-2 border-slate-100 pl-8 relative">
-                        <div class="absolute -left-[9px] top-2 w-4 h-4 rounded-full bg-growth-green group-hover:scale-150 transition-transform"></div>
-                        <h4 class="font-bold text-slate-800 text-lg uppercase">Pedestrianization and restyling of Piazza Ferretto</h4>
-                    </div>
+                <!-- Point 5 -->
+                <div class="flex flex-col items-center text-center">
+                    <div class="w-16 h-16 rounded-full bg-growth-green text-white flex items-center justify-center font-black text-xl shadow-xl mb-6 ring-8 ring-green-100">1985</div>
+                    <h4 class="font-bold mb-3 text-slate-800 uppercase tracking-tight">Piazza Ferretto</h4>
+                    <p class="text-gray-600 text-sm">Pedestrianization and restyling of the city's historical heart.</p>
                 </div>
-
-                <div class="flex gap-6 items-start group">
-                    <div class="font-black text-growth-green text-xl pt-1 min-w-[100px]">2004</div>
-                    <div class="pb-8 border-l-2 border-slate-100 pl-8 relative">
-                        <div class="absolute -left-[9px] top-2 w-4 h-4 rounded-full bg-growth-green group-hover:scale-150 transition-transform"></div>
-                        <h4 class="font-bold text-slate-800 text-lg uppercase">San Giuliano Park inauguration</h4>
-                    </div>
+                <!-- Point 6 -->
+                <div class="flex flex-col items-center text-center">
+                    <div class="w-16 h-16 rounded-full bg-growth-green text-white flex items-center justify-center font-black text-xl shadow-xl mb-6 ring-8 ring-green-100">2004</div>
+                    <h4 class="font-bold mb-3 text-slate-800 uppercase tracking-tight">San Giuliano</h4>
+                    <p class="text-gray-600 text-sm">Inauguration of the massive public urban park on the lagoon.</p>
                 </div>
-
-                <div class="flex gap-6 items-start group">
-                    <div class="font-black text-growth-green text-xl pt-1 min-w-[100px]">2018</div>
-                    <div class="pb-8 border-l-2 border-slate-100 pl-8 relative">
-                        <div class="absolute -left-[9px] top-2 w-4 h-4 rounded-full bg-growth-green group-hover:scale-150 transition-transform"></div>
-                        <h4 class="font-bold text-slate-800 text-lg uppercase">M9 Museum opening</h4>
-                    </div>
+                <!-- Point 7 -->
+                <div class="flex flex-col items-center text-center">
+                    <div class="w-16 h-16 rounded-full bg-growth-green text-white flex items-center justify-center font-black text-xl shadow-xl mb-6 ring-8 ring-green-100">2018</div>
+                    <h4 class="font-bold mb-3 text-slate-800 uppercase tracking-tight">M9 Museum</h4>
+                    <p class="text-gray-600 text-sm">A new cultural district aimed at urban regeneration.</p>
                 </div>
-
-                <div class="flex gap-6 items-start group">
-                    <div class="font-black text-growth-green text-xl pt-1 min-w-[100px]">2026</div>
-                    <div class="pb-8 border-l-2 border-slate-100 pl-8 relative">
-                        <div class="absolute -left-[9px] top-2 w-4 h-4 rounded-full bg-growth-green group-hover:scale-150 transition-transform"></div>
-                        <h4 class="font-bold text-slate-800 text-lg uppercase">New Mestre train station</h4>
-                    </div>
+                <!-- Point 8 -->
+                <div class="flex flex-col items-center text-center">
+                    <div class="w-16 h-16 rounded-full bg-growth-green text-white flex items-center justify-center font-black text-xl shadow-xl mb-6 ring-8 ring-green-100">2026</div>
+                    <h4 class="font-bold mb-3 text-slate-800 uppercase tracking-tight">New Station</h4>
+                    <p class="text-gray-600 text-sm">A future intermodal hub to redefine urban accessibility.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Necessity Section -->
-    <section class="py-24 bg-slate-50 border-y border-gray-200">
-        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="text-4xl font-black text-slate-900 mb-8 uppercase">The Necessity for uSeed</h2>
-            <div class="prose prose-lg text-gray-600 leading-relaxed space-y-6 font-medium">
-                <p>
-                    Mestre’s history is defined by a succession of <span class="text-slate-900 font-bold">top-down interventions</span> and planning driven by priorities external to its social fabric, which have fragmented the territory and hindered the formation of a shared, diffuse identity.
-                </p>
-                <div class="p-8 bg-white border-l-8 border-growth-green rounded-r-xl shadow-sm italic text-xl text-slate-700 font-serif">
-                    "A legacy of discontinuity requires a tool for reconnection."
+    <!-- Necessity Section (Why uSeed exists style) -->
+    <section class="py-24 bg-white relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                <div>
+                    <h2 class="text-4xl font-black text-slate-900 mb-8 uppercase">The Necessity for uSeed</h2>
+                    <p class="text-xl text-gray-600 leading-relaxed mb-10">
+                        Mestre’s history is defined by a succession of <strong>top-down interventions</strong> and planning driven by priorities external to its social fabric, which have fragmented the territory and hindered the formation of a shared identity.
+                    </p>
+                    <div class="p-8 bg-slate-50 border-l-8 border-growth-green rounded-r-xl italic text-2xl text-slate-700 font-serif shadow-inner">
+                        "A legacy of discontinuity requires a tool for reconnection."
+                    </div>
                 </div>
-                <p>
-                    This legacy of discontinuity—where the city has repeatedly been reshaped by centralized, monofunctional choices—is precisely what creates the need for a platform like <span class="text-growth-green font-bold uppercase">uSeed</span>. 
-                </p>
-                <p>
-                    The necessity arises from having experienced decades of imposed transformations that left little room for <span class="text-slate-900 font-bold">spontaneous aggregation</span>, leaving a void that now requires tools capable of reconnecting the territory, grounded in its complex historical reality.
-                </p>
+                <div class="space-y-6">
+                    <p class="text-gray-600 leading-relaxed">
+                        This legacy of discontinuity—where the city has repeatedly been reshaped by centralized, monofunctional choices—is precisely what creates the need for a platform like <span class="text-growth-green font-bold uppercase">uSeed</span>.
+                    </p>
+                    <p class="text-gray-600 leading-relaxed">
+                        The necessity arises from having experienced decades of imposed transformations that left little room for <strong>spontaneous aggregation</strong>, leaving a void that now requires tools capable of reconnecting the territory, grounded in its complex historical reality.
+                    </p>
+                </div>
             </div>
         </div>
     </section>

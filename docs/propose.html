@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Propose a Space | uSeed</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'growth-green': '#2ecc71',
+                        'slate-dark': '#1e293b',
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="styles.css">
+    <!-- Leaflet CSS & JS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <!-- Supabase SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <!-- Alpine.js -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+</head>
+<body class="antialiased min-h-screen flex flex-col bg-slate-50" 
+      x-data="{ mobileMenuOpen: false, submitted: false, address: '', lat: '', lng: '', user: null }" 
+      x-init="
+        const SUPABASE_URL = 'https://mjevwldzatcytulcfhpb.supabase.co';
+        const SUPABASE_ANON_KEY = 'sb_publishable_GiqFOHnsA2QyXb3x6hoKJA_8GgtrYLr';
+        const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        const { data } = await supabaseClient.auth.getSession();
+        user = data.session?.user || null;
+        if (!data.session) {
+            window.location.href = 'login.html';
+        }
+        supabaseClient.auth.onAuthStateChange((_event, session) => { 
+            user = session?.user || null;
+            if (!session) window.location.href = 'login.html';
+        });
+      ">
+
+    <!-- Navigation -->
+    <nav class="sticky top-0 z-50 dark-glass-panel border-b border-slate-700">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-20">
+                <div class="flex items-center">
+                    <a href="index.html" class="flex-shrink-0 flex items-center gap-2 group">
+                        <img src="images/logo.png" alt="uSeed Logo" class="h-10 w-auto transform group-hover:scale-110 transition-transform bg-white/90 rounded px-1 py-0.5">
+                        <span class="font-bold text-2xl tracking-wider uppercase text-white hidden sm:block drop-shadow-md">u<span class="text-growth-green">Seed</span></span>
+                    </a>
+                </div>
+                <!-- Desktop Menu -->
+                <div class="hidden sm:ml-6 sm:flex sm:items-center sm:space-x-8">
+                    <a href="index.html" class="border-b-2 border-transparent text-gray-300 hover:border-gray-300 hover:text-white px-1 pt-1 text-sm font-medium transition-colors">Home</a>
+                    <a href="map.html" class="border-b-2 border-transparent text-gray-300 hover:border-gray-300 hover:text-white px-1 pt-1 text-sm font-medium transition-colors">Map</a>
+                    <a href="feed.html" class="border-b-2 border-transparent text-gray-300 hover:border-gray-300 hover:text-white px-1 pt-1 text-sm font-medium transition-colors">Proposals</a>
+                    <a href="community.html" class="border-b-2 border-transparent text-gray-300 hover:border-gray-300 hover:text-white px-1 pt-1 text-sm font-medium transition-colors">Community</a>
+
+                    <div class="flex items-center gap-4 ml-4 border-l border-slate-700 pl-6">
+                        <template x-if="user">
+                            <div class="flex items-center gap-4">
+                                <span class="text-xs text-gray-400 font-mono" x-text="user.email"></span>
+                                <button @click="await supabaseClient.auth.signOut(); window.location.href = 'index.html'" class="text-sm font-medium text-red-400 hover:text-red-300">Logout</button>
+                            </div>
+                        </template>
+                    </div>
+                </div>
+                <!-- Mobile menu button -->
+                <div class="hidden flex items-center">
+                    <button @click="mobileMenuOpen = !mobileMenuOpen" type="button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-slate-700 focus:outline-none">
+                        <svg x-show="!mobileMenuOpen" class="block h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                        <svg x-show="mobileMenuOpen" class="block h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="display: none;">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Bottom Navigation -->
+    <div class="mobile-nav">
+        <a href="index.html" class="mobile-nav-item">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" /></svg>
+            Home
+        </a>
+        <a href="map.html" class="mobile-nav-item active">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" /></svg>
+            Map
+        </a>
+        <a href="feed.html" class="mobile-nav-item">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10l4 4v12a2 2 0 01-2 2z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 2v4a2 2 0 002 2h4" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 12h10M7 16h10M9 8h2" /></svg>
+            Seeds
+        </a>
+        <a href="community.html" class="mobile-nav-item">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
+            Community
+        </a>
+    </div>
+
+    <main class="flex-grow py-12 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-4xl mx-auto">
+            
+            <!-- Success Message -->
+            <div x-show="submitted" class="bg-white p-12 rounded-3xl shadow-2xl text-center animate-fade-in">
+                <div class="w-20 h-20 bg-green-100 text-growth-green rounded-full flex items-center justify-center mx-auto mb-6">
+                    <svg class="w-12 h-12" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7" /></svg>
+                </div>
+                <h2 class="text-3xl font-black text-slate-900 mb-4 uppercase">Report Received!</h2>
+                <p class="text-gray-600 mb-8">Thank you for helping us map forgotten spaces. Your report will be reviewed by the community shortly.</p>
+                <a href="map.html" class="btn-primary">Back to Map</a>
+            </div>
+
+            <!-- Form -->
+            <div x-show="!submitted" class="bg-white rounded-3xl shadow-xl overflow-hidden flex flex-col md:flex-row border border-gray-100">
+                
+                <!-- Left: Info & Map Selection -->
+                <div class="md:w-1/2 bg-slate-900 p-8 text-white">
+                    <h2 class="text-3xl font-black mb-6 uppercase leading-tight">Identify a <br><span class="text-growth-green">Forgotten Space</span></h2>
+                    <p class="text-gray-400 mb-8">Click on the map to pinpoint the exact location of the abandoned or degraded spot.</p>
+                    
+                    <div id="select-map" class="h-64 w-full rounded-xl mb-6 shadow-inner border border-slate-700"></div>
+                    
+                    <div class="space-y-4">
+                        <div class="flex items-start gap-3">
+                            <div class="w-6 h-6 rounded-full bg-growth-green/20 text-growth-green flex items-center justify-center flex-shrink-0 mt-1">
+                                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /></svg>
+                            </div>
+                            <p class="text-sm text-gray-400 font-mono" x-text="lat ? lat.toFixed(5) + ', ' + lng.toFixed(5) : 'Select point on map...'"></p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right: Form Fields -->
+                <div class="md:w-1/2 p-8 md:p-12">
+                    <form @submit.prevent="submitReport($event)" class="space-y-6">
+                        
+                        <!-- Address -->
+                        <div>
+                            <label class="block text-sm font-bold text-slate-700 uppercase tracking-widest mb-2">Address (Required)</label>
+                            <input type="text" name="address" x-model="address" required placeholder="e.g. 12 Main St" class="w-full px-4 py-3 rounded-lg border border-gray-200 focus:ring-2 focus:ring-growth-green focus:border-growth-green outline-none transition-all">
+                        </div>
+
+                        <!-- Type of Space -->
+                        <div>
+                            <label class="block text-sm font-bold text-slate-700 uppercase tracking-widest mb-2">Type of Decay</label>
+                            <select name="space_type" class="w-full px-4 py-3 rounded-lg border border-gray-200 focus:ring-2 focus:ring-growth-green focus:border-growth-green outline-none transition-all">
+                                <option value="Empty Storefront">Empty Storefront</option>
+                                <option value="Abandoned Building">Abandoned Building</option>
+                                <option value="Industrial Void">Industrial Void</option>
+                                <option value="Unused Lot">Unused Lot</option>
+                                <option value="Neglected Green Space">Neglected Green Space</option>
+                            </select>
+                        </div>
+
+                        <!-- Description -->
+                        <div>
+                            <label class="block text-sm font-bold text-slate-700 uppercase tracking-widest mb-2">Context & Details</label>
+                            <textarea name="description" rows="4" placeholder="Describe the state of the space and its potential impact on the neighborhood..." class="w-full px-4 py-3 rounded-lg border border-gray-200 focus:ring-2 focus:ring-growth-green focus:border-growth-green outline-none transition-all"></textarea>
+                        </div>
+
+                        <!-- Photo Upload -->
+                        <div>
+                            <label class="block text-sm font-bold text-slate-700 uppercase tracking-widest mb-2">Evidence Photo (Required)</label>
+                            <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-lg hover:border-growth-green transition-colors cursor-pointer relative">
+                                <div class="space-y-1 text-center">
+                                    <svg class="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
+                                        <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                    </svg>
+                                    <div class="flex text-sm text-gray-600">
+                                        <span class="relative cursor-pointer bg-white rounded-md font-medium text-growth-green hover:text-green-500">Upload a file</span>
+                                        <p class="pl-1">or drag and drop</p>
+                                    </div>
+                                    <p class="text-xs text-gray-500">PNG, JPG, GIF up to 10MB</p>
+                                </div>
+                                <input type="file" required class="absolute inset-0 opacity-0 cursor-pointer">
+                            </div>
+                        </div>
+
+                        <button type="submit" class="w-full btn-primary py-4 uppercase tracking-widest text-lg">Submit Report</button>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <footer class="bg-slate-900 py-12">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <p class="text-gray-500 text-sm tracking-widest uppercase">© 2026 uSeed Platform • Community Mapping Tool</p>
+        </div>
+    </footer>
+
+    <script>
+        async function submitReport(e) {
+            const app = document.querySelector('body').__x.$data;
+            const formData = new FormData(e.target);
+            
+            const reportData = {
+                address: app.address,
+                lat: app.lat,
+                lng: app.lng,
+                space_type: formData.get('space_type'),
+                description: formData.get('description'),
+                image_url: 'placeholder' 
+            };
+
+            const { data, error } = await supabaseClient
+                .from('reports')
+                .insert([reportData]);
+
+            if (error) {
+                alert('Submission Error: ' + error.message);
+            } else {
+                app.submitted = true;
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const map = L.map('select-map', {
+                zoomControl: false
+            }).setView([45.4880, 12.2330], 14);
+
+            L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+                subdomains: 'abcd',
+                maxZoom: 20
+            }).addTo(map);
+
+            let marker;
+
+            map.on('click', (e) => {
+                const app = document.querySelector('body').__x.$data;
+                app.lat = e.latlng.lat;
+                app.lng = e.latlng.lng;
+
+                if (marker) {
+                    marker.setLatLng(e.latlng);
+                } else {
+                    const customIcon = L.divIcon({
+                        className: 'custom-leaflet-marker',
+                        iconSize: [24, 24],
+                        iconAnchor: [12, 12]
+                    });
+                    marker = L.marker(e.latlng, { icon: customIcon }).addTo(map);
+                }
+            });
+        });
+    </script>
+</body>
+</html>

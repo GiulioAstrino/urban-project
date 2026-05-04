@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>uSeed | System Map Analysis</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'growth-green': '#2ecc71',
+                        'slate-dark': '#1e293b',
+                        'civic-blue': '#2563eb',
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="styles.css">
+    <!-- Supabase SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <!-- Alpine.js -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+</head>
+<body class="antialiased min-h-screen flex flex-col relative bg-slate-50" x-data="{ mobileMenuOpen: false, user: null }" x-init="
+    const SUPABASE_URL = 'https://mjevwldzatcytulcfhpb.supabase.co';
+    const SUPABASE_ANON_KEY = 'sb_publishable_GiqFOHnsA2QyXb3x6hoKJA_8GgtrYLr';
+    const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    supabaseClient.auth.getSession().then(({data}) => { user = data.session?.user || null });
+    supabaseClient.auth.onAuthStateChange((_event, session) => { user = session?.user || null });
+">
+
+    <!-- Navigation -->
+    <nav class="sticky top-0 z-50 dark-glass-panel border-b border-slate-700">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-20">
+                <div class="flex items-center">
+                    <a href="index.html" class="flex-shrink-0 flex items-center gap-2 group">
+                        <img src="images/logo.png" alt="uSeed Logo" class="h-10 w-auto transform group-hover:scale-110 transition-transform bg-white/90 rounded px-1 py-0.5">
+                        <span class="font-bold text-2xl tracking-wider uppercase text-white hidden sm:block drop-shadow-md">u<span class="text-growth-green">Seed</span></span>
+                    </a>
+                </div>
+                <!-- Desktop Menu -->
+                <div class="hidden sm:ml-6 sm:flex sm:items-center sm:space-x-8">
+                    <a href="index.html" class="border-b-2 border-transparent text-gray-300 hover:border-gray-300 hover:text-white px-1 pt-1 text-sm font-medium transition-colors">Home</a>
+                    <a href="perche-mestre.html" class="border-b-2 border-transparent text-gray-300 hover:border-gray-300 hover:text-white px-1 pt-1 text-sm font-medium transition-colors">Why Mestre</a>
+                    <a href="system-map.html" class="border-b-2 border-growth-green text-white px-1 pt-1 text-sm font-medium">System Map</a>
+                    <a href="map.html" class="border-b-2 border-transparent text-gray-300 hover:border-gray-300 hover:text-white px-1 pt-1 text-sm font-medium transition-colors">Map</a>
+                    <a href="feed.html" class="border-b-2 border-transparent text-gray-300 hover:border-gray-300 hover:text-white px-1 pt-1 text-sm font-medium transition-colors">Proposals</a>
+                    <a href="community.html" class="border-b-2 border-transparent text-gray-300 hover:border-gray-300 hover:text-white px-1 pt-1 text-sm font-medium transition-colors">Community</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header Section -->
+    <section class="bg-slate-900 py-16 text-center">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h1 class="text-4xl md:text-5xl font-black text-white uppercase tracking-tight">Urban Development & uSeed Integration</h1>
+            <p class="mt-4 text-xl text-gray-400">Systemic Mapping Analysis & Impact Report</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 -mt-10 relative z-10">
+        <!-- Map Card -->
+        <div class="bg-white rounded-3xl shadow-2xl overflow-hidden border border-gray-100 p-4 md:p-8 mb-12">
+            <img src="images/map_preview.png" alt="uSeed System Map" class="w-full h-auto rounded-xl shadow-inner">
+        </div>
+
+        <!-- Stakeholders Grid -->
+        <div class="mb-16">
+            <h2 class="text-3xl font-black text-slate-900 mb-8 uppercase flex items-center gap-3">
+                <span class="w-2 h-8 bg-growth-green rounded-full"></span>
+                1. Key Stakeholders
+            </h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-50">
+                    <h3 class="font-bold text-civic-blue mb-2">Public Admin</h3>
+                    <p class="text-sm text-gray-600">Regional authorities, municipality, and local planning agencies.</p>
+                </div>
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-50">
+                    <h3 class="font-bold text-civic-blue mb-2">Organizations</h3>
+                    <p class="text-sm text-gray-600">Businesses, cultural associations, and parishes prioritizing inclusion.</p>
+                </div>
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-50">
+                    <h3 class="font-bold text-civic-blue mb-2">Investors</h3>
+                    <p class="text-sm text-gray-600">SMEs, investment funds, urban developers, and retail.</p>
+                </div>
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-50">
+                    <h3 class="font-bold text-civic-blue mb-2">Landowners</h3>
+                    <p class="text-sm text-gray-600">Private owners, real estate funds, and industrial entities.</p>
+                </div>
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-50">
+                    <h3 class="font-bold text-civic-blue mb-2">Residents</h3>
+                    <p class="text-sm text-gray-600">Families, students, commuters, and migrants.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Loops Comparison -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+            <!-- Vicious Cycles -->
+            <div class="space-y-8">
+                <h2 class="text-3xl font-black text-slate-900 mb-8 uppercase flex items-center gap-3">
+                    <span class="w-2 h-8 bg-red-500 rounded-full"></span>
+                    Negative Dynamics
+                </h2>
+                
+                <div class="bg-white p-8 rounded-3xl border-l-8 border-red-500 shadow-lg">
+                    <h4 class="font-black text-slate-800 text-xl mb-3">Bureaucratic Friction</h4>
+                    <p class="text-gray-600 leading-relaxed">Rules block the desire to reuse abandoned spaces, causing implementation delays and stagnation despite new ideas.</p>
+                </div>
+
+                <div class="bg-white p-8 rounded-3xl border-l-8 border-red-500 shadow-lg">
+                    <h4 class="font-black text-slate-800 text-xl mb-3">Passive Speculation</h4>
+                    <p class="text-gray-600 leading-relaxed">Owners choose "owner waiting" due to poor conditions, decreasing property value and increasing resident tolerance for decay.</p>
+                </div>
+
+                <div class="bg-white p-8 rounded-3xl border-l-8 border-red-500 shadow-lg">
+                    <h4 class="font-black text-slate-800 text-xl mb-3">Urban Decay Spiral</h4>
+                    <p class="text-gray-600 leading-relaxed">High vacancy rates lead to physical decay and social stigma, creating a self-feeding downward spiral.</p>
+                </div>
+
+                <div class="bg-orange-50 p-8 rounded-3xl border-l-8 border-orange-400 shadow-lg">
+                    <h4 class="font-black text-slate-800 text-xl mb-3">Situational Intervention Risk</h4>
+                    <p class="text-gray-600 leading-relaxed italic">Localized improvements can raise property values, potentially excluding students and migrants via gentrification.</p>
+                </div>
+            </div>
+
+            <!-- Virtuous Cycles -->
+            <div class="space-y-8">
+                <h2 class="text-3xl font-black text-slate-900 mb-8 uppercase flex items-center gap-3">
+                    <span class="w-2 h-8 bg-growth-green rounded-full"></span>
+                    uSeed Positive Loops
+                </h2>
+
+                <div class="bg-white p-8 rounded-3xl border-l-8 border-growth-green shadow-lg">
+                    <h4 class="font-black text-growth-green text-xl mb-3">Local Social Activation</h4>
+                    <p class="text-gray-600 leading-relaxed">Facilitating reuse builds trust, leading to more participation and driving common action for further reuse.</p>
+                </div>
+
+                <div class="bg-white p-8 rounded-3xl border-l-8 border-growth-green shadow-lg">
+                    <h4 class="font-black text-growth-green text-xl mb-3">Shared Values</h4>
+                    <p class="text-gray-600 leading-relaxed">Breaks friction through "Idea Collection" and "Collective Approval," encouraging targeted action by authorities.</p>
+                </div>
+
+                <div class="bg-white p-8 rounded-3xl border-l-8 border-growth-green shadow-lg">
+                    <h4 class="font-black text-growth-green text-xl mb-3">Safety Perception</h4>
+                    <p class="text-gray-600 leading-relaxed">Interrupts the Decay Spiral by encouraging local events and social interactions, reclaiming the streets.</p>
+                </div>
+
+                <div class="bg-white p-8 rounded-3xl border-l-8 border-growth-green shadow-lg">
+                    <h4 class="font-black text-growth-green text-xl mb-3">Networking & Trust</h4>
+                    <p class="text-gray-600 leading-relaxed">Builds faith in institutions through better data collection and more effective, credible, community-backed policies.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 border-t border-slate-800 py-12 mt-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <a href="index.html" class="inline-flex items-center gap-2 mb-6">
+                <img src="images/logo.png" alt="uSeed Logo" class="h-10 w-auto bg-white/90 rounded p-1">
+                <span class="font-bold text-2xl tracking-wider uppercase text-white">u<span class="text-growth-green">Seed</span></span>
+            </a>
+            <p class="text-gray-500 text-sm uppercase tracking-widest">© 2026 uSeed Platform. Designed for democratic urban impact.</p>
+        </div>
+    </footer>
+
+</body>
+</html>

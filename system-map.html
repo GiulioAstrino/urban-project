@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>uSeed System Map Analysis</title>
+    <style>
+        :root {
+            --primary: #2e7d32;
+            --secondary: #1565c0;
+            --negative: #c62828;
+            --bg: #f4f7f6;
+            --text: #2c3e50;
+            --card-bg: #ffffff;
+            --accent-orange: #f39c12;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            line-height: 1.6;
+            color: var(--text);
+            background-color: var(--bg);
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background: #ffffff;
+            border-bottom: 1px solid #e0e0e0;
+            padding: 2.5rem 1rem;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.2rem;
+            color: #1a1a1a;
+            font-weight: 800;
+        }
+
+        header p {
+            color: #666;
+            margin-top: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+
+        .map-container {
+            background: white;
+            padding: 1rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            margin-bottom: 3rem;
+        }
+
+        .map-container img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 4px;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            border-left: 5px solid var(--primary);
+            padding-left: 1rem;
+            margin: 3rem 0 1.5rem 0;
+            font-weight: 700;
+        }
+
+        .stakeholders-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stk-card {
+            background: white;
+            padding: 1.2rem;
+            border-radius: 8px;
+            border: 1px solid #eee;
+            text-align: center;
+        }
+
+        .stk-card h3 {
+            margin: 0 0 0.5rem 0;
+            font-size: 1rem;
+            color: var(--secondary);
+        }
+
+        .stk-card p {
+            font-size: 0.85rem;
+            margin: 0;
+            color: #555;
+        }
+
+        .loop-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .loop-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+        }
+
+        .loop-card h2 {
+            margin-top: 0;
+            font-size: 1.4rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .negative-card { border-top: 6px solid var(--negative); }
+        .positive-card { border-top: 6px solid var(--primary); }
+
+        .item {
+            margin-bottom: 1.5rem;
+        }
+
+        .item strong {
+            display: block;
+            font-size: 1.05rem;
+            margin-bottom: 0.3rem;
+            color: #1a1a1a;
+        }
+
+        .item p {
+            margin: 0;
+            font-size: 0.95rem;
+            color: #444;
+        }
+
+        .risk-box {
+            background: #fff3e0;
+            border-left: 5px solid var(--accent-orange);
+            padding: 1.5rem;
+            margin-top: 2rem;
+            border-radius: 0 8px 8px 0;
+        }
+
+        @media (max-width: 850px) {
+            .loop-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Urban Development & uSeed Integration</h1>
+    <p>System Map Analysis & Impact Report</p>
+</header>
+
+<div class="container">
+    
+    <div class="map-container">
+        <img src="images/map_preview.png" alt="uSeed System Map">
+    </div>
+
+    <h2 class="section-title">1. Key Stakeholders</h2>
+    <div class="stakeholders-grid">
+        <div class="stk-card">
+            <h3>Public Administration</h3>
+            <p>Regional authorities, municipality, and local planning agencies.</p>
+        </div>
+        <div class="stk-card">
+            <h3>Organizations</h3>
+            <p>Businesses, cultural associations, and parishes prioritizing inclusion.</p>
+        </div>
+        <div class="stk-card">
+            <h3>Businesses & Investors</h3>
+            <p>SMEs, investment funds, urban developers, and retail.</p>
+        </div>
+        <div class="stk-card">
+            <h3>Landowners</h3>
+            <p>Private owners, real estate funds, and railway/industrial entities.</p>
+        </div>
+        <div class="stk-card">
+            <h3>Residents</h3>
+            <p>Families, students, commuters, and migrants.</p>
+        </div>
+    </div>
+
+    <div class="loop-grid">
+        
+        <!-- NEGATIVE DYNAMICS -->
+        <div class="loop-card negative-card">
+            <h2>Negative Dynamics & Bottlenecks</h2>
+            
+            <div class="item">
+                <strong>Bureaucratic Friction</strong>
+                <p>Rules block the desire to reuse abandoned spaces, causing implementation delays and stagnation despite new ideas.</p>
+            </div>
+
+            <div class="item">
+                <strong>Passive Speculation</strong>
+                <p>Owners choose "owner waiting" due to poor conditions, decreasing property value and increasing resident tolerance for decay.</p>
+            </div>
+
+            <div class="item">
+                <strong>Urban Decay Spiral</strong>
+                <p>High vacancy rates lead to physical decay and social stigma, creating a self-feeding downward spiral.</p>
+            </div>
+
+            <div class="item">
+                <strong>Social Maintenance Loop</strong>
+                <p>Decay reduces community care and social participation, ultimately resulting in even more physical decay.</p>
+            </div>
+
+            <div class="risk-box">
+                <strong>Situational Intervention (Risk of Exclusion)</strong>
+                <p>Localized improvements can raise property values and rents, disproportionately impacting students and migrants, leading to gentrification.</p>
+            </div>
+        </div>
+
+        <!-- POSITIVE LOOPS -->
+        <div class="loop-card positive-card">
+            <h2>The Solution: uSeed Positive Loops</h2>
+
+            <div class="item">
+                <strong>Local Social Activation (Transition Loop)</strong>
+                <p>Facilitating reuse builds trust, leading to more participation and driving common action for further reuse.</p>
+            </div>
+            
+            <div class="item">
+                <strong>uSeed Shared Values</strong>
+                <p>Breaks Bureaucratic Friction through "Idea Collection" and "Collective Approval," encouraging targeted urban action by authorities.</p>
+            </div>
+
+            <div class="item">
+                <strong>uSeed Safety Perception</strong>
+                <p>Interrupts the Decay Spiral and Social Maintenance Loop by encouraging local events and social interactions.</p>
+            </div>
+
+            <div class="item">
+                <strong>uSeed Networking</strong>
+                <p>Connects public organizations and supports community action, creating job opportunities and promoting Youth Retention.</p>
+            </div>
+
+            <div class="item">
+                <strong>uSeed Trust</strong>
+                <p>Builds faith in the platform and entities. Collective approval leads to better data collection and more effective, credible policies.</p>
+            </div>
+        </div>
+
+    </div>
+
+    <p style="text-align: center; margin-top: 4rem; color: #888; font-size: 0.8rem;">
+        Based on the System Map Analysis Report &copy; 2026 uSeed Project
+    </p>
+
+</div>
+
+</body>
+</html>

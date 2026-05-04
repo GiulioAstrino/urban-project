@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>uSeed | Systemic Mapping Analysis</title>
+    <title>uSeed | System Map Analysis</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -52,10 +52,62 @@
                     <a href="map.html" class="border-b-2 border-transparent text-gray-300 hover:border-gray-300 hover:text-white px-1 pt-1 text-sm font-medium transition-colors">Map</a>
                     <a href="feed.html" class="border-b-2 border-transparent text-gray-300 hover:border-gray-300 hover:text-white px-1 pt-1 text-sm font-medium transition-colors">Proposals</a>
                     <a href="community.html" class="border-b-2 border-transparent text-gray-300 hover:border-gray-300 hover:text-white px-1 pt-1 text-sm font-medium transition-colors">Community</a>
+                    
+                    <div class="flex items-center gap-4 ml-4 border-l border-slate-700 pl-6">
+                        <template x-if="!user">
+                            <div class="flex items-center gap-4">
+                                <a href="login.html" class="text-sm font-medium text-gray-300 hover:text-white">Login</a>
+                                <a href="login.html" class="btn-primary text-xs py-2 px-4">Sign Up</a>
+                            </div>
+                        </template>
+                        <template x-if="user">
+                            <div class="flex items-center gap-4">
+                                <span class="text-xs text-gray-400 font-mono" x-text="user.email"></span>
+                                <button @click="await supabaseClient.auth.signOut(); window.location.href = 'index.html';" class="text-sm font-medium text-red-400 hover:text-red-300">Logout</button>
+                            </div>
+                        </template>
+                    </div>
+                </div>
+                <!-- Mobile menu button -->
+                <div class="flex items-center sm:hidden">
+                    <button @click="mobileMenuOpen = !mobileMenuOpen" type="button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-slate-700 focus:outline-none">
+                        <svg x-show="!mobileMenuOpen" class="block h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" /></svg>
+                        <svg x-show="mobileMenuOpen" class="block h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="display: none;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+                    </button>
                 </div>
             </div>
         </div>
+        <!-- Mobile Menu Overlay -->
+        <div x-show="mobileMenuOpen" class="sm:hidden dark-glass-panel absolute w-full border-b border-slate-700">
+            <div class="pt-2 pb-3 space-y-1 px-4">
+                <a href="index.html" class="block py-2 text-white font-medium border-b border-slate-700">Home</a>
+                <a href="system-map.html" class="block py-2 text-growth-green font-bold border-b border-slate-700">System Map</a>
+                <a href="map.html" class="block py-2 text-gray-300 border-b border-slate-700">Map</a>
+                <a href="feed.html" class="block py-2 text-gray-300 border-b border-slate-700">Proposals</a>
+                <a href="community.html" class="block py-2 text-gray-300">Community</a>
+            </div>
+        </div>
     </nav>
+
+    <!-- Mobile Bottom Navigation -->
+    <div class="mobile-nav">
+        <a href="index.html" class="mobile-nav-item">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" /></svg>
+            Home
+        </a>
+        <a href="system-map.html" class="mobile-nav-item active">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2m3.222.882a.5.5 0 010-.764L7.5 12V9a5 5 0 0110 0v3l2.278 2.118a.5.5 0 010 .764L17 18H3l.222-.118z" /></svg>
+            System
+        </a>
+        <a href="map.html" class="mobile-nav-item">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" /></svg>
+            Map
+        </a>
+        <a href="feed.html" class="mobile-nav-item">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10l4 4v12a2 2 0 01-2 2z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 2v4a2 2 0 002 2h4" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 12h10M7 16h10M9 8h2" /></svg>
+            Seeds
+        </a>
+    </div>
 
     <!-- Hero / Header -->
     <header class="relative bg-slate-900 pt-24 pb-32 overflow-hidden">
@@ -67,7 +119,7 @@
                 Systemic <br><span class="text-growth-green">Impact & Dynamics</span>
             </h1>
             <p class="mt-6 max-w-2xl mx-auto text-xl text-gray-400 leading-relaxed font-medium">
-                Deep analysis of urban decay cycles and how uSeed intervenes to restore social and economic value.
+                Analysis of how uSeed disrupts urban decay cycles and restores collective value.
             </p>
         </div>
     </header>
@@ -75,11 +127,10 @@
     <!-- Main Content -->
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-16 pb-24 relative z-10">
         
-        <!-- Large Map Preview -->
+        <!-- Map Card -->
         <div class="bg-white rounded-[2.5rem] shadow-2xl overflow-hidden border border-gray-100 p-2 md:p-4 mb-20 group">
             <div class="rounded-[2rem] overflow-hidden relative">
                 <img src="images/map_preview.png" alt="uSeed System Map" class="w-full h-auto transform group-hover:scale-[1.01] transition-transform duration-700">
-                <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent pointer-events-none"></div>
             </div>
         </div>
 
@@ -87,101 +138,67 @@
         <section class="mb-32">
             <div class="flex items-center gap-4 mb-12">
                 <div class="h-1 bg-growth-green flex-grow rounded-full"></div>
-                <h2 class="text-3xl font-black text-slate-900 uppercase tracking-widest px-4">The Stakeholders</h2>
+                <h2 class="text-3xl font-black text-slate-900 uppercase tracking-widest px-4 text-center">Stakeholders</h2>
                 <div class="h-1 bg-growth-green flex-grow rounded-full"></div>
             </div>
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8">
-                <div class="p-8 bg-white rounded-3xl shadow-sm border border-slate-100 hover:shadow-xl transition-all hover:-translate-y-1">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
+                <div class="p-8 bg-white rounded-3xl shadow-sm border border-slate-100 hover:shadow-xl transition-all">
                     <h3 class="font-bold text-civic-blue uppercase text-xs tracking-widest mb-4">Governance</h3>
                     <h4 class="text-xl font-black text-slate-800 mb-2">Public Admin</h4>
-                    <p class="text-gray-500 text-sm leading-relaxed">Regional and local authorities focused on urban planning and regulation.</p>
+                    <p class="text-gray-500 text-sm">Authorities focused on planning and regulation.</p>
                 </div>
-                <div class="p-8 bg-white rounded-3xl shadow-sm border border-slate-100 hover:shadow-xl transition-all hover:-translate-y-1">
+                <div class="p-8 bg-white rounded-3xl shadow-sm border border-slate-100 hover:shadow-xl transition-all">
                     <h3 class="font-bold text-civic-blue uppercase text-xs tracking-widest mb-4">Social</h3>
                     <h4 class="text-xl font-black text-slate-800 mb-2">Organizations</h4>
-                    <p class="text-gray-500 text-sm leading-relaxed">NGOs and associations prioritizing inclusion over profitability.</p>
+                    <p class="text-gray-500 text-sm">NGOs prioritizing inclusion and accessibility.</p>
                 </div>
-                <div class="p-8 bg-white rounded-3xl shadow-sm border border-slate-100 hover:shadow-xl transition-all hover:-translate-y-1">
+                <div class="p-8 bg-white rounded-3xl shadow-sm border border-slate-100 hover:shadow-xl transition-all">
                     <h3 class="font-bold text-civic-blue uppercase text-xs tracking-widest mb-4">Economic</h3>
                     <h4 class="text-xl font-black text-slate-800 mb-2">Investors</h4>
-                    <p class="text-gray-500 text-sm leading-relaxed">SMEs and funds seeking sustainable urban development opportunities.</p>
+                    <p class="text-gray-500 text-sm">SMEs and funds seeking ethical opportunities.</p>
                 </div>
-                <div class="p-8 bg-white rounded-3xl shadow-sm border border-slate-100 hover:shadow-xl transition-all hover:-translate-y-1">
+                <div class="p-8 bg-white rounded-3xl shadow-sm border border-slate-100 hover:shadow-xl transition-all">
                     <h3 class="font-bold text-civic-blue uppercase text-xs tracking-widest mb-4">Assets</h3>
                     <h4 class="text-xl font-black text-slate-800 mb-2">Landowners</h4>
-                    <p class="text-gray-500 text-sm leading-relaxed">Private and industrial owners holding dormant real estate assets.</p>
+                    <p class="text-gray-500 text-sm">Holders of industrial or railway dormant assets.</p>
                 </div>
-                <div class="p-8 bg-white rounded-3xl shadow-sm border border-slate-100 hover:shadow-xl transition-all hover:-translate-y-1">
+                <div class="p-8 bg-white rounded-3xl shadow-sm border border-slate-100 hover:shadow-xl transition-all">
                     <h3 class="font-bold text-civic-blue uppercase text-xs tracking-widest mb-4">Community</h3>
                     <h4 class="text-xl font-black text-slate-800 mb-2">Residents</h4>
-                    <p class="text-gray-500 text-sm leading-relaxed">Families, students, and migrants living the neighborhood reality.</p>
+                    <p class="text-gray-500 text-sm">Families, students, and migrants on the ground.</p>
                 </div>
             </div>
         </section>
 
         <!-- Section 2: Loop Analysis -->
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-20">
-            
-            <!-- Vicious Cycles -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-20 mb-20">
             <div>
-                <h2 class="text-4xl font-black text-slate-900 mb-12 uppercase flex items-center gap-4">
-                    <span class="p-3 bg-red-100 text-red-600 rounded-2xl">
-                        <svg class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M19 14l-7 7m0 0l-7-7m7 7V3" /></svg>
-                    </span>
-                    The Negative Spirals
+                <h2 class="text-3xl font-black text-slate-900 mb-10 uppercase flex items-center gap-4">
+                    <span class="p-3 bg-red-100 text-red-600 rounded-xl">Vicious</span> Cycles
                 </h2>
-                
                 <div class="space-y-6">
-                    <div class="group bg-white p-8 rounded-[2rem] shadow-lg border-l-[12px] border-red-500 hover:shadow-2xl transition-all">
-                        <h4 class="text-2xl font-black text-slate-800 mb-4 group-hover:text-red-600 transition-colors">Bureaucratic Friction</h4>
-                        <p class="text-gray-600 leading-relaxed text-lg">Rigid regulations and misinterpretation of community needs block the desire to reuse abandoned spaces, leading to systemic stagnation.</p>
+                    <div class="bg-white p-8 rounded-[2rem] shadow-lg border-l-8 border-red-500">
+                        <h4 class="font-black text-slate-800 text-xl mb-2">Bureaucratic Friction</h4>
+                        <p class="text-gray-600">Complex rules block reuse ideas, leading to stagnation.</p>
                     </div>
-
-                    <div class="group bg-white p-8 rounded-[2rem] shadow-lg border-l-[12px] border-red-500 hover:shadow-2xl transition-all">
-                        <h4 class="text-2xl font-black text-slate-800 mb-4 group-hover:text-red-600 transition-colors">Passive Speculation</h4>
-                        <p class="text-gray-600 leading-relaxed text-lg">Owners choosing "owner waiting" strategies in poor conditions decrease property values and increase resident tolerance for urban decay.</p>
-                    </div>
-
-                    <div class="group bg-white p-8 rounded-[2rem] shadow-lg border-l-[12px] border-red-500 hover:shadow-2xl transition-all">
-                        <h4 class="text-2xl font-black text-slate-800 mb-4 group-hover:text-red-600 transition-colors">Urban Decay Spiral</h4>
-                        <p class="text-gray-600 leading-relaxed text-lg">High vacancy rates accelerate physical decay and fuel social stigma, creating a self-reinforcing downward path for the neighborhood.</p>
-                    </div>
-
-                    <div class="group bg-orange-50 p-8 rounded-[2rem] shadow-lg border-l-[12px] border-orange-400 hover:shadow-2xl transition-all">
-                        <h4 class="text-2xl font-black text-slate-800 mb-4">Risk of Social Exclusion</h4>
-                        <p class="text-gray-600 leading-relaxed text-lg italic">Top-down improvements risk gentrification, disproportionately impacting fragile populations like students and migrants.</p>
+                    <div class="bg-white p-8 rounded-[2rem] shadow-lg border-l-8 border-red-500">
+                        <h4 class="font-black text-slate-800 text-xl mb-2">Passive Speculation</h4>
+                        <p class="text-gray-600">"Owner waiting" decreases values and fuels tolerance for decay.</p>
                     </div>
                 </div>
             </div>
-
-            <!-- Virtuous Cycles -->
             <div>
-                <h2 class="text-4xl font-black text-slate-900 mb-12 uppercase flex items-center gap-4">
-                    <span class="p-3 bg-green-100 text-growth-green rounded-2xl">
-                        <svg class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 10l7-7m0 0l7 7m-7-7v18" /></svg>
-                    </span>
-                    The uSeed Breakout
+                <h2 class="text-3xl font-black text-slate-900 mb-10 uppercase flex items-center gap-4">
+                    <span class="p-3 bg-green-100 text-growth-green rounded-xl">Virtuous</span> Loops
                 </h2>
-
                 <div class="space-y-6">
-                    <div class="group bg-white p-8 rounded-[2rem] shadow-lg border-l-[12px] border-growth-green hover:shadow-2xl transition-all">
-                        <h4 class="text-2xl font-black text-growth-green mb-4">Shared Values Loop</h4>
-                        <p class="text-gray-600 leading-relaxed text-lg">Transitions from misinterpretation to <strong>Collective Approval</strong>. Real resident data empowers targeted urban action by authorities.</p>
+                    <div class="bg-white p-8 rounded-[2rem] shadow-lg border-l-8 border-growth-green">
+                        <h4 class="font-black text-growth-green text-xl mb-2">Collective Approval</h4>
+                        <p class="text-gray-600">Breaks friction by aligning authorities with resident data.</p>
                     </div>
-
-                    <div class="group bg-white p-8 rounded-[2rem] shadow-lg border-l-[12px] border-growth-green hover:shadow-2xl transition-all">
-                        <h4 class="text-2xl font-black text-growth-green mb-4">Local Social Activation</h4>
-                        <p class="text-gray-600 leading-relaxed text-lg">Facilitating the reuse of spaces builds trust and communityCare, driving a cycle of participation and common action for new reuse projects.</p>
-                    </div>
-
-                    <div class="group bg-white p-8 rounded-[2rem] shadow-lg border-l-[12px] border-growth-green hover:shadow-2xl transition-all">
-                        <h4 class="text-2xl font-black text-growth-green mb-4">Safety Perception</h4>
-                        <p class="text-gray-600 leading-relaxed text-lg">Interrupts the decay spiral by reclaiming spaces through events and social interaction, directly increasing perceived and real safety.</p>
-                    </div>
-
-                    <div class="group bg-white p-8 rounded-[2rem] shadow-lg border-l-[12px] border-growth-green hover:shadow-2xl transition-all">
-                        <h4 class="text-2xl font-black text-growth-green mb-4">Networking & Trust</h4>
-                        <p class="text-gray-600 leading-relaxed text-lg">Builds institutional credibility and retain young people by creating job opportunities and supporting community-backed policymaking.</p>
+                    <div class="bg-white p-8 rounded-[2rem] shadow-lg border-l-8 border-growth-green">
+                        <h4 class="font-black text-growth-green text-xl mb-2">Social Activation</h4>
+                        <p class="text-gray-600">Reclaims spaces and boosts trust through community action.</p>
                     </div>
                 </div>
             </div>
@@ -189,13 +206,30 @@
     </main>
 
     <!-- Footer -->
-    <footer class="bg-slate-900 border-t border-slate-800 py-20 mt-20">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <a href="index.html" class="inline-flex items-center gap-2 mb-8">
-                <img src="images/logo.png" alt="uSeed Logo" class="h-14 w-auto bg-white/90 rounded p-1">
-                <span class="font-bold text-4xl tracking-wider uppercase text-white">u<span class="text-growth-green">Seed</span></span>
-            </a>
-            <p class="text-gray-500 text-sm uppercase tracking-widest font-bold">© 2026 uSeed Platform. Integrated Urban Dynamics Analysis.</p>
+    <footer class="bg-slate-900 border-t border-slate-800 py-20 mt-auto">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center md:text-left">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-12">
+                <div>
+                    <a href="index.html" class="flex items-center gap-2 mb-6 justify-center md:justify-start">
+                        <img src="images/logo.png" alt="uSeed Logo" class="h-12 w-auto bg-white/90 rounded p-1">
+                        <span class="font-bold text-3xl tracking-wider uppercase text-white">u<span class="text-growth-green">Seed</span></span>
+                    </a>
+                    <p class="text-gray-400 max-w-sm">Democratic infrastructure for collective urban regeneration.</p>
+                </div>
+                <div class="flex gap-12">
+                    <div class="space-y-4">
+                        <h5 class="text-white font-bold uppercase text-sm tracking-widest">Platform</h5>
+                        <ul class="text-gray-500 space-y-2 text-sm">
+                            <li><a href="index.html" class="hover:text-growth-green transition-colors">Home</a></li>
+                            <li><a href="system-map.html" class="hover:text-growth-green transition-colors">System Map</a></li>
+                            <li><a href="map.html" class="hover:text-growth-green transition-colors">Map</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-20 pt-8 border-t border-slate-800 text-center">
+                <p class="text-gray-600 text-xs tracking-widest uppercase">© 2026 uSeed Platform. Integrated Analysis.</p>
+            </div>
         </div>
     </footer>
 

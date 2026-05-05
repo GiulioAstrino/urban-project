@@ -35,7 +35,7 @@
         .tooltip-cloud {
             display: none;
             position: absolute;
-            bottom: 140%; /* Posizionato SOPRA il pallino */
+            bottom: 120%; /* Riportato a valore standard */
             left: 50%;
             transform: translateX(-50%);
             width: 240px;
@@ -45,9 +45,10 @@
             padding: 1rem;
             border-radius: 1rem;
             box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.5);
-            z-index: 1000;
+            z-index: 9999; /* Z-index molto alto */
             border: 1px solid rgba(46, 204, 113, 0.3);
             text-align: left;
+            pointer-events: none;
         }
         /* Freccetta della nuvoletta */
         .tooltip-cloud::after {
@@ -127,7 +128,7 @@
                         <h3 class="text-4xl font-black text-slate-200">1917–1970</h3>
                     </div>
                     <div class="z-20 flex items-center justify-center bg-growth-green w-10 h-10 rounded-full border-4 border-white shadow-[0_0_20px_rgba(46,204,113,0.4)] cursor-crosshair transition-all duration-300 group-hover:scale-125 relative">
-                        <div class="tooltip-cloud" style="bottom: 160%;"> <!-- Alzato ulteriormente rispetto al pallino -->
+                        <div class="tooltip-cloud"> 
                             <h5 class="text-growth-green font-black uppercase text-xs mb-2 block" style="white-space: nowrap;">Porto Marghera Industrial Hub</h5>
                             <p class="text-[11px] leading-relaxed text-gray-300">
                                 The creation of Porto Marghera locked Mestre into a monofunctional role as an "industrial support center." This prioritised labor supply over urban social relations, molding Mestre as a "commuter city."

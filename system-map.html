@@ -123,10 +123,31 @@
     <!-- Main Content -->
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-16 pb-24 relative z-10">
         
-        <!-- Map Card -->
-        <div class="bg-white rounded-[2.5rem] shadow-2xl overflow-hidden border border-gray-100 p-2 md:p-4 mb-20 relative">
-            <div class="rounded-[2rem] overflow-hidden">
-                <img src="images/map_preview.png" alt="uSeed System Map" class="w-full h-auto block">
+        <!-- Map Card with Smooth Zoom -->
+        <div class="bg-white rounded-[2.5rem] shadow-2xl overflow-hidden border border-gray-100 p-2 md:p-4 mb-20 relative group"
+             x-data="{ 
+                zoomed: false, 
+                originX: 50, 
+                originY: 50,
+                handleMouseMove(e) {
+                    const rect = $el.getBoundingClientRect();
+                    this.originX = ((e.clientX - rect.left) / rect.width) * 100;
+                    this.originY = ((e.clientY - rect.top) / rect.height) * 100;
+                }
+             }"
+             @mousemove="handleMouseMove"
+             @mouseenter="zoomed = true"
+             @mouseleave="zoomed = false">
+            
+            <div class="rounded-[2rem] overflow-hidden cursor-zoom-in relative">
+                <img src="images/map_preview.png" alt="uSeed System Map" 
+                     class="w-full h-auto block transition-transform duration-500 ease-out"
+                     :style="zoomed ? `transform: scale(2.5); transform-origin: ${originX}% ${originY}%;` : 'transform: scale(1); transform-origin: 50% 50%;'">
+                
+                <!-- Instruction Overlay -->
+                <div x-show="!zoomed" class="absolute inset-0 bg-black/5 flex items-center justify-center transition-opacity pointer-events-none">
+                    <span class="bg-white/90 backdrop-blur text-slate-900 px-6 py-3 rounded-full font-bold shadow-xl uppercase tracking-widest text-sm">Hover to Explore Details</span>
+                </div>
             </div>
         </div>
 
